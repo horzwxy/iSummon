@@ -7,4 +7,6 @@
     <string name="fake_nickname">horzwxy</string>
 
     <string name="manage_contact">我的好友</string>
+
+    <string name="search_act_prompt">输入活动名称</string>
 </resources>

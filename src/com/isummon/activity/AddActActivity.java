@@ -18,6 +18,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.isummon.R;
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDProperty;
 import com.isummon.model.HDType;
@@ -166,7 +167,7 @@ public class AddActActivity extends Activity {
                 R.string.add_waiting) {
             @Override
             protected Integer doWork(HDActivity... params) {
-                return NetHelper.addHDActivity(params[0]);
+                return GlobalVariables.netHelper.addHDActivity(params[0]);
             }
 
             @Override

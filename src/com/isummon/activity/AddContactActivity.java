@@ -14,12 +14,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.isummon.R;
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.SimpleHDActivity;
 import com.isummon.model.UserModel;
 import com.isummon.net.NetHelper;
 import com.isummon.widget.ContactAdapter;
 import com.isummon.widget.ProgressTaskBundle;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,24 +47,24 @@ public class AddContactActivity extends Activity {
             return;
         }
         else {
-            new ProgressTaskBundle<String, UserModel>(
+            new ProgressTaskBundle<String, ArrayList<UserModel>>(
                     this,
                     R.string.searching
             ) {
                 @Override
-                protected UserModel doWork(String... params) {
-                    return NetHelper.findUserByName(params[0]);
+                protected ArrayList<UserModel> doWork(String... params) {
+                    return GlobalVariables.netHelper.findUserByName(params[0]);
                 }
 
                 @Override
-                protected void dealResult(UserModel result) {
+                protected void dealResult(ArrayList<UserModel> result) {
                     if(result == null) {
                         Toast.makeText(AddContactActivity.this,
                                 R.string.no_user_found,
                                 Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        ContactAdapter adapter = new ContactAdapter(AddContactActivity.this, Arrays.asList(result));
+                        ContactAdapter adapter = new ContactAdapter(AddContactActivity.this, result);
                         ListView listView = (ListView) findViewById(R.id.contact_search_result);
                         listView.setVisibility(View.VISIBLE);
                         listView.setAdapter(adapter);

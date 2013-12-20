@@ -12,10 +12,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.isummon.R;
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.ActListMode;
 import com.isummon.model.HDType;
 import com.isummon.model.SimpleHDActivity;
-import com.isummon.net.FakeDataProvider;
 import com.isummon.widget.SimpleHdAdapter;
 
 import java.util.ArrayList;
@@ -90,7 +90,7 @@ public class ListActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ListActivity.this, ShowHdDetailsActivity.class);
-                intent.putExtra(ShowHdDetailsActivity.HDACTIVITY, FakeDataProvider.getHDById((int)id));
+                intent.putExtra(ShowHdDetailsActivity.HDACTIVITY, GlobalVariables.netHelper.getHDActivityById((int) id));
                 startActivity(intent);
             }
         });

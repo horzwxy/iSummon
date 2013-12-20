@@ -27,7 +27,7 @@ public abstract class NetHelper {
     protected final static String serviceUrl = "http://192.168.17.156:8080/axis2/services";
     protected final static String namespace = "http://edu.fudan.10ss";
 
-    public NetHelper getInstance() {
+    public static NetHelper getInstance() {
         return new FakeNetHelper();
     }
 

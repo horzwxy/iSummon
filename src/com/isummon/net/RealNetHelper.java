@@ -22,7 +22,6 @@ import java.util.List;
  */
 public class RealNetHelper extends NetHelper {
 
-
     @Override
     public ArrayList<SimpleHDActivity> getAllActs() {
         // 定义调用的WebService方法名
@@ -158,7 +157,7 @@ public class RealNetHelper extends NetHelper {
 
     @Override
     public List<Notification> getNotifications() {
-        return FakeDataProvider.getNotifications();
+        return null;
     }
 
     /**
@@ -174,7 +173,7 @@ public class RealNetHelper extends NetHelper {
      */
     @Override
     public HDActivity getHDActivityById(int hdId) {
-        return FakeDataProvider.getHDById(hdId);
+        return null;
     }
 
 
@@ -275,7 +274,7 @@ public class RealNetHelper extends NetHelper {
      */
     @Override
     public ArrayList<UserModel> findUserByName(String nickname) {
-        return new ArrayList<UserModel>(Arrays.asList(FakeDataProvider.findUserByName(nickname)));
+        return null;
     }
 
     /**
@@ -290,7 +289,7 @@ public class RealNetHelper extends NetHelper {
 
     @Override
     public ArrayList<UserModel> getAllContacts() {
-        return FakeDataProvider.getContacts();
+        return null;
     }
 
     @Override
