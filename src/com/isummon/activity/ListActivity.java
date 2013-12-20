@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -115,11 +117,28 @@ public class ListActivity extends Activity {
         progressDialog.show();
     }
 
-    public void showOnMap(View v) {
+    private void showOnMap() {
         Intent intent = new Intent(this, ActMapActivity.class);
         intent.putExtra(ActMapActivity.SIMPLE_ACTS,
                 new ArrayList<SimpleHDActivity>(displayedActs));
         startActivity(intent);
-        finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_toMap:
+                showOnMap();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 }

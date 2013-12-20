@@ -7,7 +7,19 @@ public class UserModel {
 	private String passwd;
     private int avatar;
 
-	public int getUserId() {
+    public UserModel() {
+
+    }
+
+    public UserModel(int userId, String userName, String nickName, String passwd, int avatar) {
+        this.userId = userId;
+        this.userName = userName;
+        this.nickName = nickName;
+        this.passwd = passwd;
+        this.avatar = avatar;
+    }
+
+    public int getUserId() {
 		return userId;
 	}
 	public void setUserId(int userId) {

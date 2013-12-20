@@ -5,7 +5,11 @@ package com.isummon.model;
  */
 public enum OptionListItem {
 
-    MANAGE_CONTACT("我的好友");
+    MANAGE_CONTACT("我的好友"),
+    MY_MESSAGE("我的消息"),
+    VIEW_ALL("查看活动"),
+    ADD_ACT("创建活动"),
+    EXIT("退出");
 
     public String chn;
 

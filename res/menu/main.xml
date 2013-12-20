@@ -2,44 +2,8 @@
 
     <item
         android:id="@+id/menu_search"
-        android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:icon="@drawable/search"
+        android:icon="@android:drawable/ic_menu_search"
         android:title="@string/menu_activity_search" />
-
-    <item
-        android:id="@+id/menu_add_act"
-        android:orderInCategory="101"
-        android:showAsAction="ifRoom"
-        android:icon="@drawable/add_act"
-        android:title="@string/menu_activity_list">
-
-    </item>
-
-
-    <item
-        android:id="@+id/menu_message"
-        android:icon="@drawable/message"
-        android:orderInCategory="102"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_message" />
-
-    <item
-        android:id="@+id/menu_all_act"
-        android:orderInCategory="103"
-        android:showAsAction="never"
-        android:title="@string/menu_activity_list" />
-
-    <item
-        android:id="@+id/menu_settings"
-        android:orderInCategory="104"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
-
-    <item 
-        android:id="@+id/menu_exit"
-        android:orderInCategory="105"
-        android:showAsAction="never"
-        android:title="@string/menu_exit" />
 
 </menu>

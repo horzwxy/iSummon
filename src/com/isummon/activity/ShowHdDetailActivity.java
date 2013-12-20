@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.isummon.R;
 import com.isummon.model.HDActivity;
+import com.isummon.model.HDStatus;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -59,10 +61,23 @@ public class ShowHdDetailActivity extends Activity {
         TextView typeText = (TextView)findViewById(R.id.act_type_name);
         typeImage.setImageResource(hdActivity.getHdType().getDrawableId());
         typeText.setText(hdActivity.getHdType().getChn());
+
+        if(hdActivity.getHdStatus() == HDStatus.CANCELED
+                || hdActivity.getHdStatus() == HDStatus.NO_VACANCY) {
+            Button applyButton = (Button) findViewById(R.id.apply_in);
+            applyButton.setBackground(
+                    getResources().getDrawable(R.drawable.button_bg_disabled));
+            applyButton.setText(R.string.not_available);
+            applyButton.setEnabled(false);
+        }
     }
 
     private void setText(int viewId, int hintStringId, String content) {
         TextView editText = (TextView) findViewById(viewId);
         editText.setText(getString(hintStringId) + " : " + content);
+    }
+
+    public void applyIn(View v) {
+
     }
 }

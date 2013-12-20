@@ -31,16 +31,9 @@
         <Button
             android:id="@+id/search_button"
             android:onClick="doSearch"
-            android:background="@drawable/search"
+            android:background="@android:drawable/ic_search_category_default"
             android:enabled="false"
             android:layout_height="match_parent"
-            android:layout_width="60dp" />
-
-        <Button
-            android:id="@+id/show_on_map"
-            android:onClick="showOnMap"
-            android:background="@drawable/earth"
-            android:layout_height="60dp"
             android:layout_width="60dp" />
 
         </LinearLayout>

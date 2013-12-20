@@ -2,23 +2,22 @@ package com.isummon.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.isummon.R;
-import com.isummon.model.Contact;
 import com.isummon.model.UserModel;
 import com.isummon.net.NetHelper;
 import com.isummon.widget.ContactAdapter;
 
-import java.sql.Array;
 import java.util.Arrays;
 
 /**
@@ -31,6 +30,8 @@ public class AddContactActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_contact);
+
+        getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg_black);
     }
 
     public void doSearch(View v) {
@@ -41,26 +42,53 @@ public class AddContactActivity extends Activity {
             return;
         }
         else {
-            UserModel user = NetHelper.findUserByName(username);
-            Contact contact = new Contact(user.getUserId(),
-                    user.getUserName(),
-                    user.getAvatar());
-            ContactAdapter adapter = new ContactAdapter(this, Arrays.asList(contact));
-            ListView listView = (ListView) findViewById(R.id.contact_search_result);
-            listView.setAdapter(adapter);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            final AsyncTask<String, Void, UserModel> searchTask
+                    = new AsyncTask<String, Void, UserModel>() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                protected UserModel doInBackground(String... strings) {
+                    return NetHelper.findUserByName(strings[0]);
+                }
 
+                @Override
+                protected void onPostExecute(UserModel userModel) {
+                    progressDialog.dismiss();
+                    if(userModel == null) {
+                        Toast.makeText(AddContactActivity.this,
+                                R.string.no_user_found,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        ContactAdapter adapter = new ContactAdapter(AddContactActivity.this, Arrays.asList(userModel));
+                        ListView listView = (ListView) findViewById(R.id.contact_search_result);
+                        listView.setVisibility(View.VISIBLE);
+                        listView.setAdapter(adapter);
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                showConfirmDialog((UserModel) parent.getItemAtPosition(position));
+                            }
+                        });
+                    }
+                }
+            };
+            progressDialog.setMessage(getString(R.string.searching));
+            progressDialog.setCancelable(true);
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialogInterface) {
+                    searchTask.cancel(true);
                 }
             });
+            progressDialog.show();
+            searchTask.execute(username);
         }
     }
 
-    private void showConfirmDialog(Contact contact) {
+    private void showConfirmDialog(UserModel contact) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.add_contact_confirm_1)
-        + contact.getTargetName() + getString(R.string.add_contact_confirm_2));
+        + contact.getNickName() + getString(R.string.add_contact_confirm_2));
         builder.setPositiveButton(R.string.add_contact_confirm_position,
                 new DialogInterface.OnClickListener() {
                     @Override

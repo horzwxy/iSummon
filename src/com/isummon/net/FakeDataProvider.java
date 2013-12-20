@@ -4,7 +4,9 @@ import com.isummon.model.HDActivity;
 import com.isummon.model.HDProperty;
 import com.isummon.model.HDStatus;
 import com.isummon.model.HDType;
+import com.isummon.model.Notification;
 import com.isummon.model.SimpleHDActivity;
+import com.isummon.model.UserModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +17,38 @@ import java.util.List;
 public class FakeDataProvider {
 
     public static ArrayList<HDActivity> hdArray = new ArrayList<HDActivity>();
+    public static ArrayList<UserModel> users = new ArrayList<UserModel>();
+    public static ArrayList<UserModel> contacts = new ArrayList<UserModel>();
+    public static ArrayList<Notification> notifications = new ArrayList<Notification>();
 
     static {
+        UserModel m1 = new UserModel();
+        m1.setAvatar(0);
+        m1.setNickName("horzwxy");
+        m1.setPasswd("horzwxy");
+        m1.setUserId(1);
+        m1.setUserName("horzwxy@isummon.com");
+        users.add(m1);
+
+        UserModel m2 = new UserModel();
+        m2.setAvatar(0);
+        m2.setNickName("罗玉凤");
+        m2.setPasswd("lyf");
+        m2.setUserId(2);
+        m2.setUserName("lyf@isummon.com");
+        users.add(m2);
+
+        UserModel m3 = new UserModel();
+        m3.setAvatar(0);
+        m3.setNickName("陈水扁");
+        m3.setPasswd("csb");
+        m3.setUserId(3);
+        m3.setUserName("csb@isummon.com");
+        users.add(m3);
+
+        contacts.add(m2);
+        contacts.add(m3);
+
         HDActivity a1 = new HDActivity();
         a1.setHdId(1);
         a1.setHdName("我们去加班吧!");
@@ -69,6 +101,14 @@ public class FakeDataProvider {
         a3.setLatitude(31.195722 * 1E6);
         a3.setLongitude(121.604425 * 1E6);
         hdArray.add(a3);
+
+        Notification n1 = new Notification(
+                m1.getNickName(),
+                m1.getAvatar(),
+                a1.getHdId(),
+                a1.getHdName()
+        );
+        notifications.add(n1);
     }
 
     public static List<SimpleHDActivity> getSimpleHDActivities() {
@@ -86,5 +126,30 @@ public class FakeDataProvider {
             }
         }
         return null;
+    }
+
+    public static UserModel findUserByName(String name) {
+        for(UserModel userModel : users) {
+            if(userModel.getNickName().equals(name)) {
+                return userModel;
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<UserModel> getContacts() {
+        return contacts;
+    }
+
+    public static void fakeBlock() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<Notification> getNotifications() {
+        return notifications;
     }
 }

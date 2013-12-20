@@ -2,6 +2,7 @@ package com.isummon.net;
 
 import com.isummon.model.HDActivity;
 import com.isummon.model.Invitation;
+import com.isummon.model.Notification;
 import com.isummon.model.SimpleHDActivity;
 import com.isummon.model.UserModel;
 
@@ -11,6 +12,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NetHelper {
     // WSDL文档的URL，192.168.17.156为PC的ID地址
@@ -143,6 +145,10 @@ public class NetHelper {
         return null;
     }
 
+    public static List<Notification> getNotifications() {
+        return FakeDataProvider.getNotifications();
+    }
+
     /**
      * 查
      * 返回相应id的活动详情
@@ -155,7 +161,7 @@ public class NetHelper {
      * 应跳转到ShowHDActivity界面，同时通过本方法获取活动详情并显示
      */
     public static HDActivity getHDActivityById(int hdId) {
-        return null;
+        return FakeDataProvider.getHDById(hdId);
     }
 
 
@@ -251,7 +257,7 @@ public class NetHelper {
      * @return null if no result
      */
     public static UserModel findUserByName(String nickname) {
-        return null;
+        return FakeDataProvider.findUserByName(nickname);
     }
 
     public static void addContact(int targetId) {
@@ -263,7 +269,7 @@ public class NetHelper {
     }
 
     public static ArrayList<UserModel> getAllContacts() {
-        return null;
+        return FakeDataProvider.getContacts();
     }
 }
 

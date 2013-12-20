@@ -17,6 +17,7 @@ import com.isummon.activity.AddActActivity;
 import com.isummon.activity.PickMapAddressActivity;
 import com.isummon.activity.ShowHdDetailActivity;
 import com.isummon.model.SimpleHDActivity;
+import com.isummon.net.FakeDataProvider;
 import com.isummon.net.NetHelper;
 
 import java.util.ArrayList;
@@ -176,6 +177,8 @@ public class ISummonMapView extends MapView {
             getItem(index);
 //			Toast.makeText(getApplicationContext(), "item index: " + index + " content: " + item.getTitle(), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
+            // how can I get hdId?
+            //intent.putExtra(ShowHdDetailActivity.HDACTIVITY, FakeDataProvider.getHDById(index));
             intent.setClass(getContext().getApplicationContext(), ShowHdDetailActivity.class);
             intent.putExtra("index", index);
             getContext().startActivity(intent);

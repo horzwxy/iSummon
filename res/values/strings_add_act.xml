@@ -51,4 +51,8 @@
     <string name="add_success">创建活动成功！</string>
     <string name="add_failed">未能成功创建活动</string>
     <string name="add_waiting">正在提交创建活动请求</string>
+
+    <!-- show act -->
+    <string name="apply_in">我要加入</string>
+    <string name="not_available">暂时无法加入</string>
 </resources>

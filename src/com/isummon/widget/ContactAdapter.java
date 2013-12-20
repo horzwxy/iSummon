@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.isummon.R;
-import com.isummon.model.Contact;
+import com.isummon.model.UserModel;
 
 import java.util.List;
 
@@ -18,10 +18,10 @@ import java.util.List;
  */
 public class ContactAdapter extends BaseAdapter {
 
-    private List<Contact> contacts;
+    private List<UserModel> contacts;
     private Context context;
 
-    public ContactAdapter(Context context, List<Contact> contacts) {
+    public ContactAdapter(Context context, List<UserModel> contacts) {
         this.contacts = contacts;
         this.context = context;
     }
@@ -32,13 +32,13 @@ public class ContactAdapter extends BaseAdapter {
     }
 
     @Override
-    public Contact getItem(int position) {
+    public UserModel getItem(int position) {
         return contacts.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return contacts.get(position).getTargetId();
+        return contacts.get(position).getUserId();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ContactAdapter extends BaseAdapter {
         ImageView avatar = (ImageView) convertView.findViewById(R.id.contact_avatar);
         avatar.setImageResource(R.drawable.head);
         TextView name = (TextView) convertView.findViewById(R.id.contact_name);
-        name.setText(getItem(position).getTargetName());
+        name.setText(getItem(position).getNickName());
 
         return convertView;
     }

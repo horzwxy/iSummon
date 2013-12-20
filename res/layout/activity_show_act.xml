@@ -57,4 +57,9 @@
         android:id="@+id/act_property"
         style="@style/ShowActLine" />
 
+    <Button
+        android:id="@+id/apply_in"
+        style="@style/ShowActButtonHighlighted"
+        android:onClick="applyIn"/>
+
 </LinearLayout>

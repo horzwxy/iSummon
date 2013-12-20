@@ -6,13 +6,18 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.baidu.mapapi.BMapManager;
 import com.isummon.R;
@@ -45,11 +50,13 @@ public class MainActivity extends Activity {
                 R.string.drawer_open,  /* "open drawer" description for accessibility */
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
+            @Override
             public void onDrawerClosed(View view) {
                 getActionBar().setTitle(R.string.app_name);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
+            @Override
             public void onDrawerOpened(View drawerView) {
                 getActionBar().setTitle(R.string.fake_nickname);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
@@ -61,13 +68,32 @@ public class MainActivity extends Activity {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         mDrawer = (LinearLayout) findViewById(R.id.main_drawer);
+        mDrawer.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                // block the touch event
+                return true;
+            }
+        });
 
         ListView options = (ListView) findViewById(R.id.main_drawer_options);
         options.setAdapter(new ArrayAdapter<OptionListItem>(
                 this,
                 android.R.layout.simple_list_item_1,
                 OptionListItem.values()
-        ));
+        ) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                convertView = super.getView(position, convertView, parent);
+                TextView textView = (TextView) convertView;
+                textView.setGravity(Gravity.CENTER);
+                textView.setLayoutParams(
+                        new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT)
+                );
+                return convertView;
+            }
+        });
         options.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -76,7 +102,22 @@ public class MainActivity extends Activity {
                     case MANAGE_CONTACT:
                         startActivity(new Intent(MainActivity.this, ManageContactActivity.class));
                         break;
+                    case MY_MESSAGE:
+                        startActivity(new Intent(MainActivity.this, NotificationListActivity.class));
+                        break;
+                    case VIEW_ALL:
+                        Intent intent = new Intent();
+                        intent.setClass(getApplicationContext(), ListActivity.class);
+                        startActivity(intent);
+                        break;
+                    case ADD_ACT:
+                        startActivity(new Intent(getApplicationContext(), AddActActivity.class));
+                        break;
+                    case EXIT:
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        break;
                 }
+                mDrawerLayout.closeDrawers();
             }
         });
 
@@ -146,22 +187,6 @@ public class MainActivity extends Activity {
 
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
-        }
-
-        switch (item.getItemId()) {
-            case R.id.menu_add_act:
-                startActivity(new Intent(getApplicationContext(), AddActActivity.class));
-                break;
-
-            case R.id.menu_all_act:
-                Intent intent = new Intent();
-                intent.setClass(getApplicationContext(), ListActivity.class);
-                startActivity(intent);
-                break;
-
-            case R.id.menu_exit:
-                // DBL!!
-                android.os.Process.killProcess(android.os.Process.myPid());
         }
 
         return super.onOptionsItemSelected(item);

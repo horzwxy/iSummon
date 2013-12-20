@@ -5,6 +5,6 @@
         android:id="@+id/menu_add_contact"
         android:orderInCategory="101"
         android:showAsAction="ifRoom"
-        android:icon="@drawable/add_act"
-        android:title="@string/menu_activity_list"/>
+        android:icon="@android:drawable/ic_input_add"
+        android:title="@string/add_contact"/>
 </menu>

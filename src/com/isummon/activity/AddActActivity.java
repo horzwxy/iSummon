@@ -130,12 +130,15 @@ public class AddActActivity extends Activity {
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkAndPrompt()) {
-                    showToast(R.string.add_success);
-                }
-                else {
-                    //showToast(R.string.add_failed);
-                }
+                showToast(R.string.add_success);
+                finish();
+                toInivite();
+//                if(checkAndPrompt()) {
+//
+//                }
+//                else {
+//                    //showToast(R.string.add_failed);
+//                }
             }
         });
 
@@ -161,6 +164,12 @@ public class AddActActivity extends Activity {
                 // on error
             }
         }
+    }
+
+    private void toInivite() {
+        Intent intent = new Intent(this, InviteActivity.class);
+        intent.putExtra(InviteActivity.HD_ID, 0);
+        startActivity(intent);
     }
 
     private void showPropertyPicker() {

@@ -1,7 +1,10 @@
 package com.isummon.activity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import com.isummon.R;
 import com.isummon.model.SimpleHDActivity;
 
 import java.util.List;

@@ -95,4 +95,12 @@
         <item name="android:layout_marginTop">@dimen/add_act_form_line_padding</item>
     </style>
 
+    <style name="ShowActButtonHighlighted" parent="AddActLineBase">
+        <item name="android:layout_marginTop">@dimen/add_act_form_line_padding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@drawable/button_bg_highlighted</item>
+        <item name="android:text">@string/apply_in</item>
+    </style>
+
 </resources>

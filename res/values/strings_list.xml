@@ -4,4 +4,7 @@
     <string name="search_content_hint">输入要搜索的内容</string>
     <string name="searching">正在搜索</string>
 
+    <string name="menu_toMap">在地图上显示活动</string>
+    <string name="menu_toList">在列表中显示活动</string>
+
 </resources>

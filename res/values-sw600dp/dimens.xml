@@ -22,4 +22,6 @@
     <dimen name="act_list_origin_name_size">20sp</dimen>
     <dimen name="act_list_other_text_size">15sp</dimen>
 
+    <dimen name="manage_contacts_margin_top">10dp</dimen>
+
 </resources>

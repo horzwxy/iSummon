@@ -6,9 +6,7 @@
 
     <EditText
         android:id="@+id/actName"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:background="@drawable/login_form"
+        style="@style/AddActTopLine"
         android:hint="@string/act_name_prompt">
     </EditText>
 
