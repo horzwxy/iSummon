@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.isummon.R;
+import com.isummon.widget.ISummonMapView;
 
 /**
  * Created by horzwxy on 12/15/13.
@@ -19,6 +20,7 @@ public class PickMapAddressActivity extends MapActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mMapView.setDisplayMode(ISummonMapView.DisplayMode.SINGLE_TAP);
         mMapView.setAddressPickedListener(new AddressPickedListener() {
             @Override
             public void onAddressPicked(double longitude, double latitude) {
