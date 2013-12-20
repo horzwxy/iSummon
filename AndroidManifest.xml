@@ -51,6 +51,8 @@
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateVisible">
 
+
+
         </activity>
         <activity
             android:name="com.isummon.activity.ListActivity"
@@ -59,7 +61,7 @@
         <activity android:name=".activity.PickMapAddressActivity"
             android:label="@string/pick_addr_from_map_title"/>
 
-        <activity android:name=".activity.ShowHdDetailActivity"
+        <activity android:name=".activity.ShowHdDetailsActivity"
             android:label="@string/title_activity_show"
             android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".activity.ActMapActivity"

@@ -1,7 +1,5 @@
 package com.isummon.activity;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -91,8 +89,8 @@ public class ListActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ListActivity.this, ShowHdDetailActivity.class);
-                intent.putExtra(ShowHdDetailActivity.HDACTIVITY, FakeDataProvider.getHDById((int)id));
+                Intent intent = new Intent(ListActivity.this, ShowHdDetailsActivity.class);
+                intent.putExtra(ShowHdDetailsActivity.HDACTIVITY, FakeDataProvider.getHDById((int)id));
                 startActivity(intent);
             }
         });

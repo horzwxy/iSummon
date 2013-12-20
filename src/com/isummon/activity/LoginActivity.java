@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.isummon.R;
+import com.isummon.model.RegisterResultType;
 import com.isummon.model.UserModel;
 import com.isummon.net.NetHelper;
 import com.isummon.widget.ProgressTaskBundle;
@@ -43,18 +44,6 @@ import com.isummon.widget.ProgressTaskBundle;
  */
 public class LoginActivity extends Activity {
 
-    public interface LoginCallback {
-        public void onLoginTaskComplete(boolean isSuccessful);
-    }
-
-    private LoginCallback callback = new LoginCallback() {
-        @Override
-        public void onLoginTaskComplete(boolean isSuccessful) {
-            mDialog.dismiss();
-        }
-    };
-
-
     public static final int ANIMATION_DURATION = 100;
 
     // Values for email and password at the time of the login attempt.
@@ -64,9 +53,6 @@ public class LoginActivity extends Activity {
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
-    private ProgressDialog mDialog;
-
-    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +64,6 @@ public class LoginActivity extends Activity {
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.login_email);
         mPasswordView = (EditText) findViewById(R.id.password);
-
-        handler = new Handler();
     }
 
     @Override
@@ -164,7 +148,16 @@ public class LoginActivity extends Activity {
      * do registering work
      */
     public void register(View v) {
-        // check register forms
+        EditText registerName = (EditText) findViewById(R.id.register_email);
+        EditText registerNickname = (EditText) findViewById(R.id.register_nickname);
+        EditText registerPwd = (EditText) findViewById(R.id.password);
+        EditText registerPwd2 = (EditText) findViewById(R.id.register_password_again);
+
+        new ProgressTaskBundle<String, RegisterResultType>(
+
+        ) {
+
+        }
     }
 
     /**

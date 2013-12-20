@@ -21,7 +21,7 @@ import java.util.Date;
 /**
  * Created by horzwxy on 12/18/13.
  */
-public class ShowHdDetailActivity extends Activity {
+public class ShowHdDetailsActivity extends Activity {
 
     public static final String HDACTIVITY = "hdActivity";
 

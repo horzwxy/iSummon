@@ -1,8 +1,11 @@
 package com.isummon.net;
 
 import com.isummon.model.HDActivity;
+import com.isummon.model.HDType;
 import com.isummon.model.Invitation;
+import com.isummon.model.LogInResultType;
 import com.isummon.model.Notification;
+import com.isummon.model.RegisterResultType;
 import com.isummon.model.SimpleHDActivity;
 import com.isummon.model.UserModel;
 
@@ -12,14 +15,19 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NetHelper {
+
+    public static final int SUCCEED = 1;
+    public static final int FAIL = 0;
+
     // WSDL文档的URL，192.168.17.156为PC的ID地址
     private final static String serviceUrl = "http://192.168.17.156:8080/axis2/services";
     private final static String namespace = "http://edu.fudan.10ss";
 
-    public static void getAllActs() {
+    public static ArrayList<SimpleHDActivity> getAllActs() {
         // 定义调用的WebService方法名
         String methodName = "getAllActs";
         // 第1步：创建SoapObject对象，并指定WebService的命名空间和调用的方法名
@@ -60,12 +68,13 @@ public class NetHelper {
 
     /**
      * 用户登录方法
+     * 登录成功后需要将GlobalVariable中的currentUser设为有效值
      *
      * @param username 这里的username应该是邮箱
      * @param passwd   用户的密码
      * @return 返回值为已登录用户的ID，验证失败返回-1
      */
-    public static int login(String username, String passwd) {
+    public static LogInResultType login(String username, String passwd) {
         String methodName = "login";
         SoapObject request = new SoapObject(namespace, methodName);
         request.addProperty("username", username);
@@ -91,13 +100,15 @@ public class NetHelper {
 
     /**
      * 用户注册方法
+     * 从服务器返回,
+     *
      *
      * @param username 用户注册名，应使用邮箱
      * @param nickname 用户需要显示的昵称
      * @param passwd   用户设定的密码
      * @return 成功or失败
      */
-    public static boolean register(String username, String nickname, String passwd) {
+    public static RegisterResultType register(String username, String nickname, String passwd) {
         String methodName = "register";
         SoapObject request = new SoapObject(namespace, methodName);
         request.addProperty("username", username);
@@ -122,6 +133,10 @@ public class NetHelper {
         return false;
     }
 
+    public static void logOut() {
+
+    }
+
     /**
      * 返回当前有效的活动简介
      * SimpleHDActivity用于网络传输的轻量级HDActivity，详情见其类定义
@@ -139,10 +154,6 @@ public class NetHelper {
         retList.add(new SimpleHDActivity("Test SimpleHD2", 31.196 * 1E6, 121.604 * 1E6));
         retList.add(new SimpleHDActivity("Test SimpleHD3", 31.197 * 1E6, 121.604 * 1E6));
         return retList;
-    }
-
-    public static ArrayList<SimpleHDActivity> getSimpleHdByIdList(ArrayList<Integer> idList){
-        return null;
     }
 
     public static List<Notification> getNotifications() {
@@ -209,18 +220,12 @@ public class NetHelper {
     //----------------------------------一系列的查询方法-------------------------------------------
 
     //我发起的活动
-    public static ArrayList<SimpleHDActivity> getHDActivityByOriginId(int userId) {
+    public static ArrayList<SimpleHDActivity> getHDActivityByOriginId() {
         return null;
     }
 
     //我参加的活动
-    public static ArrayList<SimpleHDActivity> getHDActivityByUserId(int userId) {
-        return null;
-    }
-
-    //查询某个人（使用昵称）发起的活动
-    //[注意：？？？是否提供查询某个人参加的活动？？？隐私考虑的话应不提供接口]
-    public static ArrayList<SimpleHDActivity> getHDActivityByOriginerName(String originerName) {
+    public static ArrayList<SimpleHDActivity> getHDActivityByUserId() {
         return null;
     }
 
@@ -230,12 +235,7 @@ public class NetHelper {
     }
 
     //根据活动标签查询，如查询“娱乐”类的活动
-    public static ArrayList<SimpleHDActivity> getHDActivityByHdTag(String hdTag) {
-        return null;
-    }
-
-    //查询某地点附近的活动，如“二教”附近的活动
-    public static ArrayList<SimpleHDActivity> getHDActivityByAddress(String hdAddress) {
+    public static ArrayList<SimpleHDActivity> getHDActivityByHdType(HDType hdType) {
         return null;
     }
 
@@ -247,29 +247,41 @@ public class NetHelper {
     //---------其他
 
     //----------------------------通知用户--------------------------------------------------
-    public static void invite(int hdId, ArrayList<Integer> targerIds) {
 
+    /**
+     *
+     * @param hdId
+     * @param targets
+     * @return SUCCEED OR FAIL
+     */
+    public static int invite(int hdId, ArrayList<UserModel> targets) {
+        return 0;
     }
 
     /**
      *
      * @param nickname
-     * @return null if no result
+     * @return empty list if no result
      */
-    public static UserModel findUserByName(String nickname) {
-        return FakeDataProvider.findUserByName(nickname);
+    public static ArrayList<UserModel> findUserByName(String nickname) {
+        return new ArrayList<UserModel>(Arrays.asList(FakeDataProvider.findUserByName(nickname)));
     }
 
-    public static void addContact(int targetId) {
-
-    }
-
-    public static void removeContact(int targetId) {
-
+    /**
+     *
+     * @param targetId
+     * @return SUCCEED OR FAIL
+     */
+    public static int addContact(int targetId) {
+        return 0;
     }
 
     public static ArrayList<UserModel> getAllContacts() {
         return FakeDataProvider.getContacts();
+    }
+
+    public void onReadNotification(Notification notification) {
+        
     }
 }
 

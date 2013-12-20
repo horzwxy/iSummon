@@ -79,8 +79,8 @@ public class NotificationListActivity extends Activity {
             protected void dealResult(HDActivity result) {
                 Intent intent = new Intent(
                         NotificationListActivity.this,
-                        ShowHdDetailActivity.class);
-                intent.putExtra(ShowHdDetailActivity.HDACTIVITY,
+                        ShowHdDetailsActivity.class);
+                intent.putExtra(ShowHdDetailsActivity.HDACTIVITY,
                         result);
                 startActivity(intent);
             }

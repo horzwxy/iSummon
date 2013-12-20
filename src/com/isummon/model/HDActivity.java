@@ -12,11 +12,11 @@ public class HDActivity implements Serializable {
     private double latitude;
 	private String hdStartTime;
     private String hdEndTime;
-	private int hdOrigin;
+	private int hdOriginId;
     private String hdOriginName;
 	private String hdDesc;
 	private HDType hdType;
-	private int hdNumLimit;
+	private int hdNumLimit; // -1 if no limit
 	private int hdCurNum;
 
     private HDProperty hdProperty;
@@ -26,7 +26,7 @@ public class HDActivity implements Serializable {
 	public String toString() {
 		return "HDActivity [hdName=" + hdName + ", hdAddress=" + hdAddress
 				+ ", hdStartTime=" + hdStartTime + ", hdEndTime=" + hdEndTime
-				+ ", hdOrigin=" + hdOrigin + ", hdDesc=" + hdDesc + ", hdTags="
+				+ ", hdOriginId=" + hdOriginId + ", hdDesc=" + hdDesc + ", hdTags="
 				+ hdType + ", hdNumLimit=" + hdNumLimit + ", hdCurNum="
 				+ hdCurNum + "]";
 	}
@@ -54,11 +54,11 @@ public class HDActivity implements Serializable {
 	public void setHdEndTime(String hdEndTime) {
 		this.hdEndTime = hdEndTime;
 	}
-	public int getHdOrigin() {
-		return hdOrigin;
+	public int getHdOriginId() {
+		return hdOriginId;
 	}
-	public void setHdOrigin(int hdOrigin) {
-		this.hdOrigin = hdOrigin;
+	public void setHdOriginId(int hdOriginId) {
+		this.hdOriginId = hdOriginId;
 	}
 	public String getHdDesc() {
 		return hdDesc;
@@ -140,7 +140,7 @@ public class HDActivity implements Serializable {
         return new SimpleHDActivity(
                 hdId,
                 hdName,
-                hdOrigin,
+                hdOriginId,
                 hdOriginName,
                 longitude,
                 latitude,

@@ -15,9 +15,8 @@ import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.isummon.R;
 import com.isummon.activity.AddActActivity;
 import com.isummon.activity.PickMapAddressActivity;
-import com.isummon.activity.ShowHdDetailActivity;
+import com.isummon.activity.ShowHdDetailsActivity;
 import com.isummon.model.SimpleHDActivity;
-import com.isummon.net.FakeDataProvider;
 import com.isummon.net.NetHelper;
 
 import java.util.ArrayList;
@@ -29,6 +28,9 @@ import java.util.TimerTask;
  * Created by horzwxy on 12/15/13.
  */
 public class ISummonMapView extends MapView {
+
+    public final static int ADD_ACT = 876543;
+    public final static String SIMPLE_HD = "simple_hd";
 
     private Handler handler;
     private MyOverlay mOverlay = null;
@@ -110,6 +112,10 @@ public class ISummonMapView extends MapView {
         }
     }
 
+    public void setDisplayMode(DisplayMode mode) {
+
+    }
+
     public void showHd(List<SimpleHDActivity> hdIdList) {
 
     }
@@ -178,8 +184,8 @@ public class ISummonMapView extends MapView {
 //			Toast.makeText(getApplicationContext(), "item index: " + index + " content: " + item.getTitle(), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             // how can I get hdId?
-            //intent.putExtra(ShowHdDetailActivity.HDACTIVITY, FakeDataProvider.getHDById(index));
-            intent.setClass(getContext().getApplicationContext(), ShowHdDetailActivity.class);
+            //intent.putExtra(ShowHdDetailsActivity.HDACTIVITY, FakeDataProvider.getHDById(index));
+            intent.setClass(getContext().getApplicationContext(), ShowHdDetailsActivity.class);
             intent.putExtra("index", index);
             getContext().startActivity(intent);
             return false;
@@ -200,4 +206,9 @@ public class ISummonMapView extends MapView {
         }
     }
 
+    public enum DisplayMode {
+        NORMAL,
+        BALLOON_ONLY,
+        SINGLE_TAP;
+    }
 }

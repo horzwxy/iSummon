@@ -59,7 +59,7 @@ public class FakeDataProvider {
         a1.setHdCurNum(0);
         a1.setHdNumLimit(100);
         a1.setHdType(HDType.OTHER);
-        a1.setHdOrigin(1);
+        a1.setHdOriginId(1);
         a1.setHdProperty(HDProperty.ANYTIME_OPEN);
         a1.setHdStatus(HDStatus.NO_VACANCY);
         a1.setHdOriginName("horzwxy");
@@ -77,7 +77,7 @@ public class FakeDataProvider {
         a2.setHdCurNum(5);
         a2.setHdNumLimit(6);
         a2.setHdType(HDType.DINING);
-        a2.setHdOrigin(2);
+        a2.setHdOriginId(2);
         a2.setHdProperty(HDProperty.OTHER);
         a2.setHdStatus(HDStatus.OPEN);
         a2.setHdOriginName("罗玉凤");
@@ -94,7 +94,7 @@ public class FakeDataProvider {
         a3.setHdCurNum(1);
         a3.setHdNumLimit(1);
         a3.setHdType(HDType.ENTERTAINMENT);
-        a3.setHdOrigin(3);
+        a3.setHdOriginId(3);
         a3.setHdProperty(HDProperty.SECRET);
         a3.setHdStatus(HDStatus.CANCELED);
         a3.setHdOriginName("陈水扁");
