@@ -22,25 +22,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListActivity extends Activity {
+public class ListAllActivity extends ListActActivity {
 
     public static final String SIMPLE_ACTS = "simple_acts";
 
     private List<SimpleHDActivity> displayedActs;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_list);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list);
 
-        Intent intent = getIntent();
-        displayedActs = (List<SimpleHDActivity>) intent.getSerializableExtra(SIMPLE_ACTS);
+        init();
 
         final Spinner submodeSpinner = (Spinner) findViewById(R.id.list_submode_selector);
         ArrayAdapter<HDType> submodeAdapter = new ArrayAdapter<HDType>(
                 this,
                 android.R.layout.simple_spinner_item,
-                HDType.values() );
+                HDType.values());
         submodeSpinner.setAdapter(submodeAdapter);
         submodeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         submodeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -53,7 +52,7 @@ public class ListActivity extends Activity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        } );
+        });
 
         Spinner modeSpinner = (Spinner) findViewById(R.id.list_mode_selector);
         final ArrayAdapter<ActListMode> modeAdapter = new ArrayAdapter<ActListMode>(
@@ -67,7 +66,7 @@ public class ListActivity extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 submodeSpinner.setEnabled(false);
 
-                ActListMode mode = (ActListMode)parent.getItemAtPosition(position);
+                ActListMode mode = (ActListMode) parent.getItemAtPosition(position);
                 switch (mode) {
                     case ALL:
                         break;
@@ -82,44 +81,5 @@ public class ListActivity extends Activity {
 
             }
         });
-
-        ListView listView = ((ListView)findViewById(R.id.list_content));
-        listView.setAdapter(
-                new SimpleHdAdapter(this, displayedActs));
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ListActivity.this, ShowHdDetailsActivity.class);
-                intent.putExtra(ShowHdDetailsActivity.HDACTIVITY, GlobalVariables.netHelper.getHDActivityById((int) id));
-                startActivity(intent);
-            }
-        });
-
-
-    }
-
-    private void showOnMap() {
-        Intent intent = new Intent(this, ActMapActivity.class);
-        intent.putExtra(ActMapActivity.SIMPLE_ACTS,
-                new ArrayList<SimpleHDActivity>(displayedActs));
-        startActivity(intent);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.list, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_toMap:
-                showOnMap();
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        return true;
     }
 }

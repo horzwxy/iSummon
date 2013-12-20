@@ -248,9 +248,9 @@ public class MainActivity extends Activity {
             @Override
             protected void dealResult(List<SimpleHDActivity> result) {
                 Intent intent = new Intent();
-                intent.putExtra(ListActivity.SIMPLE_ACTS,
+                intent.putExtra(ListAllActivity.SIMPLE_ACTS,
                         new ArrayList<SimpleHDActivity>(result));
-                intent.setClass(getApplicationContext(), ListActivity.class);
+                intent.setClass(getApplicationContext(), ListAllActivity.class);
                 startActivity(intent);
             }
         }.action();
@@ -265,9 +265,9 @@ public class MainActivity extends Activity {
 
             @Override
             protected void dealResult(List<SimpleHDActivity> result) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                Intent intent = new Intent(MainActivity.this, ListSomeActivity.class);
                 intent.putExtra(
-                        ListActivity.SIMPLE_ACTS,
+                        ListActActivity.SIMPLE_ACTS,
                         new ArrayList<SimpleHDActivity>(result));
                 startActivity(intent);
             }
