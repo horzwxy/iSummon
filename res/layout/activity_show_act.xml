@@ -31,7 +31,7 @@
         android:gravity="center_vertical"
         style="@style/ShowActLine"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/add_act_form_height">
+        android:minHeight="@dimen/form_height">
 
         <ImageView
             android:id="@+id/act_type_image"

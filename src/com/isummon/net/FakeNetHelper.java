@@ -181,7 +181,7 @@ public class FakeNetHelper extends NetHelper {
 
     @Override
     public RegisterResultType register(UserModel newUser) {
-        return null;
+        return RegisterResultType.SUCCESS;
     }
 
     @Override

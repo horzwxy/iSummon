@@ -9,11 +9,11 @@
     <dimen name="dialog_activity_padding">30dp</dimen>
     <dimen name="dialog_activity_corner">20dp</dimen>
 
-    <dimen name="add_act_form_width">400dp</dimen>
-    <dimen name="add_act_form_height">60dp</dimen>
-    <dimen name="add_act_form_half_width">190dp</dimen>
+    <dimen name="form_width">400dp</dimen>
+    <dimen name="form_height">60dp</dimen>
+    <dimen name="form_half_width">190dp</dimen>
     <dimen name="form_text_size">20dp</dimen>
-    <dimen name="add_act_form_line_padding">20dp</dimen>
+    <dimen name="form_line_padding">20dp</dimen>
 
     <dimen name="addr_name_editor_height">60dp</dimen>
 
