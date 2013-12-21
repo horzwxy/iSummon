@@ -1,5 +1,7 @@
 package com.isummon.net;
 
+import android.util.Log;
+
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDType;
 import com.isummon.model.LogInResultType;
@@ -21,6 +23,10 @@ import java.util.List;
  * Created by horz on 12/20/13.
  */
 public class RealNetHelper extends NetHelper {
+
+    public RealNetHelper(){
+        super();
+    }
 
     @Override
     public ArrayList<SimpleHDActivity> getAllActs() {
@@ -85,8 +91,11 @@ public class RealNetHelper extends NetHelper {
             ht.call(null, envelope);
             if (envelope.getResponse() != null) {
                 SoapObject soapObject = (SoapObject) envelope.getResponse();
+                int result = Integer.parseInt(soapObject.getProperty(0).toString());
+                Log.v("Login", "login success! " + result);
                 return LogInResultType.SUCCESS;
             } else {
+                Log.v("Login", "login failed");
                 return LogInResultType.SUCCESS;
             }
         } catch (Exception e) {
@@ -95,22 +104,20 @@ public class RealNetHelper extends NetHelper {
         return LogInResultType.SUCCESS;
     }
 
+
     /**
-     * 用户注册方法
-     * 从服务器返回,
      *
-     *
-     * @param username 用户注册名，应使用邮箱
-     * @param nickname 用户需要显示的昵称
-     * @param passwd   用户设定的密码
-     * @return 成功or失败
+     * @param newUser
+     * @return
      */
-    public RegisterResultType register(String username, String nickname, String passwd) {
+    public RegisterResultType register(UserModel newUser) {
+
         String methodName = "register";
         SoapObject request = new SoapObject(namespace, methodName);
-        request.addProperty("username", username);
-        request.addProperty("nickname", nickname);
-        request.addProperty("passwd", passwd);
+        request.addProperty("username", newUser.getUserName());
+        request.addProperty("nickname", newUser.getNickName());
+        request.addProperty("passwd", newUser.getPasswd());
+        request.addProperty("avatarId", newUser.getAvatar());
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                 SoapEnvelope.VER11);
         envelope.bodyOut = request;
@@ -220,7 +227,12 @@ public class RealNetHelper extends NetHelper {
         return false;
     }
 
-    //----------------------------------一系列的查询方法-------------------------------------------
+    @Override
+    public boolean applyHDActivity(int hdId) {
+        return false;
+    }
+
+//----------------------------------一系列的查询方法-------------------------------------------
 
     //我发起的活动
     @Override

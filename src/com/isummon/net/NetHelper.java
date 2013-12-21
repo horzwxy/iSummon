@@ -24,11 +24,11 @@ public abstract class NetHelper {
     public static final int FAIL = 0;
 
     // WSDL文档的URL，192.168.17.156为PC的ID地址
-    protected final static String serviceUrl = "http://192.168.17.156:8080/axis2/services";
+    protected final static String serviceUrl = "http://10.131.251.146:8080/iSummon/services";
     protected final static String namespace = "http://edu.fudan.10ss";
 
     public static NetHelper getInstance() {
-        return new FakeNetHelper();
+        return new RealNetHelper();
     }
 
     public abstract ArrayList<SimpleHDActivity> getAllActs();
@@ -56,7 +56,7 @@ public abstract class NetHelper {
      * @param passwd   用户设定的密码
      * @return 成功or失败
      */
-    public abstract RegisterResultType register(String username, String nickname, String passwd);
+    public abstract RegisterResultType register(UserModel newUser);
 
     public abstract void logOut();
 
@@ -116,6 +116,8 @@ public abstract class NetHelper {
      * @return
      */
     public abstract boolean cancleHDActivity(int hdId);
+
+    public abstract boolean applyHDActivity(int hdId);
 
     //----------------------------------一系列的查询方法-------------------------------------------
 

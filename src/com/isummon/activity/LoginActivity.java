@@ -108,11 +108,12 @@ public class LoginActivity extends Activity {
             focusView = mEmailView;
             shouldCancel = true;
             // todo email format check
-        } else if (!mEmail.contains("@")) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            shouldCancel = true;
         }
+//        else if (!mEmail.contains("@")) {
+//            mEmailView.setError(getString(R.string.error_invalid_email));
+//            focusView = mEmailView;
+//            shouldCancel = true;
+//        }
 
         if (shouldCancel) {
             // There was an error; don't attempt login and focus the first

@@ -3,7 +3,7 @@ package com.isummon.model;
 import java.io.Serializable;
 
 public class HDActivity implements Serializable {
-	public static final String tmFormat = "yyyy-MM-dd:hhmm";
+	public static final String tmFormat = "yyyy-MM-dd hh:mm";
 
     private int hdId;
 	private String hdName;
