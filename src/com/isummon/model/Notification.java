@@ -6,12 +6,10 @@ package com.isummon.model;
 public class Notification {
     private String originName;
     private int hdId;
-    private String hdName;
     private int originAvatar;
 
-    public Notification(String originName, int originAvatar, int hdId, String hdName) {
+    public Notification(String originName, int originAvatar, int hdId) {
         this.hdId = hdId;
-        this.hdName = hdName;
         this.originName = originName;
         this.originAvatar = originAvatar;
     }
@@ -30,14 +28,6 @@ public class Notification {
 
     public void setHdId(int hdId) {
         this.hdId = hdId;
-    }
-
-    public String getHdName() {
-        return hdName;
-    }
-
-    public void setHdName(String hdName) {
-        this.hdName = hdName;
     }
 
     public int getOriginAvatar() {

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDType;
+import com.isummon.model.Invitation;
 import com.isummon.model.LogInResultType;
 import com.isummon.model.Notification;
 import com.isummon.model.RegisterResultType;
@@ -307,6 +308,11 @@ public class RealNetHelper extends NetHelper {
     @Override
     public void onReadNotification(Notification notification) {
 
+    }
+
+    @Override
+    public ArrayList<Invitation> getMyInvitations() {
+        return null;
     }
 
     @Override

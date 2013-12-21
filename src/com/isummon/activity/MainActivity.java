@@ -23,9 +23,8 @@ import android.widget.TextView;
 import com.baidu.mapapi.BMapManager;
 import com.isummon.R;
 import com.isummon.data.GlobalVariables;
-import com.isummon.model.OptionListItem;
+import com.isummon.activity.listmodel.OptionListItem;
 import com.isummon.model.SimpleHDActivity;
-import com.isummon.net.NetHelper;
 import com.isummon.widget.ISummonMapView;
 import com.isummon.widget.ProgressTaskBundle;
 

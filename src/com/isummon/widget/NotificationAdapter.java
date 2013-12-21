@@ -52,9 +52,7 @@ public class NotificationAdapter extends BaseAdapter {
         ImageView avatar = (ImageView) convertView.findViewById(R.id.origin_avatar);
         avatar.setImageResource(R.drawable.head);
         TextView originName = (TextView) convertView.findViewById(R.id.origin_name);
-        originName.setText(getItem(position).getOriginName());
-        TextView hdName = (TextView) convertView.findViewById(R.id.hdName);
-        hdName.setText(getItem(position).getHdName());
+        originName.setText(getItem(position).getOriginName() + "向你发出了邀请");
 
         return convertView;
     }

@@ -4,4 +4,8 @@
     <string name="no_notification">暂无消息</string>
 
     <string name="fetching_act">正在获取活动详情...</string>
+
+    <string name="invite_you">向你发出了邀请</string>
+
+    <string name="choose_respond_mode">回应邀请</string>
 </resources>
