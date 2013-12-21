@@ -77,6 +77,8 @@
             android:label="@string/title_notification_list"/>
         <activity android:name=".activity.ListSomeActivity"
             android:label="@string/title_activity_list"/>
+        <activity android:name=".activity.ModifyHdActivity"
+            android:theme="@android:style/Theme.Dialog"/>
     </application>
 
 </manifest>

@@ -19,14 +19,14 @@
     <RelativeLayout
         style="@style/FormLineTransparent">
         <EditText
-            android:id="@+id/add_act_start_date"
+            android:id="@+id/act_start_date"
             android:layout_alignParentLeft="true"
             style="@style/FormLineHalf"
             android:editable="false"
             android:hint="@string/act_start_date_prompt"/>
 
         <EditText
-            android:id="@+id/add_act_start_time"
+            android:id="@+id/act_start_time"
             android:layout_alignParentRight="true"
             style="@style/FormLineHalf"
             android:editable="false"
@@ -37,13 +37,13 @@
     <RelativeLayout
         style="@style/FormLineTransparent">
         <EditText
-            android:id="@+id/add_act_end_date"
+            android:id="@+id/act_end_date"
             android:layout_alignParentLeft="true"
             style="@style/FormLineHalf"
             android:editable="false"
             android:hint="@string/act_end_date_prompt"/>
         <EditText
-            android:id="@+id/add_act_end_time"
+            android:id="@+id/act_end_time"
             android:layout_alignParentRight="true"
             style="@style/FormLineHalf"
             android:editable="false"

@@ -22,9 +22,10 @@ import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDProperty;
 import com.isummon.model.HDType;
-import com.isummon.net.NetHelper;
 import com.isummon.widget.ProgressTaskBundle;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
@@ -38,11 +39,11 @@ public class AddActActivity extends Activity {
     private final static double DEFAULT_LATITUDE = 120000000d;
     private final static double DEFAULT_LONGITUDE = 35000000d;
 
-    private HDActivity result;
-    private Calendar hdStartDate;
-    private Calendar hdStartTime;
-    private Calendar hdEndDate;
-    private Calendar hdEndTime;
+    protected HDActivity result;
+    protected Calendar hdStartDate;
+    protected Calendar hdStartTime;
+    protected Calendar hdEndDate;
+    protected Calendar hdEndTime;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,28 +88,28 @@ public class AddActActivity extends Activity {
         }
 
         // the listeners can be set in XML, but... I want the XML to be shared by some other activities without these listeners
-        findViewById(R.id.add_act_start_date).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.act_start_date).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDatePicker(hdStartDate, R.id.add_act_start_date);
+                showDatePicker(hdStartDate, R.id.act_start_date);
             }
         });
-        findViewById(R.id.add_act_start_time).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.act_start_time).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showTimePicker(hdStartTime, R.id.add_act_start_time);
+                showTimePicker(hdStartTime, R.id.act_start_time);
             }
         });
-        findViewById(R.id.add_act_end_date).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.act_end_date).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDatePicker(hdEndDate, R.id.add_act_end_date);
+                showDatePicker(hdEndDate, R.id.act_end_date);
             }
         });
-        findViewById(R.id.add_act_end_time).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.act_end_time).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showTimePicker(hdEndTime, R.id.add_act_end_time);
+                showTimePicker(hdEndTime, R.id.act_end_time);
             }
         });
 
@@ -162,31 +163,27 @@ public class AddActActivity extends Activity {
     }
 
     private void onSubmit() {
-        new ProgressTaskBundle<HDActivity, Integer>(
-                this,
-                R.string.add_waiting) {
-            @Override
-            protected Integer doWork(HDActivity... params) {
-                return GlobalVariables.netHelper.addHDActivity(params[0]);
-            }
-
-            @Override
-            protected void dealResult(Integer result) {
-                if (result < 0) {
-                    showToast(R.string.add_failed);
-                } else {
-                    showToast(R.string.add_success);
-                    finish();
-                    toInivite(result);
+        if(checkAndPrompt()) {
+            new ProgressTaskBundle<HDActivity, Integer>(
+                    this,
+                    R.string.add_waiting) {
+                @Override
+                protected Integer doWork(HDActivity... params) {
+                    return GlobalVariables.netHelper.addHDActivity(params[0]);
                 }
-            }
-        }.action(result);
-//                if(checkAndPrompt()) {
-//
-//                }
-//                else {
-//                    //showToast(R.string.add_failed);
-//                }
+
+                @Override
+                protected void dealResult(Integer result) {
+                    if (result < 0) {
+                        showToast(R.string.add_failed);
+                    } else {
+                        showToast(R.string.add_success);
+                        finish();
+                        toInivite(result);
+                    }
+                }
+            }.action(result);
+        }
     }
 
     private void toInivite(int hdId) {
@@ -212,7 +209,7 @@ public class AddActActivity extends Activity {
      *
      * @return true if no error in forms
      */
-    private boolean checkAndPrompt() {
+    protected boolean checkAndPrompt() {
         String hdName = getTextInEditText(R.id.actName);
         if (isEmptyString(hdName)) {
             showToast(R.string.error_no_hdname);
@@ -225,25 +222,25 @@ public class AddActActivity extends Activity {
             return false;
         }
 
-        String hdStartDateString = getTextInEditText(R.id.add_act_start_date);
+        String hdStartDateString = getTextInEditText(R.id.act_start_date);
         if(isEmptyString(hdStartDateString)) {
             showToast(R.string.error_no_start_date);
             return false;
         }
 
-        String hdEndDateString = getTextInEditText(R.id.add_act_end_date);
+        String hdEndDateString = getTextInEditText(R.id.act_end_date);
         if(isEmptyString(hdEndDateString)) {
             showToast(R.string.error_no_end_date);
             return false;
         }
 
-        String hdStartTimeString = getTextInEditText(R.id.add_act_start_time);
+        String hdStartTimeString = getTextInEditText(R.id.act_start_time);
         if(isEmptyString(hdStartTimeString)) {
             showToast(R.string.error_no_start_time);
             return false;
         }
 
-        String hdEndTimeString = getTextInEditText(R.id.add_act_end_time);
+        String hdEndTimeString = getTextInEditText(R.id.act_end_time);
         if(isEmptyString(hdEndTimeString)) {
             showToast(R.string.error_no_end_time);
             return false;
@@ -299,11 +296,11 @@ public class AddActActivity extends Activity {
         return "".equals(s);
     }
 
-    private void showToast(int stringId) {
+    protected void showToast(int stringId) {
         Toast.makeText(this, stringId, Toast.LENGTH_SHORT).show();
     }
 
-    private void showTypePicker() {
+    protected void showTypePicker() {
         final ImageView typeImage = (ImageView)findViewById(R.id.act_type_image);
         final TextView typeText = (TextView)findViewById(R.id.act_type_name);
 
@@ -411,7 +408,7 @@ public class AddActActivity extends Activity {
      * @param sp3 separator 3, "日" or ""
      * @return
      */
-    private String getDateRepresentation(Calendar date, String sp1, String sp2, String sp3) {
+    protected String getDateRepresentation(Calendar date, String sp1, String sp2, String sp3) {
         int actualMonth = date.get(Calendar.MONTH) + 1;
         String monthResp = actualMonth < 10 ? "0" + actualMonth : "" + actualMonth;
         int actualDay = date.get(Calendar.DAY_OF_MONTH);
@@ -425,7 +422,7 @@ public class AddActActivity extends Activity {
      * @param sp1 separator between hour and seconds
      * @return
      */
-    private String getTimeRepresentation(Calendar date, String sp1) {
+    protected String getTimeRepresentation(Calendar date, String sp1) {
         String hourResp = date.get(Calendar.HOUR_OF_DAY) < 10 ? "0" + date.get(Calendar.HOUR_OF_DAY) : "" + date.get(Calendar.HOUR_OF_DAY);
         String minuteResp = date.get(Calendar.MINUTE) < 10 ? "0" + date.get(Calendar.MINUTE) : date.get(Calendar.MINUTE) + "";
         return hourResp + sp1 + minuteResp;

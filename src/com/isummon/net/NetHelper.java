@@ -1,5 +1,6 @@
 package com.isummon.net;
 
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDType;
 import com.isummon.model.LogInResultType;
@@ -25,7 +26,7 @@ public abstract class NetHelper {
      *
      * @return
      */
-    public static NetHelper getNetHelper() {
+    public static NetHelper getInstance() {
         return new FakeNetHelper();
     }
 
@@ -157,6 +158,13 @@ public abstract class NetHelper {
     public abstract ArrayList<UserModel> getAllContacts();
 
     public abstract void onReadNotification(Notification notification);
+
+    /**
+     * 判断传入的id是否是当前用户的
+     * @param userId
+     * @return
+     */
+    public abstract boolean isMyId(int userId);
 }
 
 

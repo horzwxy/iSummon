@@ -296,4 +296,9 @@ public class RealNetHelper extends NetHelper {
     public void onReadNotification(Notification notification) {
 
     }
+
+    @Override
+    public boolean isMyId(int userId) {
+        return false;
+    }
 }

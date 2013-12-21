@@ -19,6 +19,7 @@
     </string-array>
 
     <string name="add_act">创建活动</string>
+    <string name="modify_act">修改活动</string>
     <string name="cancel_add">取消</string>
 
     <!-- strings in PickMapAddressActivity -->
@@ -45,6 +46,7 @@
     <string name="error_no_type">请选择活动类型</string>
     <string name="error_no_max_participants">请输入人数上限</string>
     <string name="error_max_not_number">输入的人数上线不是有效数字</string>
+    <string name="error_cut_max">人数上限低于已参加的人数</string>
     <string name="error_no_property">请选择活动其他限制</string>
 
     <!-- result -->
@@ -54,5 +56,13 @@
 
     <!-- show act -->
     <string name="apply_in">我要加入</string>
+    <string name="to_modify">我要修改活动详情</string>
+    <string name="to_cancle">我要取消这个活动</string>
     <string name="not_available">暂时无法加入</string>
+
+    <string name="delivering">正在提交请求</string>
+    <string name="cancel_success">已取消活动</string>
+    <string name="cancel_failed">未能取消活动</string>
+    <string name="modify_success">修改已修改</string>
+    <string name="modify_failed">未能修改活动</string>
 </resources>

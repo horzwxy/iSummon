@@ -1,5 +1,6 @@
 package com.isummon.net;
 
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDProperty;
 import com.isummon.model.HDStatus;
@@ -238,6 +239,11 @@ public class FakeNetHelper extends NetHelper {
     @Override
     public void onReadNotification(Notification notification) {
 
+    }
+
+    @Override
+    public boolean isMyId(int userId) {
+        return GlobalVariables.currentUser.getUserId() == userId;
     }
 
     public static void fakeBlock() {
