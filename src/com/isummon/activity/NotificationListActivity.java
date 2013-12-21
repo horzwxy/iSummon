@@ -1,6 +1,8 @@
 package com.isummon.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.isummon.R;
+import com.isummon.activity.listmodel.NotificationRespondMode;
 import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.Notification;
@@ -61,9 +64,34 @@ public class NotificationListActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onShowDetails((int)id);
+
+
+                onShowOptions((int)id);
+                //onShowDetails((int)id);
             }
         });
+    }
+
+    private void onShowOptions(final int id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.choose_respond_mode);
+        builder.setItems(NotificationRespondMode.getChns(), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                NotificationRespondMode mode = NotificationRespondMode.values()[which];
+                switch (mode) {
+                    case LATER:
+                        // nothing
+                        break;
+                    case REJECT:
+                        break;
+                    case VIEW_DETAILS:
+                        onShowDetails(id);
+                        break;
+                }
+            }
+        });
+        builder.create().show();
+
     }
 
     private void onShowDetails(int id) {

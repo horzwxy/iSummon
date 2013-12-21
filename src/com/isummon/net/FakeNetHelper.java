@@ -5,6 +5,7 @@ import com.isummon.model.HDActivity;
 import com.isummon.model.HDProperty;
 import com.isummon.model.HDStatus;
 import com.isummon.model.HDType;
+import com.isummon.model.Invitation;
 import com.isummon.model.LogInResultType;
 import com.isummon.model.Notification;
 import com.isummon.model.RegisterResultType;
@@ -110,8 +111,7 @@ public class FakeNetHelper extends NetHelper {
         Notification n1 = new Notification(
                 m1.getNickName(),
                 m1.getAvatar(),
-                a1.getHdId(),
-                a1.getHdName()
+                a1.getHdId()
         );
         notifications.add(n1);
     }
@@ -251,6 +251,11 @@ public class FakeNetHelper extends NetHelper {
     public boolean isMyId(int userId) {
 //        return GlobalVariables.currentUser.getUserId() == userId;
         return false;
+    }
+
+    @Override
+    public ArrayList<Invitation> getMyInvitations() {
+        return null;
     }
 
     public static void fakeBlock() {

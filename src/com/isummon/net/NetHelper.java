@@ -28,7 +28,7 @@ public abstract class NetHelper {
     protected final static String namespace = "http://edu.fudan.10ss";
 
     public static NetHelper getInstance() {
-        return new RealNetHelper();
+        return new FakeNetHelper();
     }
 
     public abstract ArrayList<SimpleHDActivity> getAllActs();
@@ -51,9 +51,7 @@ public abstract class NetHelper {
      * 从服务器返回,
      *
      *
-     * @param username 用户注册名，应使用邮箱
-     * @param nickname 用户需要显示的昵称
-     * @param passwd   用户设定的密码
+     * @param newUser
      * @return 成功or失败
      */
     public abstract RegisterResultType register(UserModel newUser);
@@ -165,6 +163,9 @@ public abstract class NetHelper {
     public abstract ArrayList<UserModel> getAllContacts();
 
     public abstract void onReadNotification(Notification notification);
+
+    //----------------------------查看我发出的邀请
+    public abstract ArrayList<Invitation> getMyInvitations();
 
 
     public abstract  boolean isMyId(int userId);

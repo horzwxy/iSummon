@@ -1,4 +1,4 @@
-package com.isummon.model;
+package com.isummon.activity.listmodel;
 
 /**
  * Created by horzwxy on 12/19/13.
