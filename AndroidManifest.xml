@@ -78,6 +78,8 @@
             android:label="@string/title_activity_list"/>
         <activity android:name=".activity.ModifyHdActivity"
             android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".activity.ListInvitationActivity"
+            android:label="@string/title_invitation_list"/>
     </application>
 
 </manifest>

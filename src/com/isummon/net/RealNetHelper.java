@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDType;
-import com.isummon.model.Invitation;
+import com.isummon.model.MyInvitation;
 import com.isummon.model.LogInResultType;
 import com.isummon.model.Notification;
 import com.isummon.model.RegisterResultType;
@@ -17,7 +17,6 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -311,7 +310,7 @@ public class RealNetHelper extends NetHelper {
     }
 
     @Override
-    public ArrayList<Invitation> getMyInvitations() {
+    public ArrayList<MyInvitation> getMyInvitations() {
         return null;
     }
 
