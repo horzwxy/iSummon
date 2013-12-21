@@ -58,7 +58,7 @@ public class AddContactActivity extends Activity {
 
                 @Override
                 protected void dealResult(ArrayList<UserModel> result) {
-                    if(result == null) {
+                    if(result.size() == 0) {
                         Toast.makeText(AddContactActivity.this,
                                 R.string.no_user_found,
                                 Toast.LENGTH_SHORT).show();

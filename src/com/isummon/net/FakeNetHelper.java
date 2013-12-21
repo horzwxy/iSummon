@@ -267,7 +267,7 @@ public class FakeNetHelper extends NetHelper {
 
     public static void fakeBlock() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
