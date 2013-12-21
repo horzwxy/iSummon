@@ -165,6 +165,9 @@ public abstract class NetHelper {
     public abstract ArrayList<UserModel> getAllContacts();
 
     public abstract void onReadNotification(Notification notification);
+
+
+    public abstract  boolean isMyId(int userId);
 }
 
 

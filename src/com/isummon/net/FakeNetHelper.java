@@ -1,5 +1,6 @@
 package com.isummon.net;
 
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDProperty;
 import com.isummon.model.HDStatus;
@@ -131,11 +132,6 @@ public class FakeNetHelper extends NetHelper {
     }
 
     @Override
-    public RegisterResultType register(String username, String nickname, String passwd) {
-        return RegisterResultType.SUCCESS;
-    }
-
-    @Override
     public void logOut() {
 
     }
@@ -173,6 +169,17 @@ public class FakeNetHelper extends NetHelper {
     @Override
     public boolean cancleHDActivity(int hdId) {
         return true;
+    }
+
+
+    @Override
+    public RegisterResultType register(UserModel newUser) {
+        return null;
+    }
+
+    @Override
+    public boolean applyHDActivity(int hdId) {
+        return false;
     }
 
     @Override
@@ -238,6 +245,12 @@ public class FakeNetHelper extends NetHelper {
     @Override
     public void onReadNotification(Notification notification) {
 
+    }
+
+    @Override
+    public boolean isMyId(int userId) {
+//        return GlobalVariables.currentUser.getUserId() == userId;
+        return false;
     }
 
     public static void fakeBlock() {

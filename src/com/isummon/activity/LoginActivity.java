@@ -84,8 +84,8 @@ public class LoginActivity extends Activity {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        mEmail = mEmailView.getText().toString();
-        mPassword = mPasswordView.getText().toString();
+        mEmail = mEmailView.getEditableText().toString();
+        mPassword = mPasswordView.getEditableText().toString();
 
         boolean shouldCancel = false;
         View focusView = null;
@@ -109,6 +109,17 @@ public class LoginActivity extends Activity {
             shouldCancel = true;
             // todo email format check
         }
+//        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mEmail).matches()) {
+//            mEmailView.setError(getString(R.string.error_invalid_email));
+//            focusView = mEmailView;
+//            shouldCancel = true;
+//        }
+//        else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mEmail).matches()) {
+//            mEmailView.setError(getString(R.string.error_invalid_email));
+//            focusView = mEmailView;
+//            shouldCancel = true;
+//
+//        }
 //        else if (!mEmail.contains("@")) {
 //            mEmailView.setError(getString(R.string.error_invalid_email));
 //            focusView = mEmailView;
@@ -156,22 +167,27 @@ public class LoginActivity extends Activity {
         View focusView = null;
         final EditText registerEmail = (EditText) findViewById(R.id.register_email);
         final EditText registerNickname = (EditText) findViewById(R.id.register_nickname);
-        EditText registerPwd = (EditText) findViewById(R.id.password);
+        final EditText registerPwd = (EditText) findViewById(R.id.password);
         EditText registerPwd2 = (EditText) findViewById(R.id.register_password_again);
 
         if(TextUtils.isEmpty(registerEmail.getText().toString())) {
             registerEmail.setError(getString(R.string.error_field_required));
             focusView = registerEmail;
         }
-        else if(TextUtils.isEmpty(registerNickname.getText().toString())) {
+        else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(
+                registerEmail.getEditableText().toString()).matches()) {
+            registerEmail.setError(getString(R.string.error_invalid_email));
+            focusView = registerEmail;
+        }
+        else if(TextUtils.isEmpty(registerNickname.getEditableText().toString())) {
             registerNickname.setError(getString(R.string.error_field_required));
             focusView = registerEmail;
         }
-        else if(TextUtils.isEmpty(registerPwd.getText().toString())) {
+        else if(TextUtils.isEmpty(registerPwd.getEditableText().toString())) {
             registerPwd.setError(getString(R.string.error_field_required));
             focusView = registerPwd;
         }
-        else if(TextUtils.isEmpty(registerPwd2.getText().toString())) {
+        else if(TextUtils.isEmpty(registerPwd2.getEditableText().toString())) {
             registerPwd2.setError(getString(R.string.error_field_required));
             focusView = registerPwd2;
         }
@@ -181,14 +197,14 @@ public class LoginActivity extends Activity {
             return;
         }
         else {
-            if(!registerPwd.getText().toString().equals(registerPwd2.getText().toString())) {
+            if(!registerPwd.getEditableText().toString().equals(registerPwd2.getText().toString())) {
                 registerPwd2.setError(getString(R.string.register_not_same_pwd));
                 registerPwd2.requestFocus();
                 return;
             }
-            if(registerPwd.getText().length() < 6) {
-                registerPwd2.setError(getString(R.string.register_too_short_pwd));
-                registerPwd2.requestFocus();
+            if(registerPwd.getEditableText().length() < 6) {
+                registerPwd.setError(getString(R.string.register_too_short_pwd));
+                registerPwd.requestFocus();
                 return;
             }
 
@@ -198,7 +214,12 @@ public class LoginActivity extends Activity {
             ) {
                 @Override
                 protected RegisterResultType doWork(String... params) {
-                    return GlobalVariables.netHelper.register(params[0], params[1], params[2]);
+                    UserModel newUser = new UserModel();
+                    newUser.setAvatar(0);
+                    newUser.setNickName(registerNickname.getEditableText().toString());
+                    newUser.setUserName(registerEmail.getEditableText().toString());
+                    newUser.setPasswd(registerPwd.getEditableText().toString());
+                    return GlobalVariables.netHelper.register(newUser);
                 }
 
                 @Override
@@ -221,9 +242,9 @@ public class LoginActivity extends Activity {
                             break;
                     }
                 }
-            }.action(registerEmail.getText().toString(),
-                    registerNickname.getText().toString(),
-                    registerPwd.getText().toString());
+            }.action(registerEmail.getEditableText().toString(),
+                    registerNickname.getEditableText().toString(),
+                    registerPwd.getEditableText().toString());
         }
     }
 
@@ -275,12 +296,5 @@ public class LoginActivity extends Activity {
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         return displaymetrics.widthPixels;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.login, menu);
-        return true;
     }
 }

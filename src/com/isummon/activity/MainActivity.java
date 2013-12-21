@@ -25,6 +25,7 @@ import com.isummon.R;
 import com.isummon.data.GlobalVariables;
 import com.isummon.model.OptionListItem;
 import com.isummon.model.SimpleHDActivity;
+import com.isummon.net.NetHelper;
 import com.isummon.widget.ISummonMapView;
 import com.isummon.widget.ProgressTaskBundle;
 
@@ -114,6 +115,11 @@ public class MainActivity extends Activity {
                         break;
                     case VIEW_ALL:
                         onListAllActs();
+                        break;
+                    case LOG_OUT:
+                        GlobalVariables.netHelper.logOut();
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        finish();
                         break;
                     case ADD_ACT:
                         startActivity(new Intent(getApplicationContext(), AddActActivity.class));

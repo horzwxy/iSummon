@@ -9,6 +9,7 @@ public enum OptionListItem {
     MY_MESSAGE("我的消息"),
     VIEW_ALL("查看活动"),
     ADD_ACT("创建活动"),
+    LOG_OUT("注销"),
     EXIT("退出");
 
     public String chn;
