@@ -2,6 +2,7 @@ package com.isummon.net;
 
 import android.util.Log;
 
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDType;
 import com.isummon.model.LogInResultType;
@@ -13,6 +14,7 @@ import com.isummon.model.UserModel;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ import java.util.List;
  * Created by horz on 12/20/13.
  */
 public class RealNetHelper extends NetHelper {
-
+    String userActionUrl = "http://10.131.251.146:8080/iSummon/services/UserActionImpl?wsdl";
     public RealNetHelper(){
         super();
     }
@@ -78,6 +80,8 @@ public class RealNetHelper extends NetHelper {
      * @return 返回值为已登录用户的ID，验证失败返回-1
      */
     public LogInResultType login(String username, String passwd) {
+
+        Log.v("Login", "in login: username " + username + "  passwd: " + passwd);
         String methodName = "login";
         SoapObject request = new SoapObject(namespace, methodName);
         request.addProperty("username", username);
@@ -85,25 +89,27 @@ public class RealNetHelper extends NetHelper {
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                 SoapEnvelope.VER11);
         envelope.bodyOut = request;
-        HttpTransportSE ht = new HttpTransportSE(serviceUrl);
+        HttpTransportSE ht = new HttpTransportSE(userActionUrl);
         try {
             // 第5步：调用WebService
             ht.call(null, envelope);
             if (envelope.getResponse() != null) {
-                SoapObject soapObject = (SoapObject) envelope.getResponse();
-                int result = Integer.parseInt(soapObject.getProperty(0).toString());
-                Log.v("Login", "login success! " + result);
+//                SoapPrimitive soapPrimitive = (SoapPrimitive) envelope.getResponse();
+                SoapObject soapObject = (SoapObject)envelope.getResponse();
+                if(soapObject == null)
+                    return LogInResultType.FAIL_NOT_MATCH;
+
+                GlobalVariables.currentUser = parseUserModel(soapObject);
+                Log.v("Login", GlobalVariables.currentUser.toString());
                 return LogInResultType.SUCCESS;
             } else {
-                Log.v("Login", "login failed");
-                return LogInResultType.SUCCESS;
+                return LogInResultType.FAIL_NOT_MATCH;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return LogInResultType.SUCCESS;
+        return LogInResultType.FAIL_TIMEOUT;
     }
-
 
     /**
      *
@@ -121,7 +127,7 @@ public class RealNetHelper extends NetHelper {
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                 SoapEnvelope.VER11);
         envelope.bodyOut = request;
-        HttpTransportSE ht = new HttpTransportSE(serviceUrl);
+        HttpTransportSE ht = new HttpTransportSE(userActionUrl);
         try {
             // 第5步：调用WebService
             ht.call(null, envelope);
@@ -129,7 +135,7 @@ public class RealNetHelper extends NetHelper {
                 SoapObject soapObject = (SoapObject) envelope.getResponse();
                 return RegisterResultType.SUCCESS;
             } else {
-                return RegisterResultType.SUCCESS;
+                return RegisterResultType.FAIL_TIME_OUT;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -312,5 +318,15 @@ public class RealNetHelper extends NetHelper {
     @Override
     public boolean isMyId(int userId) {
         return false;
+    }
+
+
+    private UserModel parseUserModel(SoapObject soapObject){
+        int userId = Integer.parseInt(soapObject.getProperty("userId").toString());
+        String userName = soapObject.getProperty("userName").toString();
+        String nickName = soapObject.getProperty("nickName").toString();
+        int avatar = Integer.parseInt(soapObject.getProperty("avatar").toString());
+        UserModel userModel = new UserModel(userId, userName, nickName, null, avatar);
+        return userModel;
     }
 }

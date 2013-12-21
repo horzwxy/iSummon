@@ -37,6 +37,7 @@ public class ISummonMapView extends MapView {
     private MyOverlay mOverlay = null;
     private PointOverlay pointOverlay;
     private PickMapAddressActivity.AddressPickedListener listener;
+    private boolean longTouchEnable = true;
 
     public ISummonMapView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -62,7 +63,8 @@ public class ISummonMapView extends MapView {
 
             @Override
             public void onMapLongClick(GeoPoint point) {
-
+                if(!longTouchEnable)
+                    return;
                 final int longitude = point.getLatitudeE6();
                 final int latitude = point.getLatitudeE6();
 
@@ -101,20 +103,26 @@ public class ISummonMapView extends MapView {
         this.listener = listener;
     }
 
-    public void setLongTouchAvailable(boolean isAvailable) {
-        if(!isAvailable){
-            getOverlays().add(pointOverlay);
-            refresh();
-        }else{
-            if(getOverlays().contains(pointOverlay)){
-                getOverlays().remove(pointOverlay);
-                refresh();
-            }
-        }
-    }
-
     public void setDisplayMode(DisplayMode mode) {
+        switch (mode){
+            case NORMAL:{
+                getOverlays().clear();
+                longTouchEnable = true;
+                getOverlays().add(mOverlay);
+                break;
+            }case BALLOON_ONLY:{
+                getOverlays().clear();
+                longTouchEnable = false;
+                getOverlays().add(mOverlay);
+                break;
+            }case SINGLE_TAP:{
+                getOverlays().clear();
+                longTouchEnable = false;
+                getOverlays().add(pointOverlay);
+                break;
+            }
 
+        }
     }
 
     public void showHd(List<SimpleHDActivity> hdIdList) {
