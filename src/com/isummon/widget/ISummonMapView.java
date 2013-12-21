@@ -16,6 +16,7 @@ import com.isummon.R;
 import com.isummon.activity.AddActActivity;
 import com.isummon.activity.PickMapAddressActivity;
 import com.isummon.activity.ShowHdDetailsActivity;
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.SimpleHDActivity;
 import com.isummon.net.NetHelper;
 
@@ -132,7 +133,7 @@ public class ISummonMapView extends MapView {
         new Thread() {
             @Override
             public void run() {
-                final ArrayList<OverlayItem> itemList = getItemFromHdActivity(NetHelper.getCurrentSimpleHDActivities());
+                final ArrayList<OverlayItem> itemList = getItemFromHdActivity(GlobalVariables.netHelper.getCurrentSimpleHDActivities());
                 handler.post(new Runnable() {
                     @Override
                     public void run() {

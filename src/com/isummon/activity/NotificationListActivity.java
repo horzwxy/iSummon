@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.isummon.R;
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.Notification;
 import com.isummon.net.NetHelper;
@@ -38,7 +39,7 @@ public class NotificationListActivity extends Activity {
         ) {
             @Override
             protected List<Notification> doWork(Void... params) {
-                return NetHelper.getNotifications();
+                return GlobalVariables.netHelper.getNotifications();
             }
 
             @Override
@@ -72,7 +73,7 @@ public class NotificationListActivity extends Activity {
         ) {
             @Override
             protected HDActivity doWork(Integer... params) {
-                return NetHelper.getHDActivityById(params[0]);
+                return GlobalVariables.netHelper.getHDActivityById(params[0]);
             }
 
             @Override

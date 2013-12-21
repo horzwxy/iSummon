@@ -55,7 +55,7 @@
 
         </activity>
         <activity
-            android:name="com.isummon.activity.ListActivity"
+            android:name=".activity.ListAllActivity"
             android:label="@string/title_activity_list"/>
 
         <activity android:name=".activity.PickMapAddressActivity"
@@ -75,6 +75,8 @@
             android:label="@string/invite_prompt"/>
         <activity android:name=".activity.NotificationListActivity"
             android:label="@string/title_notification_list"/>
+        <activity android:name=".activity.ListSomeActivity"
+            android:label="@string/title_activity_list"/>
     </application>
 
 </manifest>

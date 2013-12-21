@@ -6,6 +6,7 @@ import android.view.MenuItem;
 
 import com.isummon.R;
 import com.isummon.model.SimpleHDActivity;
+import com.isummon.widget.ISummonMapView;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class ActMapActivity extends MapActivity {
 
         displayedActs = (List<SimpleHDActivity>)getIntent().getSerializableExtra(SIMPLE_ACTS);
 
+        mMapView.setDisplayMode(ISummonMapView.DisplayMode.BALLOON_ONLY);
         mMapView.showHd(displayedActs);
     }
 }

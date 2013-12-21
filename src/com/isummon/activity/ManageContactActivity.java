@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.isummon.R;
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.UserModel;
 import com.isummon.net.NetHelper;
 import com.isummon.widget.ContactAdapter;
@@ -49,7 +50,7 @@ public class ManageContactActivity extends Activity {
         ) {
             @Override
             protected List<UserModel> doWork(Void... params) {
-                return NetHelper.getAllContacts();
+                return GlobalVariables.netHelper.getAllContacts();
             }
 
             @Override

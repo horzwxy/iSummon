@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.isummon.R;
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.Invitation;
 import com.isummon.model.UserModel;
 import com.isummon.net.NetHelper;
@@ -54,7 +55,7 @@ public class InviteActivity extends Activity {
         ) {
             @Override
             protected List<UserModel> doWork(Void... params) {
-                return NetHelper.getAllContacts();
+                return GlobalVariables.netHelper.getAllContacts();
             }
 
             @Override

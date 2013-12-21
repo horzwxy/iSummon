@@ -28,7 +28,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.platform.comapi.map.r;
 import com.isummon.R;
+import com.isummon.data.GlobalVariables;
+import com.isummon.model.LogInResultType;
 import com.isummon.model.RegisterResultType;
 import com.isummon.model.UserModel;
 import com.isummon.net.NetHelper;
@@ -116,28 +119,29 @@ public class LoginActivity extends Activity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            new ProgressTaskBundle<String, Integer>(
+            new ProgressTaskBundle<String, LogInResultType>(
                     this,
                     R.string.login_progress_signing_in
             ) {
                 @Override
-                protected Integer doWork(String... params) {
-                    return NetHelper.login(params[0], params[1]);
+                protected LogInResultType doWork(String... params) {
+                    return GlobalVariables.netHelper.login(params[0], params[1]);
                 }
 
                 @Override
-                protected void dealResult(Integer result) {
-                    if(result < 0) {
-                        Toast.makeText(
-                                LoginActivity.this,
-                                R.string.sign_in_failed,
-                                Toast.LENGTH_SHORT
-                        ).show();
-                    }
-                    else {
-                        Intent intent = new Intent();
-                        intent.setClass(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
+                protected void dealResult(LogInResultType result) {
+                    switch (result) {
+                        case SUCCESS:
+                            Intent intent = new Intent();
+                            intent.setClass(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            break;
+                        case FAIL_NOT_MATCH:
+                            showToast(R.string.sign_in_failed_not_match);
+                            break;
+                        case FAIL_TIMEOUT:
+                            showToast(R.string.sign_in_failed_on_timeout);
+                            break;
                     }
                 }
             }.action(mEmail, mPassword);
@@ -148,16 +152,84 @@ public class LoginActivity extends Activity {
      * do registering work
      */
     public void register(View v) {
-        EditText registerName = (EditText) findViewById(R.id.register_email);
-        EditText registerNickname = (EditText) findViewById(R.id.register_nickname);
+        View focusView = null;
+        final EditText registerEmail = (EditText) findViewById(R.id.register_email);
+        final EditText registerNickname = (EditText) findViewById(R.id.register_nickname);
         EditText registerPwd = (EditText) findViewById(R.id.password);
         EditText registerPwd2 = (EditText) findViewById(R.id.register_password_again);
 
-        new ProgressTaskBundle<String, RegisterResultType>(
-
-        ) {
-
+        if(TextUtils.isEmpty(registerEmail.getText().toString())) {
+            registerEmail.setError(getString(R.string.error_field_required));
+            focusView = registerEmail;
         }
+        else if(TextUtils.isEmpty(registerNickname.getText().toString())) {
+            registerNickname.setError(getString(R.string.error_field_required));
+            focusView = registerEmail;
+        }
+        else if(TextUtils.isEmpty(registerPwd.getText().toString())) {
+            registerPwd.setError(getString(R.string.error_field_required));
+            focusView = registerPwd;
+        }
+        else if(TextUtils.isEmpty(registerPwd2.getText().toString())) {
+            registerPwd2.setError(getString(R.string.error_field_required));
+            focusView = registerPwd2;
+        }
+
+        if(focusView != null) {
+            focusView.requestFocus();
+            return;
+        }
+        else {
+            if(!registerPwd.getText().toString().equals(registerPwd2.getText().toString())) {
+                registerPwd2.setError(getString(R.string.register_not_same_pwd));
+                registerPwd2.requestFocus();
+                return;
+            }
+            if(registerPwd.getText().length() < 6) {
+                registerPwd2.setError(getString(R.string.register_too_short_pwd));
+                registerPwd2.requestFocus();
+                return;
+            }
+
+            new ProgressTaskBundle<String, RegisterResultType>(
+                    this,
+                    R.string.register_submitting
+            ) {
+                @Override
+                protected RegisterResultType doWork(String... params) {
+                    return GlobalVariables.netHelper.register(params[0], params[1], params[2]);
+                }
+
+                @Override
+                protected void dealResult(RegisterResultType result) {
+                    switch (result) {
+                        case SUCCESS:
+                            showToast(R.string.register_success);
+                            toLogIn(null);
+                            break;
+                        case FAIL_TIME_OUT:
+                            showToast(R.string.register_failed_on_timeout);
+                            break;
+                        case FAIL_ON_USED_EMAIL:
+                            registerEmail.setError(getString(R.string.register_failed_on_used_email));
+                            registerEmail.requestFocus();
+                            break;
+                        case FAIL_ON_USED_NICKNAME:
+                            registerNickname.setError(getString(R.string.register_failed_on_used_nickname));
+                            registerNickname.requestFocus();
+                            break;
+                    }
+                }
+            }.action(registerEmail.getText().toString(),
+                    registerNickname.getText().toString(),
+                    registerPwd.getText().toString());
+        }
+    }
+
+    private void showToast(int msgId) {
+        Toast.makeText(this,
+                msgId,
+                Toast.LENGTH_SHORT).show();
     }
 
     /**

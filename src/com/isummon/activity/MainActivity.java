@@ -22,9 +22,9 @@ import android.widget.TextView;
 
 import com.baidu.mapapi.BMapManager;
 import com.isummon.R;
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.OptionListItem;
 import com.isummon.model.SimpleHDActivity;
-import com.isummon.net.FakeDataProvider;
 import com.isummon.widget.ISummonMapView;
 import com.isummon.widget.ProgressTaskBundle;
 
@@ -128,6 +128,7 @@ public class MainActivity extends Activity {
 
         mBMapMan = ((TestApplication) this.getApplication()).getBMapManager();
         mMapView = (ISummonMapView) findViewById(R.id.bmapsView);
+        mMapView.setDisplayMode(ISummonMapView.DisplayMode.NORMAL);
     }
 
     @Override
@@ -147,13 +148,29 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onResume() {
+        super.onResume();
+
         mMapView.onResume();
         // I found if you wants to respond the long-tap action, you must start the manager.
         // And if you don't want to respond, it's useless to do anything while the manager is started.
         if (mBMapMan != null) {
             mBMapMan.start();
         }
-        super.onResume();
+
+        new ProgressTaskBundle<Void, ArrayList<SimpleHDActivity>>(
+                this,
+                R.string.fetching_act
+        ) {
+            @Override
+            protected ArrayList<SimpleHDActivity> doWork(Void... params) {
+                return GlobalVariables.netHelper.getAllActs();
+            }
+
+            @Override
+            protected void dealResult(ArrayList<SimpleHDActivity> result) {
+                mMapView.showHd(result);
+            }
+        }.action();
     }
 
     @Override
@@ -174,7 +191,7 @@ public class MainActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        searchView.setQueryHint("输入活动名称");
+        searchView.setQueryHint(getString(R.string.search_act_prompt));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -225,15 +242,15 @@ public class MainActivity extends Activity {
         ) {
             @Override
             protected List<SimpleHDActivity> doWork(Void... params) {
-                return FakeDataProvider.getSimpleHDActivities();
+                return GlobalVariables.netHelper.getAllActs();
             }
 
             @Override
             protected void dealResult(List<SimpleHDActivity> result) {
                 Intent intent = new Intent();
-                intent.putExtra(ListActivity.SIMPLE_ACTS,
+                intent.putExtra(ListAllActivity.SIMPLE_ACTS,
                         new ArrayList<SimpleHDActivity>(result));
-                intent.setClass(getApplicationContext(), ListActivity.class);
+                intent.setClass(getApplicationContext(), ListAllActivity.class);
                 startActivity(intent);
             }
         }.action();
@@ -243,14 +260,14 @@ public class MainActivity extends Activity {
         new ProgressTaskBundle<String, List<SimpleHDActivity>>(this, R.string.searching) {
             @Override
             protected List<SimpleHDActivity> doWork(String... params) {
-                return FakeDataProvider.getSimpleHDActivities();
+                return GlobalVariables.netHelper.getHDActivityByHdName(params[0]);
             }
 
             @Override
             protected void dealResult(List<SimpleHDActivity> result) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                Intent intent = new Intent(MainActivity.this, ListSomeActivity.class);
                 intent.putExtra(
-                        ListActivity.SIMPLE_ACTS,
+                        ListActActivity.SIMPLE_ACTS,
                         new ArrayList<SimpleHDActivity>(result));
                 startActivity(intent);
             }
