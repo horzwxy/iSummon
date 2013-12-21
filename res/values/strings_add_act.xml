@@ -4,8 +4,8 @@
     <string name="act_place_prompt">活动地点</string>
     <string name="act_start_date_prompt">开始日期</string>
     <string name="act_end_date_prompt">结束日期</string>
-    <string name="act_start_time_prompt">开始时间</string>
-    <string name="act_end_time_prompt">结束时间</string>
+    <string name="act_start_time_prompt">开始</string>
+    <string name="act_end_time_prompt">结束</string>
     <string name="act_content_prompt">活动内容</string>
     <string name="act_type_prompt">选择活动类别</string>
     <string name="act_participants_max_prompt">人数限制</string>

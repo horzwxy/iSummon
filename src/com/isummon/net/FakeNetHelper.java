@@ -58,8 +58,8 @@ public class FakeNetHelper extends NetHelper {
         a1.setHdId(1);
         a1.setHdName("我们去加班吧!");
         a1.setHdAddress("世界500强");
-        a1.setHdStartTime("2013-12-18:0915");
-        a1.setHdEndTime("2013-12-19:0916");
+        a1.setHdStartTime("2013-12-18 09:15");
+        a1.setHdEndTime("2013-12-19 09:16");
         a1.setHdDesc("加班是世界上最幸福的事情！！！");
         a1.setHdCurNum(0);
         a1.setHdNumLimit(100);
@@ -76,8 +76,8 @@ public class FakeNetHelper extends NetHelper {
         a2.setHdId(2);
         a2.setHdName("我去炸学校，天天不迟到");
         a2.setHdAddress("复旦大学");
-        a2.setHdStartTime("2013-12-17:0915");
-        a2.setHdEndTime("2013-12-18:0916");
+        a2.setHdStartTime("2013-12-17 09:15");
+        a2.setHdEndTime("2013-12-18 09:16");
         a2.setHdDesc("万恶的PJ");
         a2.setHdCurNum(5);
         a2.setHdNumLimit(6);
@@ -93,8 +93,8 @@ public class FakeNetHelper extends NetHelper {
         HDActivity a3 = new HDActivity();
         a3.setHdName("入党");
         a3.setHdAddress("桃园劳教所");
-        a3.setHdStartTime("2013-12-20:2100");
-        a3.setHdEndTime("2013-12-21:2200");
+        a3.setHdStartTime("2013-12-20 21:00");
+        a3.setHdEndTime("2013-12-21 22:00");
         a3.setHdDesc("伟大！光荣！正确！");
         a3.setHdCurNum(1);
         a3.setHdNumLimit(1);
@@ -108,6 +108,7 @@ public class FakeNetHelper extends NetHelper {
         hdArray.add(a3);
 
         Notification n1 = new Notification(
+                0,
                 m1.getNickName(),
                 m1.getAvatar(),
                 a1.getHdId()

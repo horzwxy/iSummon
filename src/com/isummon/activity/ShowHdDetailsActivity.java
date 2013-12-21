@@ -62,7 +62,18 @@ public class ShowHdDetailsActivity extends Activity {
 
         ImageView typeImage = (ImageView)findViewById(R.id.act_type_image);
         TextView typeText = (TextView)findViewById(R.id.act_type_name);
-        typeImage.setImageResource(hdActivity.getHdType().getDrawableId());
+
+
+        int imageId = getResources().getIdentifier(
+                "drawable." + hdActivity.getHdType().name().toLowerCase(),
+                null,
+                null
+        );
+        System.out.println("name=" + hdActivity.getHdType().name().toLowerCase() + ".png");
+        System.out.println("id=" + imageId);
+        System.out.println("package=" + getApplicationContext().getPackageName());
+
+        typeImage.setImageResource(imageId);
         typeText.setText(hdActivity.getHdType().getChn());
 
         if(GlobalVariables.netHelper.isMyId(
