@@ -2,20 +2,13 @@ package com.isummon.net;
 
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDType;
-import com.isummon.model.Invitation;
 import com.isummon.model.LogInResultType;
 import com.isummon.model.Notification;
 import com.isummon.model.RegisterResultType;
 import com.isummon.model.SimpleHDActivity;
 import com.isummon.model.UserModel;
 
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class NetHelper {
@@ -29,6 +22,7 @@ public abstract class NetHelper {
 
     /**
      * 可以把这里返回的NetHelper改成其他实例。
+     *
      * @return
      */
     public static NetHelper getNetHelper() {
@@ -53,7 +47,6 @@ public abstract class NetHelper {
     /**
      * 用户注册方法
      * 从服务器返回,
-     *
      *
      * @param username 用户注册名，应使用邮箱
      * @param nickname 用户需要显示的昵称
@@ -86,7 +79,6 @@ public abstract class NetHelper {
      * 应跳转到ShowHDActivity界面，同时通过本方法获取活动详情并显示
      */
     public abstract HDActivity getHDActivityById(int hdId);
-
 
 
     /**
@@ -136,6 +128,7 @@ public abstract class NetHelper {
     public abstract ArrayList<SimpleHDActivity> getHDActivityByHdType(HDType hdType);
 
     //查询某时间范围以内的活动，两个参数可以一个为null，如(startTime, null)表示startTime以后的所有活动
+    // wxy----------界面上没有实现这个功能
     public abstract ArrayList<SimpleHDActivity> getHDActivityByTime(String startTime, String endTime);
 
     //---------其他
@@ -143,7 +136,6 @@ public abstract class NetHelper {
     //----------------------------通知用户--------------------------------------------------
 
     /**
-     *
      * @param hdId
      * @param targets
      * @return SUCCEED OR FAIL
@@ -151,14 +143,12 @@ public abstract class NetHelper {
     public abstract int invite(int hdId, ArrayList<UserModel> targets);
 
     /**
-     *
      * @param nickname
      * @return empty list if no result
      */
     public abstract ArrayList<UserModel> findUserByName(String nickname);
 
     /**
-     *
      * @param targetId
      * @return SUCCEED OR FAIL
      */
