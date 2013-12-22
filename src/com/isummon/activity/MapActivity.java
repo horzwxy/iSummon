@@ -20,7 +20,8 @@ public class MapActivity extends Activity {
 
         mMapView = (ISummonMapView) findViewById(R.id.bmapsView);
 
-        mMapView.setLongTouchAvailable(false);
+//        mMapView.setLongTouchAvailable(false);
+        mMapView.setDisplayMode(ISummonMapView.DisplayMode.NORMAL);
     }
 
     @Override

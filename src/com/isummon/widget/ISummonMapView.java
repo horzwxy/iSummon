@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.baidu.mapapi.map.ItemizedOverlay;
 import com.baidu.mapapi.map.MKMapTouchListener;
@@ -33,11 +34,11 @@ public class ISummonMapView extends MapView {
     public final static int ADD_ACT = 876543;
     public final static String SIMPLE_HD = "simple_hd";
 
-    private Handler handler;
     private MyOverlay mOverlay = null;
     private PointOverlay pointOverlay;
     private PickMapAddressActivity.AddressPickedListener listener;
     private boolean longTouchEnable = true;
+    private int [] index2hdId;
 
     public ISummonMapView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -51,7 +52,7 @@ public class ISummonMapView extends MapView {
         mMapController.setCenter(getDefaultGeoPoint());// 设置地图中心点
         mMapController.setZoom(getDefaultZoomClass());// 设置地图zoom级别
 
-        handler = new Handler();
+
         //initialize mOverlay with default marker;
         mOverlay = new MyOverlay(getContext().getResources().getDrawable(R.drawable.icon_gcoding), this);
         getOverlays().add(mOverlay);
@@ -87,12 +88,9 @@ public class ISummonMapView extends MapView {
 
             @Override
             public void onMapDoubleClick(GeoPoint arg0) {
-                // TODO Auto-generated method stub
             }
-
             @Override
             public void onMapClick(GeoPoint arg0) {
-                // TODO Auto-generated method stub
             }
         });
     }
@@ -120,13 +118,16 @@ public class ISummonMapView extends MapView {
                 longTouchEnable = false;
                 getOverlays().add(pointOverlay);
                 break;
+            }default:{
+                Log.v("ISummonMapView", "Invalid display mode!");
+                return;
             }
 
         }
     }
 
     public void showHd(List<SimpleHDActivity> hdIdList) {
-
+       mOverlay.addItem(getItemFromHdActivity((ArrayList<SimpleHDActivity>)hdIdList));
     }
 
     private void showAddActActivity(double longitude, double latitude) {
@@ -136,31 +137,18 @@ public class ISummonMapView extends MapView {
         getContext().startActivity(intent);
     }
 
-
-    public void showAllCurrentActivities(){
-        new Thread() {
-            @Override
-            public void run() {
-                final ArrayList<OverlayItem> itemList = getItemFromHdActivity(GlobalVariables.netHelper.getCurrentSimpleHDActivities());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mOverlay.addItem(itemList);
-                        refresh();
-                    }
-                });
-            }
-        }.start();
-    }
-
-
     /*********************** Private method ************************/
 
     private ArrayList<OverlayItem> getItemFromHdActivity(ArrayList<SimpleHDActivity> hdList){
+        if(hdList == null || hdList.size() == 0)
+            return null;
+        index2hdId = new int[hdList.size()];
         ArrayList<OverlayItem> itemList = new ArrayList<OverlayItem>();
-        for(SimpleHDActivity hd: hdList){
+        for(int i = 0; i < hdList.size(); i++){
+            SimpleHDActivity hd = hdList.get(i);
             GeoPoint point = new GeoPoint((int) hd.getHdLatitude(), (int) hd.getHdLongitude());
-            itemList.add(new OverlayItem(point, hd.getHdName(), ""));
+            itemList.add(new OverlayItem(point, hd.getHdName(), hd.getHdOriginName()));
+            index2hdId[i] = hd.getHdId();
         }
         return itemList;
     }

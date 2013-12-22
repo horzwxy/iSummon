@@ -308,6 +308,31 @@ public class RealNetHelper extends NetHelper {
 
     @Override
     public ArrayList<UserModel> getAllContacts() {
+        String methodName = "getAllContacts";
+        SoapObject request = new SoapObject(namespace, methodName);
+        request.addProperty("userId", 1);
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.bodyOut = request;
+        HttpTransportSE ht = new HttpTransportSE(userActionUrl);
+        String TAG = "getAllContacts";
+        try {
+            // 第5步：调用WebService
+            ht.call(null, envelope);
+            if (envelope.getResponse() != null) {
+                SoapObject soapObject = (SoapObject)envelope.getResponse();
+                if(soapObject == null){
+                    Log.v(TAG, "return null!" );
+                    return  null;
+                }
+                int listSize = soapObject.getPropertyCount();
+                Log.v(TAG, "list size: " + listSize);
+
+            } else {
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
