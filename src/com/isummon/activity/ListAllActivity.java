@@ -26,14 +26,12 @@ public class ListAllActivity extends ListActActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        init();
-
         Spinner modeSpinner = (Spinner) findViewById(R.id.list_mode_selector);
         ArrayList<String> modeStrings = new ArrayList<String>();
+        modeStrings.add("所有类别");
         for(String s : HDType.getChns()) {
             modeStrings.add(s);
         }
-        modeStrings.add("所有类别");
         final ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_item,
@@ -43,11 +41,11 @@ public class ListAllActivity extends ListActActivity {
         modeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position > HDType.values().length - 1) {
+                if(position == 0) {
                     showAllItems();
                 }
                 else {
-                    showSelectedItems(HDType.values()[position]);
+                    showSelectedItems(HDType.values()[position - 1]);
                 }
             }
 

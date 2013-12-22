@@ -261,24 +261,8 @@ public class MainActivity extends ISummonActivity {
     }
 
     private void onListAllActs() {
-        new ProgressTaskBundle<Void, List<SimpleHDActivity>>(
-                this,
-                R.string.searching
-        ) {
-            @Override
-            protected List<SimpleHDActivity> doWork(Void... params) {
-                return GlobalVariables.netHelper.getAllActs();
-            }
-
-            @Override
-            protected void dealResult(List<SimpleHDActivity> result) {
-                Intent intent = new Intent();
-                intent.putExtra(ListAllActivity.SIMPLE_ACTS,
-                        new ArrayList<SimpleHDActivity>(result));
-                intent.setClass(getApplicationContext(), ListAllActivity.class);
-                startActivity(intent);
-            }
-        }.action();
+        Intent intent = new Intent(this, ListAllActivity.class);
+        startActivity(intent);
     }
 
     private void onQuery(String query) {
