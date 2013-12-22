@@ -32,7 +32,7 @@
 
             <TextView
                 android:id="@+id/actContent"
-                style="@style/ShowActLine" />
+                style="@style/MultiLine" />
 
             <LinearLayout
                 android:id="@+id/act_type_content"
@@ -66,41 +66,42 @@
                 android:id="@+id/act_property"
                 style="@style/ShowActLine" />
 
+
+            <RelativeLayout
+                android:id="@+id/origin_can_see"
+                style="@style/FormLineTransparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_alignParentLeft="true"
+                    style="@style/FormLineHalf"
+                    android:text="@string/to_modify"
+                    android:onClick="modifyAct" />
+
+                <Button
+                    android:layout_alignParentRight="true"
+                    style="@style/FormLineHalf"
+                    android:text="@string/to_cancle"
+                    android:onClick="cancelAct" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/other_can_see"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/apply_in"
+                    style="@style/ShowActButtonHighlighted"
+                    android:onClick="applyIn" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
-
-    <RelativeLayout
-        android:id="@+id/origin_can_see"
-        style="@style/FormLineTransparent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:layout_alignParentLeft="true"
-            style="@style/FormLineHalf"
-            android:text="@string/to_modify"
-            android:onClick="modifyAct" />
-
-        <Button
-            android:layout_alignParentRight="true"
-            style="@style/FormLineHalf"
-            android:text="@string/to_cancle"
-            android:onClick="cancelAct" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/other_can_see"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/apply_in"
-            style="@style/ShowActButtonHighlighted"
-            android:onClick="applyIn" />
-
-    </LinearLayout>
 
 </LinearLayout>
