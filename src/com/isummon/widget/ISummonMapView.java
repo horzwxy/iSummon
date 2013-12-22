@@ -34,6 +34,8 @@ import java.util.TimerTask;
 
 import android.graphics.Bitmap;
 
+import javax.microedition.khronos.opengles.GL;
+
 /**
  * Created by horzwxy on 12/15/13.
  */
@@ -191,15 +193,15 @@ public class ISummonMapView extends MapView {
 
             viewCache = LayoutInflater.from(getContext()).inflate(R.layout.custom_text_view, null);
             popupInfo = (View) viewCache.findViewById(R.id.popinfo);
-            popupLeft = (View) viewCache.findViewById(R.id.popleft);
-            popupRight = (View) viewCache.findViewById(R.id.popright);
+            popupLeft = (TextView) viewCache.findViewById(R.id.popleft);
+            popupRight = (TextView) viewCache.findViewById(R.id.popright);
             popupText =(TextView) viewCache.findViewById(R.id.textcache);
 
 
         }
 
         protected boolean onTap(int index) {
-            final SimpleHDActivity selectedHd = currentHDList.get(index);
+//            final SimpleHDActivity selectedHd = currentHDList.get(index);
             PopupClickListener popListener = new PopupClickListener(){
                 @Override
                 public void onClickedPopup(int popIndex) {
@@ -207,12 +209,14 @@ public class ISummonMapView extends MapView {
                         //查看活动
                         Intent intent = new Intent();
                         intent.setClass(getContext().getApplicationContext(), ShowHdDetailsActivity.class);
-                        intent.putExtra(ShowHdDetailsActivity.HDACTIVITY, selectedHd);
+//                        intent.putExtra(ShowHdDetailsActivity.HDACTIVITY, selectedHd);
                         getContext().startActivity(intent);
                     }
                     else if(popIndex == 2){
                         //申请加入
-                        if()
+//                        if(GlobalVariables.currentUser.getUserId() == selectedHd.getHdOriginId()){//
+//
+//                        }
                     }
                 }
             };
