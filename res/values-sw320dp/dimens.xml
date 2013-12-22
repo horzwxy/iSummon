@@ -8,11 +8,12 @@
     <dimen name="dialog_activity_padding">15dp</dimen>
     <dimen name="dialog_activity_corner">12dp</dimen>
 
-    <dimen name="add_act_form_width">260dp</dimen>
-    <dimen name="add_act_form_height">35dp</dimen>
-    <dimen name="add_act_form_half_width">128dp</dimen>
-    <dimen name="form_text_size">14sp</dimen>
-    <dimen name="add_act_form_line_padding">10dp</dimen>
+    <dimen name="form_width">280dp</dimen>
+    <dimen name="form_height">40dp</dimen>
+    <dimen name="form_half_width">135dp</dimen>
+    <dimen name="form_text_size">16sp</dimen>
+    <dimen name="form_line_padding">10dp</dimen>
+    <dimen name="form_button_logo_size">40dp</dimen>
 
     <dimen name="addr_name_editor_height">60dp</dimen>
 
@@ -31,5 +32,10 @@
     <dimen name="act_list_other_text_size">15sp</dimen>
 
     <dimen name="manage_contacts_margin_top">10dp</dimen>
+
+    <dimen name="function_area_height">50dp</dimen>
+
+    <dimen name="contact_search_view_width">220dp</dimen>
+    <dimen name="contact_search_result_margin_top">20dp</dimen>
 
 </resources>

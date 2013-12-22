@@ -308,12 +308,15 @@ public class AddActActivity extends Activity {
         builder.setTitle(R.string.act_type_prompt);
         builder.setItems(HDType.getChns(), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                typeImage.setImageResource(HDType.values()[which].getDrawableId());
-                typeText.setText(HDType.values()[which].getChn());
+                HDType hdType = HDType.values()[which];
+                typeText.setText(hdType.getChn());
 
                 EditText promptText = (EditText) findViewById(R.id.act_type_prompt);
                 promptText.setVisibility(View.GONE);
-                promptText.setText(HDType.values()[which].toString()); // save type id in the invisible EditText
+                promptText.setText(hdType.toString()); // save type id in the invisible EditText
+
+
+                typeImage.setImageResource(hdType.getDrawableId());
 
                 findViewById(R.id.act_type_content).setVisibility(View.VISIBLE);
                 findViewById(R.id.act_type_content).setOnClickListener(new View.OnClickListener() {

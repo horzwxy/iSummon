@@ -115,6 +115,9 @@ public class MainActivity extends Activity {
                     case VIEW_ALL:
                         onListAllActs();
                         break;
+                    case MY_INVITATIONS:
+                        startActivity(new Intent(MainActivity.this, ListInvitationActivity.class));
+                        break;
                     case LOG_OUT:
                         GlobalVariables.netHelper.logOut();
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));

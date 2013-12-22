@@ -8,6 +8,7 @@
     <string name="title_activity_map">活动地图</string>
     <string name="title_manage_contact">我的好友</string>
     <string name="title_notification_list">我的消息</string>
+    <string name="title_invitation_list">我的邀请</string>
 
     <!-- global menu strings -->
     <string name="action_settings">设置</string>

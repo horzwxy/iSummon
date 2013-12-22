@@ -2,20 +2,14 @@ package com.isummon.net;
 
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDType;
-import com.isummon.model.Invitation;
+import com.isummon.model.MyInvitation;
 import com.isummon.model.LogInResultType;
 import com.isummon.model.Notification;
 import com.isummon.model.RegisterResultType;
 import com.isummon.model.SimpleHDActivity;
 import com.isummon.model.UserModel;
 
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class NetHelper {
@@ -165,7 +159,7 @@ public abstract class NetHelper {
     public abstract void onReadNotification(Notification notification);
 
     //----------------------------查看我发出的邀请
-    public abstract ArrayList<Invitation> getMyInvitations();
+    public abstract ArrayList<MyInvitation> getMyInvitations();
 
 
     public abstract  boolean isMyId(int userId);

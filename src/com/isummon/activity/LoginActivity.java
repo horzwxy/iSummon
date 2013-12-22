@@ -167,7 +167,7 @@ public class LoginActivity extends Activity {
         View focusView = null;
         final EditText registerEmail = (EditText) findViewById(R.id.register_email);
         final EditText registerNickname = (EditText) findViewById(R.id.register_nickname);
-        final EditText registerPwd = (EditText) findViewById(R.id.password);
+        final EditText registerPwd = (EditText) findViewById(R.id.register_password);
         EditText registerPwd2 = (EditText) findViewById(R.id.register_password_again);
 
         if(TextUtils.isEmpty(registerEmail.getText().toString())) {
@@ -198,8 +198,8 @@ public class LoginActivity extends Activity {
         }
         else {
             if(!registerPwd.getEditableText().toString().equals(registerPwd2.getText().toString())) {
-                registerPwd2.setError(getString(R.string.register_not_same_pwd));
-                registerPwd2.requestFocus();
+                registerPwd.setError(getString(R.string.register_not_same_pwd));
+                registerPwd.requestFocus();
                 return;
             }
             if(registerPwd.getEditableText().length() < 6) {

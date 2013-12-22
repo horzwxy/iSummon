@@ -7,6 +7,7 @@ public enum OptionListItem {
 
     MANAGE_CONTACT("我的好友"),
     MY_MESSAGE("我的消息"),
+    MY_INVITATIONS("我的邀请"),
     VIEW_ALL("查看活动"),
     ADD_ACT("创建活动"),
     LOG_OUT("注销"),
