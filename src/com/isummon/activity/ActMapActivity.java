@@ -1,10 +1,7 @@
 package com.isummon.activity;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import com.isummon.R;
 import com.isummon.model.SimpleHDActivity;
 import com.isummon.widget.ISummonMapView;
 
@@ -23,7 +20,7 @@ public class ActMapActivity extends MapActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        displayedActs = (List<SimpleHDActivity>)getIntent().getSerializableExtra(SIMPLE_ACTS);
+        displayedActs = (List<SimpleHDActivity>) getIntent().getSerializableExtra(SIMPLE_ACTS);
 
         mMapView.setDisplayMode(ISummonMapView.DisplayMode.BALLOON_ONLY);
         mMapView.showHd(displayedActs);

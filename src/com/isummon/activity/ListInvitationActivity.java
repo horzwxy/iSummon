@@ -1,6 +1,5 @@
 package com.isummon.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by horz on 12/22/13.
  */
-public class ListInvitationActivity extends Activity {
+public class ListInvitationActivity extends ISummonActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

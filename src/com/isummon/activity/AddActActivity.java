@@ -1,6 +1,5 @@
 package com.isummon.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -15,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.isummon.R;
 import com.isummon.data.GlobalVariables;
@@ -24,12 +22,10 @@ import com.isummon.model.HDProperty;
 import com.isummon.model.HDType;
 import com.isummon.widget.ProgressTaskBundle;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-public class AddActActivity extends Activity {
+public class AddActActivity extends ISummonActivity {
 
     static final String ADDRESS_NAME = "address_name";
     static final String LONGITUDE = "longitude";
@@ -198,7 +194,7 @@ public class AddActActivity extends Activity {
         builder.setItems(HDProperty.getChns(), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 EditText promptText = (EditText) findViewById(R.id.act_property);
-                promptText.setText(HDProperty.values()[which].getChn());
+                promptText.setText(HDProperty.values()[which].name());
                 result.setHdProperty(HDProperty.values()[which]);
             }
         });
@@ -296,10 +292,6 @@ public class AddActActivity extends Activity {
         return "".equals(s);
     }
 
-    protected void showToast(int stringId) {
-        Toast.makeText(this, stringId, Toast.LENGTH_SHORT).show();
-    }
-
     protected void showTypePicker() {
         final ImageView typeImage = (ImageView)findViewById(R.id.act_type_image);
         final TextView typeText = (TextView)findViewById(R.id.act_type_name);
@@ -313,10 +305,15 @@ public class AddActActivity extends Activity {
 
                 EditText promptText = (EditText) findViewById(R.id.act_type_prompt);
                 promptText.setVisibility(View.GONE);
-                promptText.setText(hdType.toString()); // save type id in the invisible EditText
+                promptText.setText(hdType.name()); // save type enum name in the invisible EditText
 
-
-                typeImage.setImageResource(hdType.getDrawableId());
+                typeImage.setImageResource(
+                        getResources().getIdentifier(
+                                "com.isummon:drawable/" + hdType.name().toLowerCase(),
+                                null,
+                                null
+                        )
+                );
 
                 findViewById(R.id.act_type_content).setVisibility(View.VISIBLE);
                 findViewById(R.id.act_type_content).setOnClickListener(new View.OnClickListener() {
@@ -437,7 +434,7 @@ public class AddActActivity extends Activity {
             et.setText(name);
         }
         else {
-            Toast.makeText(this, R.string.input_empty_hint, Toast.LENGTH_SHORT).show();
+            showToast(R.string.input_empty_hint);
         }
     }
 
@@ -464,7 +461,7 @@ public class AddActActivity extends Activity {
     }
 
     private void onChooseSearch() {
-        Toast.makeText(this, R.string.search_not_available, Toast.LENGTH_SHORT).show();
+        showToast(R.string.search_not_available);
     }
 
 

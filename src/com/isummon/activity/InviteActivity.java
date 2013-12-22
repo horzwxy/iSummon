@@ -1,6 +1,5 @@
 package com.isummon.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.isummon.R;
 import com.isummon.data.GlobalVariables;
@@ -24,7 +22,7 @@ import java.util.List;
 /**
  * Created by horzwxy on 12/20/13.
  */
-public class InviteActivity extends Activity {
+public class InviteActivity extends ISummonActivity {
 
     public static final String HD_ID = "hdid";
 
@@ -113,15 +111,11 @@ public class InviteActivity extends Activity {
             @Override
             protected void dealResult(Integer result) {
                 if(result == 0) {
-                    Toast.makeText(InviteActivity.this,
-                            R.string.submitting_success,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(R.string.submitting_success);
                     finish();
                 }
                 else {
-                    Toast.makeText(InviteActivity.this,
-                            R.string.submitting_failed,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(R.string.submitting_failed);
                 }
             }
         }.action();

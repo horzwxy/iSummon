@@ -1,77 +1,106 @@
 package com.isummon.activity;
 
+import android.app.ActionBar;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.isummon.R;
-import com.isummon.activity.listmodel.ActListMode;
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDType;
 import com.isummon.model.SimpleHDActivity;
+import com.isummon.widget.ProgressTaskBundle;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class ListAllActivity extends ListActActivity {
-
-    public static final String SIMPLE_ACTS = "simple_acts";
-
-    private List<SimpleHDActivity> displayedActs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        init();
-
-        final Spinner submodeSpinner = (Spinner) findViewById(R.id.list_submode_selector);
-        ArrayAdapter<HDType> submodeAdapter = new ArrayAdapter<HDType>(
+        ArrayList<String> modeStrings = new ArrayList<String>();
+        modeStrings.add("所有类别");
+        for(String s : HDType.getChns()) {
+            modeStrings.add(s);
+        }
+        final ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_item,
-                HDType.values());
-        submodeSpinner.setAdapter(submodeAdapter);
-        submodeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        submodeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                modeStrings) {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                HDType type = (HDType) parent.getItemAtPosition(position);
+            public View getView(int position, View convertView, ViewGroup parent) {
+                convertView = super.getView(position, convertView, parent);
+                ((TextView)convertView).setTextColor(Color.WHITE);
+                return convertView;
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                convertView = super.getDropDownView(position, convertView, parent);
+                convertView.setBackgroundColor(Color.WHITE);
+                return convertView;
             }
-        });
-
-        Spinner modeSpinner = (Spinner) findViewById(R.id.list_mode_selector);
-        final ArrayAdapter<ActListMode> modeAdapter = new ArrayAdapter<ActListMode>(
-                this,
-                android.R.layout.simple_spinner_item,
-                ActListMode.values());
+        };
         modeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        modeSpinner.setAdapter(modeAdapter);
-        modeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                submodeSpinner.setEnabled(false);
 
-                ActListMode mode = (ActListMode) parent.getItemAtPosition(position);
-                switch (mode) {
-                    case ALL:
-                        break;
-                    case TYPE:
-                        submodeSpinner.setEnabled(true);
-                        break;
-                }
+
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+            actionBar.setListNavigationCallbacks(modeAdapter,
+                    new ActionBar.OnNavigationListener() {
+                        @Override
+                        public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+                            if (itemPosition == 0) {
+                                showAllItems();
+                            } else {
+                                showSelectedItems(HDType.values()[itemPosition - 1]);
+                            }
+                            return true;
+                        }
+                    });
+        }
+    }
+
+    private void showAllItems() {
+        new ProgressTaskBundle<HDType, ArrayList<SimpleHDActivity>>(
+                this,
+                R.string.searching
+        ) {
+            @Override
+            protected ArrayList<SimpleHDActivity> doWork(HDType... params) {
+                return GlobalVariables.netHelper.getAllActs();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            protected void dealResult(ArrayList<SimpleHDActivity> result) {
+                displayedActs = result;
+                init();
             }
-        });
+        }.action();
+    }
+
+    private void showSelectedItems(HDType type) {
+        new ProgressTaskBundle<HDType, ArrayList<SimpleHDActivity>>(
+                this,
+                R.string.searching
+        ) {
+            @Override
+            protected ArrayList<SimpleHDActivity> doWork(HDType... params) {
+                return GlobalVariables.netHelper.getHDActivityByHdType(params[0]);
+            }
+
+            @Override
+            protected void dealResult(ArrayList<SimpleHDActivity> result) {
+                displayedActs = result;
+                init();
+            }
+        }.action(type);
     }
 }

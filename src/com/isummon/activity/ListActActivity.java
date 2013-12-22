@@ -1,6 +1,5 @@
 package com.isummon.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,11 +19,11 @@ import java.util.List;
 /**
  * Created by horz on 12/20/13.
  */
-public class ListActActivity extends Activity {
+public class ListActActivity extends ISummonActivity {
 
     public static final String SIMPLE_ACTS = "simple_acts";
 
-    private List<SimpleHDActivity> displayedActs;
+    protected List<SimpleHDActivity> displayedActs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,7 @@ public class ListActActivity extends Activity {
     }
 
     protected void init() {
-        ListView listView = ((ListView)findViewById(R.id.list_content));
+        ListView listView = ((ListView) findViewById(R.id.list_content));
         listView.setAdapter(
                 new SimpleHdAdapter(this, displayedActs));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

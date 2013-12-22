@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.isummon.R;
+import com.isummon.activity.ISummonActivity;
 import com.isummon.model.MyInvitation;
 
 import java.util.ArrayList;
@@ -48,7 +49,11 @@ public class InvitationAdapter extends BaseAdapter {
                     .inflate(R.layout.invitation_item,null);
         }
         ImageView avatarView = (ImageView) view.findViewById(R.id.targetAvatar);
-        avatarView.setImageResource(R.drawable.head);
+        avatarView.setImageResource(
+                ((ISummonActivity)context).getAvatarResourceId(
+                        getItem(position).getTargetAvatar()
+                )
+        );
 
         TextView contentText = (TextView) view.findViewById(R.id.invitation_content);
         MyInvitation myInvitation = getItem(position);

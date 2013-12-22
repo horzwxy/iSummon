@@ -5,89 +5,103 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/actName"
-        style="@style/ShowActLineTop" />
-
-    <TextView
-        android:id="@+id/actPlace"
-        style="@style/ShowActLine" />
-
-    <TextView
-        android:id="@+id/act_start_time"
-        style="@style/ShowActLine" />
-
-    <TextView
-        android:id="@+id/act_end_time"
-        style="@style/ShowActLine" />
-
-    <TextView
-        android:id="@+id/actContent"
-        style="@style/ShowActLine" />
-
-    <LinearLayout
-        android:id="@+id/act_type_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        style="@style/ShowActLine"
-        android:layout_height="wrap_content"
-        android:minHeight="@dimen/form_height">
-
-        <ImageView
-            android:id="@+id/act_type_image"
-            android:layout_marginLeft="@dimen/add_act_type_image_left_margin"
-            android:layout_height="@dimen/add_act_type_image_size"
-            android:layout_width="@dimen/add_act_type_image_size" />
-
-        <TextView
-            android:id="@+id/act_type_name"
-            android:layout_marginLeft="@dimen/add_act_type_text_left_margin"
-            android:textColor="#000"
-            android:textSize="@dimen/form_text_size"
-            android:gravity="center_vertical"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/act_participants"
-        style="@style/ShowActLine" />
-
-    <TextView
-        android:id="@+id/act_property"
-        style="@style/ShowActLine" />
-
-    <RelativeLayout
-        android:id="@+id/origin_can_see"
-        style="@style/FormLineTransparent"
-        android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <Button
-            android:layout_alignParentLeft="true"
-            style="@style/FormLineHalf"
-            android:text="@string/to_modify"
-            android:onClick="modifyAct"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:layout_alignParentRight="true"
-            style="@style/FormLineHalf"
-            android:text="@string/to_cancle"
-            android:onClick="cancelAct"/>
+            <TextView
+                android:id="@+id/actName"
+                style="@style/ShowActLineTop" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/actPlace"
+                style="@style/ShowActLine" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/other_can_see"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/act_start_time"
+                style="@style/ShowActLine" />
 
-        <Button
-            android:id="@+id/apply_in"
-            style="@style/ShowActButtonHighlighted"
-            android:onClick="applyIn"/>
+            <TextView
+                android:id="@+id/act_end_time"
+                style="@style/ShowActLine" />
+
+            <TextView
+                android:id="@+id/actContent"
+                style="@style/MultiLine" />
+
+            <LinearLayout
+                android:id="@+id/act_type_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                style="@style/ShowActLine"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/form_height">
+
+                <ImageView
+                    android:id="@+id/act_type_image"
+                    android:layout_marginLeft="@dimen/add_act_type_image_left_margin"
+                    android:layout_height="@dimen/add_act_type_image_size"
+                    android:layout_width="@dimen/add_act_type_image_size" />
+
+                <TextView
+                    android:id="@+id/act_type_name"
+                    android:layout_marginLeft="@dimen/add_act_type_text_left_margin"
+                    android:textColor="#000"
+                    android:textSize="@dimen/form_text_size"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/act_participants"
+                style="@style/ShowActLine" />
+
+            <TextView
+                android:id="@+id/act_property"
+                style="@style/ShowActLine" />
+
+
+            <RelativeLayout
+                android:id="@+id/origin_can_see"
+                style="@style/FormLineTransparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_alignParentLeft="true"
+                    style="@style/FormLineHalf"
+                    android:text="@string/to_modify"
+                    android:onClick="modifyAct" />
+
+                <Button
+                    android:layout_alignParentRight="true"
+                    style="@style/FormLineHalf"
+                    android:text="@string/to_cancle"
+                    android:onClick="cancelAct" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/other_can_see"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/apply_in"
+                    style="@style/ShowActButtonHighlighted"
+                    android:onClick="applyIn" />
+
+            </LinearLayout>
 
         </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

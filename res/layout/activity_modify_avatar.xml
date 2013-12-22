@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <GridView
+        android:id="@+id/avatar_gallery"
+        android:columnWidth="@dimen/avatar_main_width"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="@dimen/avatar_gallery_verticalSpacing"
+        android:horizontalSpacing="@dimen/avatar_gallery_horizontalSpacing"
+        android:stretchMode="spacingWidth"
+        android:gravity="center"
+        android:layout_width="@dimen/form_width"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

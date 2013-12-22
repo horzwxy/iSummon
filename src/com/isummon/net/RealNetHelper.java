@@ -358,5 +358,11 @@ public class RealNetHelper extends NetHelper {
         int avatar = Integer.parseInt(soapObject.getProperty("avatar").toString());
         UserModel userModel = new UserModel(userId, userName, nickName, null, avatar);
         return userModel;
+
+    }
+
+    @Override
+    public boolean updateAvatar(int avatarId) {
+        return false;
     }
 }

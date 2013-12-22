@@ -40,7 +40,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <activity
@@ -50,6 +49,7 @@
             android:name="com.isummon.activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateVisible">
+
 
 
         </activity>
@@ -80,6 +80,11 @@
             android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".activity.ListInvitationActivity"
             android:label="@string/title_invitation_list"/>
+        <activity android:name=".activity.ModifyAvatarActivity"
+            android:label="@string/choose_avatar"
+            android:theme="@android:style/Theme.Dialog">
+
+        </activity>
     </application>
 
 </manifest>

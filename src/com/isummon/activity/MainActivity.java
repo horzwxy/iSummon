@@ -1,6 +1,5 @@
 package com.isummon.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -15,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -22,8 +22,8 @@ import android.widget.TextView;
 
 import com.baidu.mapapi.BMapManager;
 import com.isummon.R;
-import com.isummon.data.GlobalVariables;
 import com.isummon.activity.listmodel.OptionListItem;
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.SimpleHDActivity;
 import com.isummon.widget.ISummonMapView;
 import com.isummon.widget.ProgressTaskBundle;
@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends ISummonActivity {
     private BMapManager mBMapMan;
     private ISummonMapView mMapView;
 
@@ -137,6 +137,11 @@ public class MainActivity extends Activity {
         mBMapMan = ((TestApplication) this.getApplication()).getBMapManager();
         mMapView = (ISummonMapView) findViewById(R.id.bmapsView);
         mMapView.setDisplayMode(ISummonMapView.DisplayMode.NORMAL);
+
+        ImageView avatarView = (ImageView) findViewById(R.id.main_head_pic);
+        avatarView.setImageResource(getAvatarResourceId(
+                GlobalVariables.currentUser.getAvatar()
+        ));
     }
 
     @Override
@@ -243,25 +248,21 @@ public class MainActivity extends Activity {
         return true;
     }
 
-    private void onListAllActs() {
-        new ProgressTaskBundle<Void, List<SimpleHDActivity>>(
-                this,
-                R.string.searching
-        ) {
-            @Override
-            protected List<SimpleHDActivity> doWork(Void... params) {
-                return GlobalVariables.netHelper.getAllActs();
-            }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ModifyAvatarActivity.MODIFY_AVATAR
+                && resultCode == RESULT_OK) {
+            int avatarId = data.getIntExtra(ModifyAvatarActivity.AVATAR_ID, 0);
+            ImageView imageView = (ImageView) findViewById(R.id.main_head_pic);
+            imageView.setImageResource(getAvatarResourceId(avatarId));
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 
-            @Override
-            protected void dealResult(List<SimpleHDActivity> result) {
-                Intent intent = new Intent();
-                intent.putExtra(ListAllActivity.SIMPLE_ACTS,
-                        new ArrayList<SimpleHDActivity>(result));
-                intent.setClass(getApplicationContext(), ListAllActivity.class);
-                startActivity(intent);
-            }
-        }.action();
+    private void onListAllActs() {
+        Intent intent = new Intent(this, ListAllActivity.class);
+        startActivity(intent);
     }
 
     private void onQuery(String query) {
@@ -280,5 +281,12 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         }.action(query);
+    }
+
+    public void modifyAvatar(View v) {
+        startActivityForResult(
+                new Intent(this, ModifyAvatarActivity.class),
+                ModifyAvatarActivity.MODIFY_AVATAR
+        );
     }
 }
