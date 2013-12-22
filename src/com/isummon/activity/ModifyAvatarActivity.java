@@ -35,8 +35,8 @@ public class ModifyAvatarActivity extends Activity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // position is equivalent with avatarId
-                onUpdateAvatar(position);
+                // (position + 1) is equivalent with avatarId
+                onUpdateAvatar(position + 1);
             }
         });
     }

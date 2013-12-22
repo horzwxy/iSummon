@@ -252,8 +252,8 @@ public class MainActivity extends Activity {
             ImageView imageView = (ImageView) findViewById(R.id.main_head_pic);
             imageView.setImageResource(
                     getResources().getIdentifier(
-                            "com.isummon:drawable/hn" +
-                                    (avatarId < 0 ? "0" + avatarId : "" + avatarId),
+                            "com.isummon:drawable/hn"
+                            + (avatarId < 10 ? "0" + avatarId : avatarId),
                             null,
                             null
                     )

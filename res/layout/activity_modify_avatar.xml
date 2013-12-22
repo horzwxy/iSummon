@@ -6,6 +6,7 @@
 
     <GridView
         android:id="@+id/avatar_gallery"
+        android:columnWidth="@dimen/avatar_main_width"
         android:numColumns="auto_fit"
         android:verticalSpacing="@dimen/avatar_gallery_verticalSpacing"
         android:horizontalSpacing="@dimen/avatar_gallery_horizontalSpacing"

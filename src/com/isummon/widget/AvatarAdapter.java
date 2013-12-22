@@ -43,14 +43,14 @@ public class AvatarAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null) {
             convertView = new ImageView(context);
-            ((ImageView)convertView).setImageResource(
-                    getItem(position)
-            );
             float width = context.getResources().getDimension(R.dimen.avatar_main_width);
             float height = context.getResources().getDimension(R.dimen.avatar_main_height);
             convertView.setLayoutParams(
-                    new GridView.LayoutParams((int)(width + 0.5), (int)(height + 0.5)));
+                    new GridView.LayoutParams((int) (width + 0.5), (int) (height + 0.5)));
         }
+        ((ImageView)convertView).setImageResource(
+                getItem(position)
+        );
         return convertView;
     }
 }
