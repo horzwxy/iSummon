@@ -9,4 +9,8 @@
     <string name="manage_contact">我的好友</string>
 
     <string name="search_act_prompt">输入活动名称</string>
+
+    <string name="choose_avatar">选择一个头像</string>
+    <string name="update_avatar_failed">头像修改失败</string>
+    <string name="update_avatar_success">头像修改成功</string>
 </resources>

@@ -8,22 +8,16 @@ import java.io.Serializable;
  * Created by horzwxy on 12/15/13.
  */
 public enum HDType implements Serializable {
-    SPORT(R.drawable.sport, "运动"),
-    STUDY(R.drawable.study, "学习"),
-    ENTERTAINMENT(R.drawable.entertainment, "娱乐"),
-    DINING(R.drawable.dining, "聚餐"),
-    OTHER(R.drawable.other, "其他");
+    SPORT("运动"),
+    STUDY("学习"),
+    ENTERTAINMENT("娱乐"),
+    DINING("聚餐"),
+    OTHER("其他");
 
-    private int drawableId;
     private String chn;
 
-    HDType(int drawableId, String chn) {
-        this.drawableId = drawableId;
+    HDType(String chn) {
         this.chn = chn;
-    }
-
-    public int getDrawableId() {
-        return this.drawableId;
     }
 
     public String getChn() {

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.isummon.R;
+import com.isummon.model.HDType;
 import com.isummon.model.SimpleHDActivity;
 
 import java.util.List;
@@ -50,10 +51,17 @@ public class SimpleHdAdapter extends BaseAdapter {
         SimpleHDActivity hdModel = resource.get(position);
 
         ImageView typeImage = (ImageView) convertView.findViewById(R.id.type_logo);
-        typeImage.setImageResource(hdModel.getHdType().getDrawableId());
+        HDType hdType = hdModel.getHdType();
+        typeImage.setImageResource(
+                context.getResources().getIdentifier(
+                        "com.isummon:drawable/" + hdType.name().toLowerCase(),
+                        null,
+                        null
+                )
+        );
 
         TextView typeName = (TextView) convertView.findViewById(R.id.type_name);
-        typeName.setText(hdModel.getHdType().getChn());
+        typeName.setText(hdType.getChn());
 
         TextView originName = (TextView) convertView.findViewById(R.id.origin_name);
         originName.setText(hdModel.getHdOriginName());

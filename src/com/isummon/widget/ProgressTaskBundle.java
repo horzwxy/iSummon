@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 
+import com.isummon.net.FakeNetHelper;
+
 /**
  * Created by horzwxy on 12/20/13.
  */
@@ -28,6 +30,7 @@ public abstract class ProgressTaskBundle<P, R> {
         task = new AsyncTask<P, Void, R>() {
             @Override
             protected R doInBackground(P... params) {
+                FakeNetHelper.fakeBlock();
                 return doWork(params);
             }
 

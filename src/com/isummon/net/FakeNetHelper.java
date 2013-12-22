@@ -5,14 +5,13 @@ import com.isummon.model.HDActivity;
 import com.isummon.model.HDProperty;
 import com.isummon.model.HDStatus;
 import com.isummon.model.HDType;
-import com.isummon.model.Invitation;
+import com.isummon.model.MyInvitation;
 import com.isummon.model.LogInResultType;
 import com.isummon.model.Notification;
 import com.isummon.model.RegisterResultType;
 import com.isummon.model.SimpleHDActivity;
 import com.isummon.model.UserModel;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,10 +25,11 @@ public class FakeNetHelper extends NetHelper {
     private ArrayList<UserModel> users = new ArrayList<UserModel>();
     private ArrayList<UserModel> contacts = new ArrayList<UserModel>();
     private ArrayList<Notification> notifications = new ArrayList<Notification>();
+    private ArrayList<MyInvitation> invitations = new ArrayList<MyInvitation>();
 
     public FakeNetHelper(){
         UserModel m1 = new UserModel();
-        m1.setAvatar(0);
+        m1.setAvatar(8);
         m1.setNickName("horzwxy");
         m1.setPasswd("horzwxy");
         m1.setUserId(1);
@@ -37,7 +37,7 @@ public class FakeNetHelper extends NetHelper {
         users.add(m1);
 
         UserModel m2 = new UserModel();
-        m2.setAvatar(0);
+        m2.setAvatar(2);
         m2.setNickName("罗玉凤");
         m2.setPasswd("lyf");
         m2.setUserId(2);
@@ -45,7 +45,7 @@ public class FakeNetHelper extends NetHelper {
         users.add(m2);
 
         UserModel m3 = new UserModel();
-        m3.setAvatar(0);
+        m3.setAvatar(3);
         m3.setNickName("陈水扁");
         m3.setPasswd("csb");
         m3.setUserId(3);
@@ -59,8 +59,8 @@ public class FakeNetHelper extends NetHelper {
         a1.setHdId(1);
         a1.setHdName("我们去加班吧!");
         a1.setHdAddress("世界500强");
-        a1.setHdStartTime("2013-12-18:0915");
-        a1.setHdEndTime("2013-12-19:0916");
+        a1.setHdStartTime("2013-12-18 09:15");
+        a1.setHdEndTime("2013-12-19 09:16");
         a1.setHdDesc("加班是世界上最幸福的事情！！！");
         a1.setHdCurNum(0);
         a1.setHdNumLimit(100);
@@ -77,8 +77,8 @@ public class FakeNetHelper extends NetHelper {
         a2.setHdId(2);
         a2.setHdName("我去炸学校，天天不迟到");
         a2.setHdAddress("复旦大学");
-        a2.setHdStartTime("2013-12-17:0915");
-        a2.setHdEndTime("2013-12-18:0916");
+        a2.setHdStartTime("2013-12-17 09:15");
+        a2.setHdEndTime("2013-12-18 09:16");
         a2.setHdDesc("万恶的PJ");
         a2.setHdCurNum(5);
         a2.setHdNumLimit(6);
@@ -94,8 +94,8 @@ public class FakeNetHelper extends NetHelper {
         HDActivity a3 = new HDActivity();
         a3.setHdName("入党");
         a3.setHdAddress("桃园劳教所");
-        a3.setHdStartTime("2013-12-20:2100");
-        a3.setHdEndTime("2013-12-21:2200");
+        a3.setHdStartTime("2013-12-20 21:00");
+        a3.setHdEndTime("2013-12-21 22:00");
         a3.setHdDesc("伟大！光荣！正确！");
         a3.setHdCurNum(1);
         a3.setHdNumLimit(1);
@@ -109,11 +109,20 @@ public class FakeNetHelper extends NetHelper {
         hdArray.add(a3);
 
         Notification n1 = new Notification(
+                0,
                 m1.getNickName(),
                 m1.getAvatar(),
                 a1.getHdId()
         );
         notifications.add(n1);
+
+        MyInvitation i1 = new MyInvitation(
+                m2.getNickName(),
+                m2.getAvatar(),
+                "入党",
+                MyInvitation.InvitationStatus.READ
+        );
+        invitations.add(i1);
     }
 
     @Override
@@ -174,7 +183,7 @@ public class FakeNetHelper extends NetHelper {
 
     @Override
     public RegisterResultType register(UserModel newUser) {
-        return null;
+        return RegisterResultType.SUCCESS;
     }
 
     @Override
@@ -249,20 +258,25 @@ public class FakeNetHelper extends NetHelper {
 
     @Override
     public boolean isMyId(int userId) {
-//        return GlobalVariables.currentUser.getUserId() == userId;
-        return false;
+        return GlobalVariables.currentUser.getUserId() == userId;
     }
 
     @Override
-    public ArrayList<Invitation> getMyInvitations() {
-        return null;
+    public ArrayList<MyInvitation> getMyInvitations() {
+        return invitations;
     }
 
     public static void fakeBlock() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean updateAvatar(int avatarId) {
+        GlobalVariables.currentUser.setAvatar(avatarId);
+        return true;
     }
 }

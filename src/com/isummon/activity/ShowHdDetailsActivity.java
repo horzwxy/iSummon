@@ -1,18 +1,17 @@
 package com.isummon.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.isummon.R;
 import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDStatus;
+import com.isummon.model.HDType;
 import com.isummon.widget.ProgressTaskBundle;
 
 import java.text.DateFormat;
@@ -23,7 +22,7 @@ import java.util.Date;
 /**
  * Created by horzwxy on 12/18/13.
  */
-public class ShowHdDetailsActivity extends Activity {
+public class ShowHdDetailsActivity extends ISummonActivity {
 
     public static final String HDACTIVITY = "hdActivity";
     private HDActivity hdActivity;
@@ -42,7 +41,7 @@ public class ShowHdDetailsActivity extends Activity {
         setText(R.id.actName, R.string.act_name_prompt, hdActivity.getHdName());
         setText(R.id.actPlace, R.string.act_place_prompt, hdActivity.getHdAddress());
         DateFormat s2Date = new SimpleDateFormat(HDActivity.tmFormat);
-        DateFormat date2s = new SimpleDateFormat("yyyy年MM月dd日  HH : mm");
+        DateFormat date2s = new SimpleDateFormat("yyyy年MM月dd日 HH : mm");
         try {
             Date startDate = s2Date.parse(hdActivity.getHdStartTime());
             Date endDate = s2Date.parse(hdActivity.getHdEndTime());
@@ -62,8 +61,16 @@ public class ShowHdDetailsActivity extends Activity {
 
         ImageView typeImage = (ImageView)findViewById(R.id.act_type_image);
         TextView typeText = (TextView)findViewById(R.id.act_type_name);
-        typeImage.setImageResource(hdActivity.getHdType().getDrawableId());
-        typeText.setText(hdActivity.getHdType().getChn());
+
+        HDType type = hdActivity.getHdType();
+
+        int imageId = getResources().getIdentifier(
+                "com.isummon:drawable/" + type.name().toLowerCase(),
+                null,
+                null
+        );
+        typeImage.setImageResource(imageId);
+        typeText.setText(type.getChn());
 
         if(GlobalVariables.netHelper.isMyId(
                 hdActivity.getHdOriginId()
@@ -89,7 +96,25 @@ public class ShowHdDetailsActivity extends Activity {
     }
 
     public void applyIn(View v) {
+        new ProgressTaskBundle<Integer, Boolean>(
+                this,
+                R.string.delivering
+        ) {
+            @Override
+            protected Boolean doWork(Integer... params) {
+                return GlobalVariables.netHelper.applyHDActivity(params[0]);
+            }
 
+            @Override
+            protected void dealResult(Boolean result) {
+                if (result) {
+                    showToast(R.string.apply_success);
+                    finish();
+                } else {
+                    showToast(R.string.apply_failed);
+                }
+            }
+        }.action(hdActivity.getHdId());
     }
 
     public void cancelAct(View v) {
@@ -105,15 +130,11 @@ public class ShowHdDetailsActivity extends Activity {
             @Override
             protected void dealResult(Boolean result) {
                 if(result) {
-                    Toast.makeText(ShowHdDetailsActivity.this,
-                            R.string.cancel_success,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(R.string.cancel_success);
                     finish();
                 }
                 else {
-                    Toast.makeText(ShowHdDetailsActivity.this,
-                            R.string.cancel_failed,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(R.string.cancel_failed);
                 }
             }
         }.action(hdActivity.getHdId());

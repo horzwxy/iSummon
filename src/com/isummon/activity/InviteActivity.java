@@ -1,25 +1,18 @@
 package com.isummon.activity;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.isummon.R;
 import com.isummon.data.GlobalVariables;
-import com.isummon.model.Invitation;
 import com.isummon.model.UserModel;
-import com.isummon.net.NetHelper;
 import com.isummon.widget.ContactAdapter;
 import com.isummon.widget.ProgressTaskBundle;
 
@@ -29,11 +22,12 @@ import java.util.List;
 /**
  * Created by horzwxy on 12/20/13.
  */
-public class InviteActivity extends Activity {
+public class InviteActivity extends ISummonActivity {
 
     public static final String HD_ID = "hdid";
 
-    private List<UserModel> invitedList;
+    private ArrayList<UserModel> invitedList;
+    private int hdId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +35,9 @@ public class InviteActivity extends Activity {
 
         setContentView(R.layout.activity_invite);
         getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg_black);
+
+        Intent intent = getIntent();
+        hdId = intent.getIntExtra(HD_ID, -1);
 
         invitedList = new ArrayList<UserModel>();
     }
@@ -102,27 +99,23 @@ public class InviteActivity extends Activity {
     }
 
     public void submitInivitation(View v) {
-        new ProgressTaskBundle<Invitation, Integer>(
+        new ProgressTaskBundle<Void, Integer>(
                 this,
                 R.string.submitting_invitation
         ) {
             @Override
-            protected Integer doWork(Invitation... params) {
-                return 0;
+            protected Integer doWork(Void... params) {
+                return GlobalVariables.netHelper.invite(hdId, invitedList);
             }
 
             @Override
             protected void dealResult(Integer result) {
                 if(result == 0) {
-                    Toast.makeText(InviteActivity.this,
-                            R.string.submitting_success,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(R.string.submitting_success);
                     finish();
                 }
                 else {
-                    Toast.makeText(InviteActivity.this,
-                            R.string.submitting_failed,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(R.string.submitting_failed);
                 }
             }
         }.action();
