@@ -6,12 +6,17 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
 import com.baidu.mapapi.map.ItemizedOverlay;
 import com.baidu.mapapi.map.MKMapTouchListener;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.OverlayItem;
+import com.baidu.mapapi.map.PopupClickListener;
+import com.baidu.mapapi.map.PopupOverlay;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.isummon.R;
 import com.isummon.activity.AddActActivity;
@@ -22,9 +27,12 @@ import com.isummon.model.SimpleHDActivity;
 import com.isummon.net.NetHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import android.graphics.Bitmap;
 
 /**
  * Created by horzwxy on 12/15/13.
@@ -38,7 +46,9 @@ public class ISummonMapView extends MapView {
     private PointOverlay pointOverlay;
     private PickMapAddressActivity.AddressPickedListener listener;
     private boolean longTouchEnable = true;
-    private int [] index2hdId;
+    private ArrayList<SimpleHDActivity> currentHDList;
+
+
 
     public ISummonMapView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -127,7 +137,8 @@ public class ISummonMapView extends MapView {
     }
 
     public void showHd(List<SimpleHDActivity> hdIdList) {
-       mOverlay.addItem(getItemFromHdActivity((ArrayList<SimpleHDActivity>)hdIdList));
+       currentHDList = (ArrayList<SimpleHDActivity>)hdIdList;
+       mOverlay.addItem(getItemFromHdActivity(currentHDList));
     }
 
     private void showAddActActivity(double longitude, double latitude) {
@@ -142,13 +153,11 @@ public class ISummonMapView extends MapView {
     private ArrayList<OverlayItem> getItemFromHdActivity(ArrayList<SimpleHDActivity> hdList){
         if(hdList == null || hdList.size() == 0)
             return null;
-        index2hdId = new int[hdList.size()];
         ArrayList<OverlayItem> itemList = new ArrayList<OverlayItem>();
         for(int i = 0; i < hdList.size(); i++){
             SimpleHDActivity hd = hdList.get(i);
             GeoPoint point = new GeoPoint((int) hd.getHdLatitude(), (int) hd.getHdLongitude());
             itemList.add(new OverlayItem(point, hd.getHdName(), hd.getHdOriginName()));
-            index2hdId[i] = hd.getHdId();
         }
         return itemList;
     }
@@ -163,30 +172,77 @@ public class ISummonMapView extends MapView {
     private int getDefaultZoomClass() {
         // zoom from 3 to 19,
         return 19;
-
     }
+
+
 
     /**
      * ********************** Inner class, itemized layout ********
      */
     private class MyOverlay extends ItemizedOverlay<OverlayItem> {
-
+        private TextView popupText = null;
+        private View viewCache = null;
+        private View popupInfo = null;
+        private View popupLeft = null;
+        private View popupRight = null;
+        private PopupOverlay pop ;
         public MyOverlay(Drawable defaultMarker, MapView mapView) {
             super(defaultMarker, mapView);
-            // TODO Auto-generated constructor stub
+
+            viewCache = LayoutInflater.from(getContext()).inflate(R.layout.custom_text_view, null);
+            popupInfo = (View) viewCache.findViewById(R.id.popinfo);
+            popupLeft = (View) viewCache.findViewById(R.id.popleft);
+            popupRight = (View) viewCache.findViewById(R.id.popright);
+            popupText =(TextView) viewCache.findViewById(R.id.textcache);
+
+
         }
 
         protected boolean onTap(int index) {
-            getItem(index);
-//			Toast.makeText(getApplicationContext(), "item index: " + index + " content: " + item.getTitle(), Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent();
-            // how can I get hdId?
-            //intent.putExtra(ShowHdDetailsActivity.HDACTIVITY, FakeDataProvider.getHDById(index));
-            intent.setClass(getContext().getApplicationContext(), ShowHdDetailsActivity.class);
-            intent.putExtra("index", index);
-            getContext().startActivity(intent);
+            final SimpleHDActivity selectedHd = currentHDList.get(index);
+            PopupClickListener popListener = new PopupClickListener(){
+                @Override
+                public void onClickedPopup(int popIndex) {
+                    if ( popIndex == 0){
+                        //查看活动
+                        Intent intent = new Intent();
+                        intent.setClass(getContext().getApplicationContext(), ShowHdDetailsActivity.class);
+                        intent.putExtra(ShowHdDetailsActivity.HDACTIVITY, selectedHd);
+                        getContext().startActivity(intent);
+                    }
+                    else if(popIndex == 2){
+                        //申请加入
+                        if()
+                    }
+                }
+            };
+            pop = new PopupOverlay(mMapView,popListener);
+            popupText.setText(getItem(index).getTitle());
+            Bitmap[] bitMaps={
+                    getBitmapFromView(popupLeft),
+                    getBitmapFromView(popupInfo),
+                    getBitmapFromView(popupRight)
+            };
+            pop.showPopup(bitMaps,getItem(index).getPoint(),32);
             return false;
         }
+        @Override
+        public boolean onTap(GeoPoint pt , MapView mMapView){
+            if (pop != null){
+                pop.hidePop();
+            }
+            return false;
+        }
+        public  Bitmap getBitmapFromView(View view) {
+            view.destroyDrawingCache();
+            view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+            view.setDrawingCacheEnabled(true);
+            Bitmap bitmap = view.getDrawingCache(true);
+            return bitmap;
+        }
+
     }
 
     private class PointOverlay extends  ItemizedOverlay<OverlayItem>{
@@ -201,6 +257,8 @@ public class ISummonMapView extends MapView {
             listener.onAddressPicked(geoPoint.getLongitudeE6(), geoPoint.getLongitudeE6());
             return true;
         }
+
+
     }
 
     public enum DisplayMode {
