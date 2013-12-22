@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Created by horzwxy on 12/19/13.
  */
-public class AddContactActivity extends Activity {
+public class AddContactActivity extends ISummonActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.isummon.R;
+import com.isummon.activity.ISummonActivity;
 import com.isummon.model.UserModel;
 
 import java.util.List;
@@ -48,7 +49,10 @@ public class ContactAdapter extends BaseAdapter {
                     .inflate(R.layout.contact_list_item, null);
         }
         ImageView avatar = (ImageView) convertView.findViewById(R.id.contact_avatar);
-        avatar.setImageResource(R.drawable.head);
+        avatar.setImageResource(
+                ((ISummonActivity)context).getAvatarResourceId(
+                        getItem(position).getAvatar())
+        );
         TextView name = (TextView) convertView.findViewById(R.id.contact_name);
         name.setText(getItem(position).getNickName());
 

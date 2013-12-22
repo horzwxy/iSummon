@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Created by horzwxy on 12/20/13.
  */
-public class InviteActivity extends Activity {
+public class InviteActivity extends ISummonActivity {
 
     public static final String HD_ID = "hdid";
 

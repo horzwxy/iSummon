@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by horzwxy on 12/19/13.
  */
-public class ManageContactActivity extends Activity {
+public class ManageContactActivity extends ISummonActivity {
 
     public static final int ADD_CONTACT = 7865;
 

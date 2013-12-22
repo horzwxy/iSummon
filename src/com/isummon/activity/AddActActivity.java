@@ -29,7 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-public class AddActActivity extends Activity {
+public class AddActActivity extends ISummonActivity {
 
     static final String ADDRESS_NAME = "address_name";
     static final String LONGITUDE = "longitude";
@@ -198,7 +198,7 @@ public class AddActActivity extends Activity {
         builder.setItems(HDProperty.getChns(), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 EditText promptText = (EditText) findViewById(R.id.act_property);
-                promptText.setText(HDProperty.values()[which].getChn());
+                promptText.setText(HDProperty.values()[which].name());
                 result.setHdProperty(HDProperty.values()[which]);
             }
         });
@@ -313,7 +313,7 @@ public class AddActActivity extends Activity {
 
                 EditText promptText = (EditText) findViewById(R.id.act_type_prompt);
                 promptText.setVisibility(View.GONE);
-                promptText.setText(hdType.getChn()); // save type id in the invisible EditText
+                promptText.setText(hdType.name()); // save type enum name in the invisible EditText
 
                 typeImage.setImageResource(
                         getResources().getIdentifier(

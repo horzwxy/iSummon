@@ -22,7 +22,6 @@
         <ImageView
             android:id="@+id/main_head_pic"
             android:contentDescription="@string/head_pic_desp"
-            android:src="@drawable/head"
             android:layout_marginTop="20dp"
             android:layout_height="@dimen/avatar_main_height"
             android:layout_width="@dimen/avatar_main_width"

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by horzwxy on 12/22/13.
  */
-public class ModifyAvatarActivity extends Activity {
+public class ModifyAvatarActivity extends ISummonActivity {
 
     public final static int MODIFY_AVATAR = 757347;
     public final static String AVATAR_ID = "avatar_id";
@@ -72,12 +72,7 @@ public class ModifyAvatarActivity extends Activity {
     private ArrayList<Integer> getAvatarResourceIds() {
         ArrayList<Integer> result = new ArrayList<Integer>();
         for(int i = 1; i <= 22; i++) {
-            int id = getResources().getIdentifier(
-                    "com.isummon:drawable/hn" +
-                            ((i < 10) ? "0" + i : i + "" ),
-                    null,
-                    null
-            );
+            int id = getAvatarResourceId(i);
             result.add(id);
         }
         return result;

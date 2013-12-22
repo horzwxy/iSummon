@@ -29,7 +29,7 @@ public class FakeNetHelper extends NetHelper {
 
     public FakeNetHelper(){
         UserModel m1 = new UserModel();
-        m1.setAvatar(0);
+        m1.setAvatar(8);
         m1.setNickName("horzwxy");
         m1.setPasswd("horzwxy");
         m1.setUserId(1);
@@ -37,7 +37,7 @@ public class FakeNetHelper extends NetHelper {
         users.add(m1);
 
         UserModel m2 = new UserModel();
-        m2.setAvatar(0);
+        m2.setAvatar(2);
         m2.setNickName("罗玉凤");
         m2.setPasswd("lyf");
         m2.setUserId(2);
@@ -45,7 +45,7 @@ public class FakeNetHelper extends NetHelper {
         users.add(m2);
 
         UserModel m3 = new UserModel();
-        m3.setAvatar(0);
+        m3.setAvatar(3);
         m3.setNickName("陈水扁");
         m3.setPasswd("csb");
         m3.setUserId(3);
@@ -117,8 +117,8 @@ public class FakeNetHelper extends NetHelper {
         notifications.add(n1);
 
         MyInvitation i1 = new MyInvitation(
-                "罗玉凤",
-                0,
+                m2.getNickName(),
+                m2.getAvatar(),
                 "入党",
                 MyInvitation.InvitationStatus.READ
         );
@@ -258,8 +258,7 @@ public class FakeNetHelper extends NetHelper {
 
     @Override
     public boolean isMyId(int userId) {
-//        return GlobalVariables.currentUser.getUserId() == userId;
-        return false;
+        return GlobalVariables.currentUser.getUserId() == userId;
     }
 
     @Override

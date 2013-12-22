@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.isummon.R;
+import com.isummon.activity.ISummonActivity;
 import com.isummon.model.Notification;
 
 import java.util.List;
@@ -50,7 +51,11 @@ public class NotificationAdapter extends BaseAdapter {
             );
         }
         ImageView avatar = (ImageView) convertView.findViewById(R.id.origin_avatar);
-        avatar.setImageResource(R.drawable.head);
+        avatar.setImageResource(
+                ((ISummonActivity)context).getAvatarResourceId(
+                        getItem(position).getOriginAvatar()
+                )
+        );
         TextView originName = (TextView) convertView.findViewById(R.id.origin_name);
         originName.setText(getItem(position).getOriginName() + "向你发出了邀请");
 

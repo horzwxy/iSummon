@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends ISummonActivity {
     private BMapManager mBMapMan;
     private ISummonMapView mMapView;
 
@@ -138,6 +138,11 @@ public class MainActivity extends Activity {
         mBMapMan = ((TestApplication) this.getApplication()).getBMapManager();
         mMapView = (ISummonMapView) findViewById(R.id.bmapsView);
         mMapView.setDisplayMode(ISummonMapView.DisplayMode.NORMAL);
+
+        ImageView avatarView = (ImageView) findViewById(R.id.main_head_pic);
+        avatarView.setImageResource(getAvatarResourceId(
+                GlobalVariables.currentUser.getAvatar()
+        ));
     }
 
     @Override
@@ -250,14 +255,7 @@ public class MainActivity extends Activity {
                 && resultCode == RESULT_OK) {
             int avatarId = data.getIntExtra(ModifyAvatarActivity.AVATAR_ID, 0);
             ImageView imageView = (ImageView) findViewById(R.id.main_head_pic);
-            imageView.setImageResource(
-                    getResources().getIdentifier(
-                            "com.isummon:drawable/hn"
-                            + (avatarId < 10 ? "0" + avatarId : avatarId),
-                            null,
-                            null
-                    )
-            );
+            imageView.setImageResource(getAvatarResourceId(avatarId));
         }
         else {
             super.onActivityResult(requestCode, resultCode, data);

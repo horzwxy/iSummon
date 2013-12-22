@@ -9,7 +9,7 @@ import com.isummon.widget.ISummonMapView;
 /**
  * Created by horzwxy on 12/19/13.
  */
-public class MapActivity extends Activity {
+public class MapActivity extends ISummonActivity {
 
     protected ISummonMapView mMapView;
 

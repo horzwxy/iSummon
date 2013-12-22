@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Created by horzwxy on 12/20/13.
  */
-public class NotificationListActivity extends Activity {
+public class NotificationListActivity extends ISummonActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

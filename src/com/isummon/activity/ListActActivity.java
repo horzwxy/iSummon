@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by horz on 12/20/13.
  */
-public class ListActActivity extends Activity {
+public class ListActActivity extends ISummonActivity {
 
     public static final String SIMPLE_ACTS = "simple_acts";
 

@@ -45,7 +45,7 @@ import com.isummon.widget.ProgressTaskBundle;
  * @author horzwxy
  *
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends ISummonActivity {
 
     public static final int ANIMATION_DURATION = 100;
 
