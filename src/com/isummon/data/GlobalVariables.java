@@ -9,5 +9,6 @@ import com.isummon.net.NetHelper;
 public class GlobalVariables {
 
     public static NetHelper netHelper = NetHelper.getInstance();
-    public static UserModel currentUser = netHelper.findUserByName("horzwxy").get(0);
+    public static UserModel currentUser = new UserModel();
+//    public static UserModel currentUser = netHelper.findUserByName("horzwxy").get(0);
 }

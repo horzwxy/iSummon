@@ -19,12 +19,15 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by horz on 12/20/13.
  */
 public class RealNetHelper extends NetHelper {
+    private final String TAG ="iSummon";
     String userActionUrl = "http://10.131.251.146:8080/iSummon/services/UserActionImpl?wsdl";
     public RealNetHelper(){
         super();
@@ -81,7 +84,7 @@ public class RealNetHelper extends NetHelper {
      */
     public LogInResultType login(String username, String passwd) {
 
-        Log.v("Login", "in login: username " + username + "  passwd: " + passwd);
+        Log.v(TAG, "in login: username " + username + "  passwd: " + passwd);
         String methodName = "login";
         SoapObject request = new SoapObject(namespace, methodName);
         request.addProperty("username", username);
@@ -100,7 +103,9 @@ public class RealNetHelper extends NetHelper {
                     return LogInResultType.FAIL_NOT_MATCH;
 
                 GlobalVariables.currentUser = parseUserModel(soapObject);
-                Log.v("Login", GlobalVariables.currentUser.toString());
+                Log.v(TAG, GlobalVariables.currentUser.toString());
+//                register(new UserModel());
+                getAllContacts();
                 return LogInResultType.SUCCESS;
             } else {
                 return LogInResultType.FAIL_NOT_MATCH;
@@ -117,7 +122,6 @@ public class RealNetHelper extends NetHelper {
      * @return
      */
     public RegisterResultType register(UserModel newUser) {
-
         String methodName = "register";
         SoapObject request = new SoapObject(namespace, methodName);
         request.addProperty("username", newUser.getUserName());
@@ -132,20 +136,25 @@ public class RealNetHelper extends NetHelper {
             // 第5步：调用WebService
             ht.call(null, envelope);
             if (envelope.getResponse() != null) {
-                SoapObject soapObject = (SoapObject) envelope.getResponse();
-                return RegisterResultType.SUCCESS;
+                int retcode = Integer.parseInt( envelope.getResponse().toString());
+                if(retcode == 0)
+                    return RegisterResultType.SUCCESS;
+                else if(retcode == -2)
+                    return  RegisterResultType.FAIL_ON_USED_EMAIL;
+                else
+                    return RegisterResultType.FAIL_TIME_OUT;
             } else {
                 return RegisterResultType.FAIL_TIME_OUT;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return RegisterResultType.SUCCESS;
+        return RegisterResultType.FAIL_TIME_OUT;
     }
 
     @Override
     public void logOut() {
-
+        GlobalVariables.currentUser = null;
     }
 
     /**
@@ -262,7 +271,7 @@ public class RealNetHelper extends NetHelper {
     @Override
     public ArrayList<SimpleHDActivity> getHDActivityByHdType(HDType hdType) {
         return null;
-    }
+    }.
 
     //查询某时间范围以内的活动，两个参数可以一个为null，如(startTime, null)表示startTime以后的所有活动
     @Override
@@ -307,6 +316,7 @@ public class RealNetHelper extends NetHelper {
 
     @Override
     public ArrayList<UserModel> getAllContacts() {
+        ArrayList<UserModel> resultList = new ArrayList<UserModel>();
         String methodName = "getAllContacts";
         SoapObject request = new SoapObject(namespace, methodName);
         request.addProperty("userId", 1);
@@ -314,25 +324,30 @@ public class RealNetHelper extends NetHelper {
                 SoapEnvelope.VER11);
         envelope.bodyOut = request;
         HttpTransportSE ht = new HttpTransportSE(userActionUrl);
-        String TAG = "getAllContacts";
         try {
             // 第5步：调用WebService
+            Log.v(TAG, "before call to getAllContacts");
             ht.call(null, envelope);
             if (envelope.getResponse() != null) {
-                SoapObject soapObject = (SoapObject)envelope.getResponse();
+                Vector soapObject = (Vector)envelope.getResponse();
                 if(soapObject == null){
-                    Log.v(TAG, "return null!" );
-                    return  null;
+                    Log.v(TAG, "soapObject  null!" );
+                    return  resultList;
                 }
-                int listSize = soapObject.getPropertyCount();
-                Log.v(TAG, "list size: " + listSize);
-
+                Iterator ie = soapObject.iterator();
+                while (ie.hasNext()){
+                    UserModel um  = parseUserModel((SoapObject)ie.next());
+                    resultList.add(um);
+                }
+                Log.v(TAG, "getAllContacts() get " + resultList.size() + " contacts");
             } else {
+                Log.v(TAG, "envelope.getResponse()  null!" );
+                return  resultList;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return resultList;
     }
 
     @Override
