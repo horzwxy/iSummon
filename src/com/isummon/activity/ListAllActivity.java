@@ -1,32 +1,29 @@
 package com.isummon.activity;
 
+import android.app.ActionBar;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.isummon.R;
-import com.isummon.activity.listmodel.ActListMode;
 import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDType;
 import com.isummon.model.SimpleHDActivity;
 import com.isummon.widget.ProgressTaskBundle;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ListAllActivity extends ListActActivity {
-
-    public static final String SIMPLE_ACTS = "simple_acts";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        Spinner modeSpinner = (Spinner) findViewById(R.id.list_mode_selector);
         ArrayList<String> modeStrings = new ArrayList<String>();
         modeStrings.add("所有类别");
         for(String s : HDType.getChns()) {
@@ -35,25 +32,40 @@ public class ListAllActivity extends ListActActivity {
         final ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_item,
-                modeStrings);
+                modeStrings) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                convertView = super.getView(position, convertView, parent);
+                ((TextView)convertView).setTextColor(Color.WHITE);
+                return convertView;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                convertView = super.getDropDownView(position, convertView, parent);
+                convertView.setBackgroundColor(Color.WHITE);
+                return convertView;
+            }
+        };
         modeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        modeSpinner.setAdapter(modeAdapter);
-        modeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0) {
-                    showAllItems();
-                }
-                else {
-                    showSelectedItems(HDType.values()[position - 1]);
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+            actionBar.setListNavigationCallbacks(modeAdapter,
+                    new ActionBar.OnNavigationListener() {
+                        @Override
+                        public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+                            if (itemPosition == 0) {
+                                showAllItems();
+                            } else {
+                                showSelectedItems(HDType.values()[itemPosition - 1]);
+                            }
+                            return true;
+                        }
+                    });
+        }
     }
 
     private void showAllItems() {
