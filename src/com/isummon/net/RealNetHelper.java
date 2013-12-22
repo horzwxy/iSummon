@@ -271,7 +271,7 @@ public class RealNetHelper extends NetHelper {
     @Override
     public ArrayList<SimpleHDActivity> getHDActivityByHdType(HDType hdType) {
         return null;
-    }.
+    }
 
     //查询某时间范围以内的活动，两个参数可以一个为null，如(startTime, null)表示startTime以后的所有活动
     @Override
