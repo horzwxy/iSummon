@@ -39,4 +39,9 @@
     <dimen name="contact_search_view_width">300dp</dimen>
     <dimen name="contact_search_result_margin_top">30dp</dimen>
 
+    <dimen name="avatar_main_width">50dp</dimen>
+    <dimen name="avatar_main_height">62.5dp</dimen>
+    <dimen name="avatar_gallery_verticalSpacing">10dp</dimen>
+    <dimen name="avatar_gallery_horizontalSpacing">10dp</dimen>
+
 </resources>

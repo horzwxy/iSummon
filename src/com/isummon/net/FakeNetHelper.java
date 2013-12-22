@@ -1,5 +1,6 @@
 package com.isummon.net;
 
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDProperty;
 import com.isummon.model.HDStatus;
@@ -272,5 +273,11 @@ public class FakeNetHelper extends NetHelper {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean updateAvatar(int avatarId) {
+        GlobalVariables.currentUser.setAvatar(avatarId);
+        return true;
     }
 }

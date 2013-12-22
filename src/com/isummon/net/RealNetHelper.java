@@ -318,4 +318,9 @@ public class RealNetHelper extends NetHelper {
     public boolean isMyId(int userId) {
         return false;
     }
+
+    @Override
+    public boolean updateAvatar(int avatarId) {
+        return false;
+    }
 }

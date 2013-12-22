@@ -162,7 +162,9 @@ public abstract class NetHelper {
     public abstract ArrayList<MyInvitation> getMyInvitations();
 
 
-    public abstract  boolean isMyId(int userId);
+    public abstract boolean isMyId(int userId);
+
+    public abstract boolean updateAvatar(int avatarId);
 }
 
 

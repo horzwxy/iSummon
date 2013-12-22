@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -243,6 +244,26 @@ public class MainActivity extends Activity {
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == ModifyAvatarActivity.MODIFY_AVATAR
+                && resultCode == RESULT_OK) {
+            int avatarId = data.getIntExtra(ModifyAvatarActivity.AVATAR_ID, 0);
+            ImageView imageView = (ImageView) findViewById(R.id.main_head_pic);
+            imageView.setImageResource(
+                    getResources().getIdentifier(
+                            "com.isummon:drawable/hn" +
+                                    (avatarId < 0 ? "0" + avatarId : "" + avatarId),
+                            null,
+                            null
+                    )
+            );
+        }
+        else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
     private void onListAllActs() {
         new ProgressTaskBundle<Void, List<SimpleHDActivity>>(
                 this,
@@ -280,5 +301,12 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         }.action(query);
+    }
+
+    public void modifyAvatar(View v) {
+        startActivityForResult(
+                new Intent(this, ModifyAvatarActivity.class),
+                ModifyAvatarActivity.MODIFY_AVATAR
+        );
     }
 }
