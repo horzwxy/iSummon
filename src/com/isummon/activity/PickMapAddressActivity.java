@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.isummon.R;
 import com.isummon.widget.ISummonMapView;
@@ -61,7 +60,7 @@ public class PickMapAddressActivity extends MapActivity {
             onReturnAddressResult(name, longitude, latitude);
         }
         else {
-            Toast.makeText(this, R.string.input_empty_hint, Toast.LENGTH_SHORT).show();
+            showToast(R.string.input_empty_hint);
         }
     }
 

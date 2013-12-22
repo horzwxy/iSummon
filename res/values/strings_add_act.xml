@@ -65,4 +65,7 @@
     <string name="cancel_failed">未能取消活动</string>
     <string name="modify_success">修改已修改</string>
     <string name="modify_failed">未能修改活动</string>
+
+    <string name="apply_success">已加入活动</string>
+    <string name="apply_failed">未能加入活动</string>
 </resources>

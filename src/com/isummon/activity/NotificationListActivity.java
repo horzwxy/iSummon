@@ -1,6 +1,5 @@
 package com.isummon.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,14 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.isummon.R;
 import com.isummon.activity.listmodel.NotificationRespondMode;
 import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.Notification;
-import com.isummon.net.NetHelper;
 import com.isummon.widget.NotificationAdapter;
 import com.isummon.widget.ProgressTaskBundle;
 
@@ -50,9 +47,7 @@ public class NotificationListActivity extends ISummonActivity {
                 if (result.size() != 0) {
                     updateList(result);
                 } else {
-                    Toast.makeText(NotificationListActivity.this,
-                            R.string.no_notification,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(R.string.no_notification);
                 }
             }
         }.action();
@@ -66,7 +61,7 @@ public class NotificationListActivity extends ISummonActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                onShowOptions((int)id);
+                onShowOptions((int) id);
                 //onShowDetails((int)id);
             }
         });

@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.isummon.R;
 import com.isummon.data.GlobalVariables;
@@ -140,20 +139,14 @@ public class ModifyHdActivity extends AddActActivity {
                     try {
                         int limit = Integer.parseInt(editText.getEditableText().toString());
                         if(limit > hdActivity.getHdCurNum()) {
-                            Toast.makeText(
-                                    ModifyHdActivity.this,
-                                    R.string.error_cut_max,
-                                    Toast.LENGTH_SHORT
-                            ).show();
+                            showToast(R.string.error_cut_max);
                         }
                         else {
                             //?
                         }
                     }
                     catch (NumberFormatException e) {
-                        Toast.makeText(ModifyHdActivity.this,
-                                R.string.error_max_not_number,
-                                Toast.LENGTH_SHORT).show();
+                        showToast(R.string.error_max_not_number);
                     }
                 }
                 return true;

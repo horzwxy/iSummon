@@ -1,6 +1,5 @@
 package com.isummon.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -23,8 +22,8 @@ import android.widget.TextView;
 
 import com.baidu.mapapi.BMapManager;
 import com.isummon.R;
-import com.isummon.data.GlobalVariables;
 import com.isummon.activity.listmodel.OptionListItem;
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.SimpleHDActivity;
 import com.isummon.widget.ISummonMapView;
 import com.isummon.widget.ProgressTaskBundle;
@@ -251,13 +250,12 @@ public class MainActivity extends ISummonActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == ModifyAvatarActivity.MODIFY_AVATAR
+        if (requestCode == ModifyAvatarActivity.MODIFY_AVATAR
                 && resultCode == RESULT_OK) {
             int avatarId = data.getIntExtra(ModifyAvatarActivity.AVATAR_ID, 0);
             ImageView imageView = (ImageView) findViewById(R.id.main_head_pic);
             imageView.setImageResource(getAvatarResourceId(avatarId));
-        }
-        else {
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }

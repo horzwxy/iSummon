@@ -1,11 +1,8 @@
 package com.isummon.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +13,6 @@ import android.widget.ListView;
 import com.isummon.R;
 import com.isummon.data.GlobalVariables;
 import com.isummon.model.UserModel;
-import com.isummon.net.NetHelper;
 import com.isummon.widget.ContactAdapter;
 import com.isummon.widget.ProgressTaskBundle;
 
@@ -68,7 +64,7 @@ public class ManageContactActivity extends ISummonActivity {
         contactsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                showConfirmRemove((UserModel)parent.getItemAtPosition(position));
+                showConfirmRemove((UserModel) parent.getItemAtPosition(position));
                 return true;
             }
         });
@@ -77,7 +73,7 @@ public class ManageContactActivity extends ISummonActivity {
     private void showConfirmRemove(UserModel userModel) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.remove_contact_confirm_1)
-        + userModel.getNickName() + getString(R.string.remove_contact_confirm_2));
+                + userModel.getNickName() + getString(R.string.remove_contact_confirm_2));
         builder.setPositiveButton(R.string.remove_contact_confirm_position,
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -97,10 +93,9 @@ public class ManageContactActivity extends ISummonActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == ADD_CONTACT && resultCode == RESULT_OK) {
+        if (requestCode == ADD_CONTACT && resultCode == RESULT_OK) {
 
-        }
-        else {
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -117,7 +112,8 @@ public class ManageContactActivity extends ISummonActivity {
             case R.id.menu_add_contact:
                 startActivity(new Intent(this, AddContactActivity.class));
                 break;
-            default: return super.onMenuItemSelected(featureId, item);
+            default:
+                return super.onMenuItemSelected(featureId, item);
         }
         return true;
     }

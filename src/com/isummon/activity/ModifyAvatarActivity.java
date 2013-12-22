@@ -1,12 +1,10 @@
 package com.isummon.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.isummon.R;
 import com.isummon.data.GlobalVariables;
@@ -57,13 +55,11 @@ public class ModifyAvatarActivity extends ISummonActivity {
                     Intent intent = new Intent();
                     intent.putExtra(AVATAR_ID, avatarId);
                     setResult(RESULT_OK, intent);
+                    showToast(R.string.update_avatar_success);
                     finish();
                 }
                 else {
-                    Toast.makeText(
-                            ModifyAvatarActivity.this,
-                            "头像修改失败",
-                            Toast.LENGTH_SHORT).show();
+                    showToast(R.string.update_avatar_failed);
                 }
             }
         }.action(avatarId);

@@ -1,6 +1,5 @@
 package com.isummon.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -15,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.isummon.R;
 import com.isummon.data.GlobalVariables;
@@ -24,8 +22,6 @@ import com.isummon.model.HDProperty;
 import com.isummon.model.HDType;
 import com.isummon.widget.ProgressTaskBundle;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
@@ -296,10 +292,6 @@ public class AddActActivity extends ISummonActivity {
         return "".equals(s);
     }
 
-    protected void showToast(int stringId) {
-        Toast.makeText(this, stringId, Toast.LENGTH_SHORT).show();
-    }
-
     protected void showTypePicker() {
         final ImageView typeImage = (ImageView)findViewById(R.id.act_type_image);
         final TextView typeText = (TextView)findViewById(R.id.act_type_name);
@@ -442,7 +434,7 @@ public class AddActActivity extends ISummonActivity {
             et.setText(name);
         }
         else {
-            Toast.makeText(this, R.string.input_empty_hint, Toast.LENGTH_SHORT).show();
+            showToast(R.string.input_empty_hint);
         }
     }
 
@@ -469,7 +461,7 @@ public class AddActActivity extends ISummonActivity {
     }
 
     private void onChooseSearch() {
-        Toast.makeText(this, R.string.search_not_available, Toast.LENGTH_SHORT).show();
+        showToast(R.string.search_not_available);
     }
 
 

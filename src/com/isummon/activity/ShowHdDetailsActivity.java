@@ -1,13 +1,11 @@
 package com.isummon.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.isummon.R;
 import com.isummon.data.GlobalVariables;
@@ -98,7 +96,25 @@ public class ShowHdDetailsActivity extends ISummonActivity {
     }
 
     public void applyIn(View v) {
+        new ProgressTaskBundle<Integer, Boolean>(
+                this,
+                R.string.delivering
+        ) {
+            @Override
+            protected Boolean doWork(Integer... params) {
+                return GlobalVariables.netHelper.applyHDActivity(params[0]);
+            }
 
+            @Override
+            protected void dealResult(Boolean result) {
+                if (result) {
+                    showToast(R.string.apply_success);
+                    finish();
+                } else {
+                    showToast(R.string.apply_failed);
+                }
+            }
+        }.action(hdActivity.getHdId());
     }
 
     public void cancelAct(View v) {
@@ -114,15 +130,11 @@ public class ShowHdDetailsActivity extends ISummonActivity {
             @Override
             protected void dealResult(Boolean result) {
                 if(result) {
-                    Toast.makeText(ShowHdDetailsActivity.this,
-                            R.string.cancel_success,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(R.string.cancel_success);
                     finish();
                 }
                 else {
-                    Toast.makeText(ShowHdDetailsActivity.this,
-                            R.string.cancel_failed,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(R.string.cancel_failed);
                 }
             }
         }.action(hdActivity.getHdId());
