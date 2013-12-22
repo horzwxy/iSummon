@@ -313,10 +313,15 @@ public class AddActActivity extends Activity {
 
                 EditText promptText = (EditText) findViewById(R.id.act_type_prompt);
                 promptText.setVisibility(View.GONE);
-                promptText.setText(hdType.toString()); // save type id in the invisible EditText
+                promptText.setText(hdType.getChn()); // save type id in the invisible EditText
 
-
-                typeImage.setImageResource(hdType.getDrawableId());
+                typeImage.setImageResource(
+                        getResources().getIdentifier(
+                                "com.isummon:drawable/" + hdType.name().toLowerCase(),
+                                null,
+                                null
+                        )
+                );
 
                 findViewById(R.id.act_type_content).setVisibility(View.VISIBLE);
                 findViewById(R.id.act_type_content).setOnClickListener(new View.OnClickListener() {

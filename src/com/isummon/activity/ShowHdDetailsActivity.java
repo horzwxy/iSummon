@@ -13,6 +13,7 @@ import com.isummon.R;
 import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDStatus;
+import com.isummon.model.HDType;
 import com.isummon.widget.ProgressTaskBundle;
 
 import java.text.DateFormat;
@@ -42,7 +43,7 @@ public class ShowHdDetailsActivity extends Activity {
         setText(R.id.actName, R.string.act_name_prompt, hdActivity.getHdName());
         setText(R.id.actPlace, R.string.act_place_prompt, hdActivity.getHdAddress());
         DateFormat s2Date = new SimpleDateFormat(HDActivity.tmFormat);
-        DateFormat date2s = new SimpleDateFormat("yyyy年MM月dd日  HH : mm");
+        DateFormat date2s = new SimpleDateFormat("yyyy年MM月dd日 HH : mm");
         try {
             Date startDate = s2Date.parse(hdActivity.getHdStartTime());
             Date endDate = s2Date.parse(hdActivity.getHdEndTime());
@@ -63,18 +64,15 @@ public class ShowHdDetailsActivity extends Activity {
         ImageView typeImage = (ImageView)findViewById(R.id.act_type_image);
         TextView typeText = (TextView)findViewById(R.id.act_type_name);
 
+        HDType type = hdActivity.getHdType();
 
         int imageId = getResources().getIdentifier(
-                "drawable." + hdActivity.getHdType().name().toLowerCase(),
+                "com.isummon:drawable/" + type.name().toLowerCase(),
                 null,
                 null
         );
-        System.out.println("name=" + hdActivity.getHdType().name().toLowerCase() + ".png");
-        System.out.println("id=" + imageId);
-        System.out.println("package=" + getApplicationContext().getPackageName());
-
         typeImage.setImageResource(imageId);
-        typeText.setText(hdActivity.getHdType().getChn());
+        typeText.setText(type.getChn());
 
         if(GlobalVariables.netHelper.isMyId(
                 hdActivity.getHdOriginId()

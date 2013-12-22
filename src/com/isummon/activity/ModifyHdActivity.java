@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.isummon.R;
 import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
+import com.isummon.model.HDType;
 import com.isummon.widget.ProgressTaskBundle;
 
 import java.text.DateFormat;
@@ -95,12 +96,19 @@ public class ModifyHdActivity extends AddActActivity {
         final ImageView typeImage = (ImageView)findViewById(R.id.act_type_image);
         final TextView typeText = (TextView)findViewById(R.id.act_type_name);
 
-        typeImage.setImageResource(hdActivity.getHdType().getDrawableId());
-        typeText.setText(hdActivity.getHdType().getChn());
+        HDType hdType = hdActivity.getHdType();
+        typeImage.setImageResource(
+                getResources().getIdentifier(
+                        "com.isummon:drawable/" + hdType.name().toLowerCase(),
+                        null,
+                        null
+                )
+        );
+        typeText.setText(hdType.getChn());
 
         EditText typeEditor = (EditText) findViewById(R.id.act_type_prompt);
         typeEditor.setVisibility(View.GONE);
-        typeEditor.setText(hdActivity.getHdType().toString()); // save type id in the invisible EditText
+        typeEditor.setText(hdType.toString()); // save type id in the invisible EditText
 
         findViewById(R.id.act_type_content).setVisibility(View.VISIBLE);
         findViewById(R.id.act_type_content).setOnClickListener(new View.OnClickListener() {
