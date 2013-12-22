@@ -23,7 +23,7 @@ public class ListActActivity extends ISummonActivity {
 
     public static final String SIMPLE_ACTS = "simple_acts";
 
-    private List<SimpleHDActivity> displayedActs;
+    protected List<SimpleHDActivity> displayedActs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,17 +8,18 @@ import android.widget.Spinner;
 
 import com.isummon.R;
 import com.isummon.activity.listmodel.ActListMode;
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDType;
 import com.isummon.model.SimpleHDActivity;
+import com.isummon.widget.ProgressTaskBundle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ListAllActivity extends ListActActivity {
 
     public static final String SIMPLE_ACTS = "simple_acts";
-
-    private List<SimpleHDActivity> displayedActs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,44 +28,26 @@ public class ListAllActivity extends ListActActivity {
 
         init();
 
-        final Spinner submodeSpinner = (Spinner) findViewById(R.id.list_submode_selector);
-        ArrayAdapter<HDType> submodeAdapter = new ArrayAdapter<HDType>(
-                this,
-                android.R.layout.simple_spinner_item,
-                HDType.values());
-        submodeSpinner.setAdapter(submodeAdapter);
-        submodeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        submodeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                HDType type = (HDType) parent.getItemAtPosition(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
         Spinner modeSpinner = (Spinner) findViewById(R.id.list_mode_selector);
-        final ArrayAdapter<ActListMode> modeAdapter = new ArrayAdapter<ActListMode>(
+        ArrayList<String> modeStrings = new ArrayList<String>();
+        for(String s : HDType.getChns()) {
+            modeStrings.add(s);
+        }
+        modeStrings.add("所有类别");
+        final ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_item,
-                ActListMode.values());
+                modeStrings);
         modeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         modeSpinner.setAdapter(modeAdapter);
         modeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                submodeSpinner.setEnabled(false);
-
-                ActListMode mode = (ActListMode) parent.getItemAtPosition(position);
-                switch (mode) {
-                    case ALL:
-                        break;
-                    case TYPE:
-                        submodeSpinner.setEnabled(true);
-                        break;
+                if(position > HDType.values().length - 1) {
+                    showAllItems();
+                }
+                else {
+                    showSelectedItems(HDType.values()[position]);
                 }
             }
 
@@ -73,5 +56,41 @@ public class ListAllActivity extends ListActActivity {
 
             }
         });
+    }
+
+    private void showAllItems() {
+        new ProgressTaskBundle<HDType, ArrayList<SimpleHDActivity>>(
+                this,
+                R.string.searching
+        ) {
+            @Override
+            protected ArrayList<SimpleHDActivity> doWork(HDType... params) {
+                return GlobalVariables.netHelper.getAllActs();
+            }
+
+            @Override
+            protected void dealResult(ArrayList<SimpleHDActivity> result) {
+                displayedActs = result;
+                init();
+            }
+        }.action();
+    }
+
+    private void showSelectedItems(HDType type) {
+        new ProgressTaskBundle<HDType, ArrayList<SimpleHDActivity>>(
+                this,
+                R.string.searching
+        ) {
+            @Override
+            protected ArrayList<SimpleHDActivity> doWork(HDType... params) {
+                return GlobalVariables.netHelper.getHDActivityByHdType(params[0]);
+            }
+
+            @Override
+            protected void dealResult(ArrayList<SimpleHDActivity> result) {
+                displayedActs = result;
+                init();
+            }
+        }.action(type);
     }
 }
