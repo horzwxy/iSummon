@@ -29,6 +29,7 @@ public class RealNetHelper extends NetHelper {
     private final String TAG ="iSummon";
     String userActionUrl = "http://10.131.251.146:8080/iSummon/services/UserActionImpl?wsdl";
     String notiActionUrl = "http://10.131.251.146:8080/iSummon/services/NotificationActionImpl?wsdl";
+    String activityUrl = "http://10.131.224.63:808/iSummon/services/ActivityActionImpl?wsdl";
     public RealNetHelper(){
         super();
     }
@@ -309,9 +310,6 @@ public class RealNetHelper extends NetHelper {
     public ArrayList<SimpleHDActivity> getHDActivityByTime(String startTime, String endTime) {
         return null;
     }
-
-
-
 
 
 
