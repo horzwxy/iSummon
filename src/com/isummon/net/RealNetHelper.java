@@ -70,7 +70,18 @@ public class RealNetHelper extends NetHelper {
 //        targets.add(new UserModel(2));
 //        invite(3, targets);
 //        getCurrentSimpleHDActivities();
-        getHDActivityById(2);
+//        getHDActivityById(2);
+        modifyUserModel(new UserModel(5, "ubuntu", "ubuntu111", "ubuntu", 3));
+    }
+
+    private void modifyUserModel(UserModel user){
+        SoapObject request = new SoapObject(namespace, "modifyUser");
+        request.addProperty("user", user);
+        Object resultObj = makeKsoapCall(request, userActionUrl);
+        if(resultObj != null){
+            Log.v(TAG, resultObj.toString());
+        }
+        Log.v(TAG, "result null;");
     }
 
     public RegisterResultType register(UserModel newUser) {

@@ -1,6 +1,6 @@
 package com.isummon.model;
 
-public class UserModel {
+public class UserModel  {
 	private int userId;
 	private String userName;
 	private String nickName;
@@ -65,4 +65,7 @@ public class UserModel {
                 ", avatar=" + avatar +
                 '}';
     }
+
+
+
 }
