@@ -47,6 +47,8 @@ public class MyInvitation {
 
     public void setStatus(InvitationStatus status) {
         this.status = status;
+
+
     }
 
     public enum InvitationStatus {

@@ -29,7 +29,7 @@ public abstract class NetHelper {
     public abstract ArrayList<SimpleHDActivity> getAllActs();
 
 
-    //---------------------------------基本功能-----------------------------------------
+    //---------------------------------User Action------------------------------------------------------------------------------
 
     /**
      * 用户登录方法
@@ -53,6 +53,52 @@ public abstract class NetHelper {
 
     public abstract void logOut();
 
+    public abstract  UserModel getUserById(int userId);
+
+    /**
+     *
+     * @param nickname
+     * @return empty list if no result
+     */
+    public abstract ArrayList<UserModel> findUserByName(String nickname);
+
+    /**
+     *
+     * @param targetId
+     * @return SUCCEED OR FAIL
+     */
+    public abstract int addContact(int targetId);
+
+    public abstract ArrayList<UserModel> getAllContacts();
+
+
+    public abstract boolean isMyId(int userId);
+
+    public abstract boolean updateAvatar(int avatarId);
+
+    /*-----------------------------------Notification Action--------------------------------------------------------------------------------*/
+
+    public abstract List<Notification> getNotifications();
+
+
+    /**
+     *
+     * @param hdId
+     * @param targets
+     * @return SUCCEED OR FAIL
+     */
+    public abstract int invite(int hdId, ArrayList<UserModel> targets);
+
+
+
+    public abstract void onReadNotification(Notification notification);
+
+    //---查看我发出的邀请
+    public abstract ArrayList<MyInvitation> getMyInvitations();
+
+
+    /*--------------------------------------------Activity Action--------------------------------------------------------------*/
+
     /**
      * 返回当前有效的活动简介
      * SimpleHDActivity用于网络传输的轻量级HDActivity，详情见其类定义
@@ -61,7 +107,7 @@ public abstract class NetHelper {
      */
     public abstract ArrayList<SimpleHDActivity> getCurrentSimpleHDActivities();
 
-    public abstract List<Notification> getNotifications();
+
 
     /**
      * 查
@@ -112,7 +158,7 @@ public abstract class NetHelper {
 
     public abstract boolean applyHDActivity(int hdId);
 
-    //----------------------------------一系列的查询方法-------------------------------------------
+    //----------------------------------一系列的查询方法-----
 
     //我发起的活动
     public abstract ArrayList<SimpleHDActivity> getHDActivityByOriginId();
@@ -129,45 +175,10 @@ public abstract class NetHelper {
     //查询某时间范围以内的活动，两个参数可以一个为null，如(startTime, null)表示startTime以后的所有活动
     public abstract ArrayList<SimpleHDActivity> getHDActivityByTime(String startTime, String endTime);
 
-    //---------其他
-
-    //----------------------------通知用户--------------------------------------------------
-
-    /**
-     *
-     * @param hdId
-     * @param targets
-     * @return SUCCEED OR FAIL
-     */
-    public abstract int invite(int hdId, ArrayList<UserModel> targets);
-
-    /**
-     *
-     * @param nickname
-     * @return empty list if no result
-     */
-    public abstract ArrayList<UserModel> findUserByName(String nickname);
-
-    /**
-     *
-     * @param targetId
-     * @return SUCCEED OR FAIL
-     */
-    public abstract int addContact(int targetId);
-
-    public abstract ArrayList<UserModel> getAllContacts();
-
-    public abstract void onReadNotification(Notification notification);
-
-    //----------------------------查看我发出的邀请
-    public abstract ArrayList<MyInvitation> getMyInvitations();
 
 
-    public abstract boolean isMyId(int userId);
 
-    public abstract boolean updateAvatar(int avatarId);
+
+
 }
-
-
-//--------------------------------用于网络传输的简化类-------------------------------------------------
 
