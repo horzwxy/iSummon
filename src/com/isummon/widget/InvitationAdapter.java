@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.isummon.R;
 import com.isummon.activity.ISummonActivity;
-import com.isummon.model.MyInvitation;
+import com.isummon.model.DisplayInvitation;
 
 import java.util.ArrayList;
 
@@ -20,9 +20,9 @@ import java.util.ArrayList;
 public class InvitationAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<MyInvitation> invitations;
+    private ArrayList<DisplayInvitation> invitations;
 
-    public InvitationAdapter(Context context, ArrayList<MyInvitation> invitations) {
+    public InvitationAdapter(Context context, ArrayList<DisplayInvitation> invitations) {
         this.context = context;
         this.invitations = invitations;
     }
@@ -33,7 +33,7 @@ public class InvitationAdapter extends BaseAdapter {
     }
 
     @Override
-    public MyInvitation getItem(int i) {
+    public DisplayInvitation getItem(int i) {
         return invitations.get(i);
     }
 
@@ -56,11 +56,11 @@ public class InvitationAdapter extends BaseAdapter {
         );
 
         TextView contentText = (TextView) view.findViewById(R.id.invitation_content);
-        MyInvitation myInvitation = getItem(position);
-        contentText.setText("邀请" + myInvitation.getTargetName() + "\"" + myInvitation.getHdName() + "\"");
+        DisplayInvitation myInvitation = getItem(position);
+        contentText.setText("邀请" + myInvitation.getTargetName() + "\"" + myInvitation.getActivityName() + "\"");
 
         TextView statusText = (TextView) view.findViewById(R.id.invitation_status);
-        statusText.setText("邀请状态：" + myInvitation.getStatus().getChn());
+        statusText.setText("邀请状态：" + myInvitation.getInvitationStatus().getChn());
 
         return view;
     }

@@ -107,7 +107,7 @@ public class ModifyHdActivity extends AddActActivity {
 
         EditText typeEditor = (EditText) findViewById(R.id.act_type_prompt);
         typeEditor.setVisibility(View.GONE);
-        typeEditor.setText(hdType.toString()); // save type id in the invisible EditText
+        typeEditor.setText(hdType.name()); // save type id in the invisible EditText
 
         findViewById(R.id.act_type_content).setVisibility(View.VISIBLE);
         findViewById(R.id.act_type_content).setOnClickListener(new View.OnClickListener() {

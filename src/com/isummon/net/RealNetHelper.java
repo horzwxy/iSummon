@@ -2,9 +2,9 @@ package com.isummon.net;
 
 import android.util.Log;
 
+import com.isummon.model.DisplayInvitation;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDType;
-import com.isummon.model.MyInvitation;
 import com.isummon.model.LogInResultType;
 import com.isummon.model.Notification;
 import com.isummon.model.RegisterResultType;
@@ -310,7 +310,7 @@ public class RealNetHelper extends NetHelper {
     }
 
     @Override
-    public ArrayList<MyInvitation> getMyInvitations() {
+    public ArrayList<DisplayInvitation> getMyInvitations() {
         return null;
     }
 

@@ -1,8 +1,8 @@
 package com.isummon.net;
 
+import com.isummon.model.DisplayInvitation;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDType;
-import com.isummon.model.MyInvitation;
 import com.isummon.model.LogInResultType;
 import com.isummon.model.Notification;
 import com.isummon.model.RegisterResultType;
@@ -159,7 +159,7 @@ public abstract class NetHelper {
     public abstract void onReadNotification(Notification notification);
 
     //----------------------------查看我发出的邀请
-    public abstract ArrayList<MyInvitation> getMyInvitations();
+    public abstract ArrayList<DisplayInvitation> getMyInvitations();
 
 
     public abstract boolean isMyId(int userId);
