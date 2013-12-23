@@ -1,10 +1,10 @@
 package com.isummon.net;
 
 import android.util.Log;
+import com.isummon.model.DisplayInvitation;
 import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDType;
-import com.isummon.model.MyInvitation;
 import com.isummon.model.LogInResultType;
 import com.isummon.model.Notification;
 import com.isummon.model.RegisterResultType;
@@ -169,22 +169,7 @@ public class RealNetHelper extends NetHelper {
         return  0;
     }
 
-    @Override
-    public void onReadNotification(Notification notification) {
 
-    }
-
-    @Override
-    public ArrayList<MyInvitation> getMyInvitations() {
-        SoapObject request = new SoapObject(namespace, "getInvitationByOriginId");
-        request.addProperty("originID", GlobalVariables.currentUser.getUserId());
-
-        Object resultObj = makeKsoapCall(request, notiActionUrl);
-        if(resultObj != null){
-            return parseMyInvitationsFromSoap(resultObj);
-        }
-        return  null;
-    }
 
 
     /*------------------------------------Activitation Action---------------------------------------------------------------------*/
@@ -337,19 +322,19 @@ public class RealNetHelper extends NetHelper {
     }
 
     //---------------------------------------------Notification
-    private MyInvitation parseMyInvitation(SoapObject soapObject){
+    private DisplayInvitation parseMyInvitation(SoapObject soapObject){
         String targetName = soapObject.getProperty("targetName").toString();
         int targetAvatar = Integer.parseInt(soapObject.getProperty("targetAvatar").toString());
         String activityName = soapObject.getProperty("activityName").toString();
         int responseStatus = Integer.parseInt(soapObject.getProperty("responseStatus").toString());
-        return new MyInvitation(targetName, targetAvatar, activityName, MyInvitation.InvitationStatus.values()[responseStatus]);
+        return new DisplayInvitation(targetName, targetAvatar, activityName, 1);
     }
 
-    private ArrayList<MyInvitation> parseMyInvitationsFromSoap(Object obj){
-        ArrayList<MyInvitation> resultList = new ArrayList<MyInvitation>();
+    private ArrayList<DisplayInvitation> parseMyInvitationsFromSoap(Object obj){
+        ArrayList<DisplayInvitation> resultList = new ArrayList<DisplayInvitation>();
         Iterator ie = ((Vector)obj).iterator();
         while (ie.hasNext()){
-            MyInvitation mi  = parseMyInvitation((SoapObject)ie.next());
+            DisplayInvitation mi  = parseMyInvitation((SoapObject)ie.next());
             resultList.add(mi);
         }
         Log.v(TAG, "get MyInvitation of  " + resultList.size() );
@@ -374,6 +359,17 @@ public class RealNetHelper extends NetHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return null;
+    }
+
+    @Override
+    public void onReadNotification(Notification notification) {
+
+    }
+
+    @Override
+    public ArrayList<DisplayInvitation> getMyInvitations() {
         return null;
     }
 }

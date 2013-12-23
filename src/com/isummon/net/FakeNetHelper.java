@@ -1,11 +1,12 @@
 package com.isummon.net;
 
 import com.isummon.data.GlobalVariables;
+import com.isummon.model.DisplayInvitation;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDProperty;
 import com.isummon.model.HDStatus;
 import com.isummon.model.HDType;
-import com.isummon.model.MyInvitation;
+import com.isummon.model.InvitationStatus;
 import com.isummon.model.LogInResultType;
 import com.isummon.model.Notification;
 import com.isummon.model.RegisterResultType;
@@ -25,7 +26,7 @@ public class FakeNetHelper extends NetHelper {
     private ArrayList<UserModel> users = new ArrayList<UserModel>();
     private ArrayList<UserModel> contacts = new ArrayList<UserModel>();
     private ArrayList<Notification> notifications = new ArrayList<Notification>();
-    private ArrayList<MyInvitation> invitations = new ArrayList<MyInvitation>();
+    private ArrayList<DisplayInvitation> invitations = new ArrayList<DisplayInvitation>();
 
     public FakeNetHelper(){
         UserModel m1 = new UserModel();
@@ -110,17 +111,19 @@ public class FakeNetHelper extends NetHelper {
 
         Notification n1 = new Notification(
                 0,
+                a1.getHdId(),
+                0,
+                a1.getHdName(),
                 m1.getNickName(),
-                m1.getAvatar(),
-                a1.getHdId()
+                m1.getAvatar()
         );
         notifications.add(n1);
 
-        MyInvitation i1 = new MyInvitation(
+        DisplayInvitation i1 = new DisplayInvitation(
                 m2.getNickName(),
                 m2.getAvatar(),
                 "入党",
-                MyInvitation.InvitationStatus.READ
+                InvitationStatus.READ.ordinal()
         );
         invitations.add(i1);
     }
@@ -262,7 +265,7 @@ public class FakeNetHelper extends NetHelper {
     }
 
     @Override
-    public ArrayList<MyInvitation> getMyInvitations() {
+    public ArrayList<DisplayInvitation> getMyInvitations() {
         return invitations;
     }
 
