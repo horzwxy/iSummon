@@ -28,7 +28,6 @@
             android:onClick="modifyAvatar"/>
         <TextView
             android:id="@+id/main_user_nickname"
-            android:text="@string/fake_nickname"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:layout_marginTop="15dp"

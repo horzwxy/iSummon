@@ -142,6 +142,9 @@ public class MainActivity extends ISummonActivity {
         avatarView.setImageResource(getAvatarResourceId(
                 GlobalVariables.currentUser.getAvatar()
         ));
+
+        TextView nameText = (TextView) findViewById(R.id.main_user_nickname);
+        nameText.setText(GlobalVariables.currentUser.getNickName());
     }
 
     @Override
