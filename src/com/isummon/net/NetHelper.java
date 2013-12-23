@@ -22,7 +22,8 @@ public abstract class NetHelper {
     protected final static String namespace = "http://edu.fudan.10ss";
 
     public static NetHelper getInstance() {
-        return new FakeNetHelper();
+//        return new FakeNetHelper();
+        return new RealNetHelper();
     }
 
     public abstract ArrayList<SimpleHDActivity> getAllActs();

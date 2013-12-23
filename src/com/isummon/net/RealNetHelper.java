@@ -3,6 +3,7 @@ package com.isummon.net;
 import android.util.Log;
 
 import com.isummon.model.DisplayInvitation;
+import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDType;
 import com.isummon.model.LogInResultType;
@@ -17,13 +18,16 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by horz on 12/20/13.
  */
 public class RealNetHelper extends NetHelper {
-
+    private final String TAG ="iSummon";
+    String userActionUrl = "http://10.131.251.146:8080/iSummon/services/UserActionImpl?wsdl";
     public RealNetHelper(){
         super();
     }
@@ -78,6 +82,8 @@ public class RealNetHelper extends NetHelper {
      * @return 返回值为已登录用户的ID，验证失败返回-1
      */
     public LogInResultType login(String username, String passwd) {
+
+        Log.v(TAG, "in login: username " + username + "  passwd: " + passwd);
         String methodName = "login";
         SoapObject request = new SoapObject(namespace, methodName);
         request.addProperty("username", username);
@@ -85,25 +91,29 @@ public class RealNetHelper extends NetHelper {
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                 SoapEnvelope.VER11);
         envelope.bodyOut = request;
-        HttpTransportSE ht = new HttpTransportSE(serviceUrl);
+        HttpTransportSE ht = new HttpTransportSE(userActionUrl);
         try {
             // 第5步：调用WebService
             ht.call(null, envelope);
             if (envelope.getResponse() != null) {
-                SoapObject soapObject = (SoapObject) envelope.getResponse();
-                int result = Integer.parseInt(soapObject.getProperty(0).toString());
-                Log.v("Login", "login success! " + result);
+//                SoapPrimitive soapPrimitive = (SoapPrimitive) envelope.getResponse();
+                SoapObject soapObject = (SoapObject)envelope.getResponse();
+                if(soapObject == null)
+                    return LogInResultType.FAIL_NOT_MATCH;
+
+                GlobalVariables.currentUser = parseUserModel(soapObject);
+                Log.v(TAG, GlobalVariables.currentUser.toString());
+//                register(new UserModel());
+                getAllContacts();
                 return LogInResultType.SUCCESS;
             } else {
-                Log.v("Login", "login failed");
-                return LogInResultType.SUCCESS;
+                return LogInResultType.FAIL_NOT_MATCH;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return LogInResultType.SUCCESS;
+        return LogInResultType.FAIL_TIMEOUT;
     }
-
 
     /**
      *
@@ -111,7 +121,6 @@ public class RealNetHelper extends NetHelper {
      * @return
      */
     public RegisterResultType register(UserModel newUser) {
-
         String methodName = "register";
         SoapObject request = new SoapObject(namespace, methodName);
         request.addProperty("username", newUser.getUserName());
@@ -121,25 +130,30 @@ public class RealNetHelper extends NetHelper {
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                 SoapEnvelope.VER11);
         envelope.bodyOut = request;
-        HttpTransportSE ht = new HttpTransportSE(serviceUrl);
+        HttpTransportSE ht = new HttpTransportSE(userActionUrl);
         try {
             // 第5步：调用WebService
             ht.call(null, envelope);
             if (envelope.getResponse() != null) {
-                SoapObject soapObject = (SoapObject) envelope.getResponse();
-                return RegisterResultType.SUCCESS;
+                int retcode = Integer.parseInt( envelope.getResponse().toString());
+                if(retcode == 0)
+                    return RegisterResultType.SUCCESS;
+                else if(retcode == -2)
+                    return  RegisterResultType.FAIL_ON_USED_EMAIL;
+                else
+                    return RegisterResultType.FAIL_TIME_OUT;
             } else {
-                return RegisterResultType.SUCCESS;
+                return RegisterResultType.FAIL_TIME_OUT;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return RegisterResultType.SUCCESS;
+        return RegisterResultType.FAIL_TIME_OUT;
     }
 
     @Override
     public void logOut() {
-
+        GlobalVariables.currentUser = null;
     }
 
     /**
@@ -301,7 +315,38 @@ public class RealNetHelper extends NetHelper {
 
     @Override
     public ArrayList<UserModel> getAllContacts() {
-        return null;
+        ArrayList<UserModel> resultList = new ArrayList<UserModel>();
+        String methodName = "getAllContacts";
+        SoapObject request = new SoapObject(namespace, methodName);
+        request.addProperty("userId", 1);
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.bodyOut = request;
+        HttpTransportSE ht = new HttpTransportSE(userActionUrl);
+        try {
+            // 第5步：调用WebService
+            Log.v(TAG, "before call to getAllContacts");
+            ht.call(null, envelope);
+            if (envelope.getResponse() != null) {
+                Vector soapObject = (Vector)envelope.getResponse();
+                if(soapObject == null){
+                    Log.v(TAG, "soapObject  null!" );
+                    return  resultList;
+                }
+                Iterator ie = soapObject.iterator();
+                while (ie.hasNext()){
+                    UserModel um  = parseUserModel((SoapObject)ie.next());
+                    resultList.add(um);
+                }
+                Log.v(TAG, "getAllContacts() get " + resultList.size() + " contacts");
+            } else {
+                Log.v(TAG, "envelope.getResponse()  null!" );
+                return  resultList;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultList;
     }
 
     @Override
@@ -319,8 +364,20 @@ public class RealNetHelper extends NetHelper {
         return false;
     }
 
+
+    private UserModel parseUserModel(SoapObject soapObject){
+        int userId = Integer.parseInt(soapObject.getProperty("userId").toString());
+        String userName = soapObject.getProperty("userName").toString();
+        String nickName = soapObject.getProperty("nickName").toString();
+        int avatar = Integer.parseInt(soapObject.getProperty("avatar").toString());
+        UserModel userModel = new UserModel(userId, userName, nickName, null, avatar);
+        return userModel;
+
+    }
+
     @Override
     public boolean updateAvatar(int avatarId) {
         return false;
     }
 }
+

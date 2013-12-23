@@ -19,7 +19,8 @@ public class MapActivity extends ISummonActivity {
 
         mMapView = (ISummonMapView) findViewById(R.id.bmapsView);
 
-        mMapView.setLongTouchAvailable(false);
+//        mMapView.setLongTouchAvailable(false);
+        mMapView.setDisplayMode(ISummonMapView.DisplayMode.NORMAL);
     }
 
     @Override
