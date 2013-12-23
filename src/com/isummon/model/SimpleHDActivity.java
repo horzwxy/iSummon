@@ -39,6 +39,17 @@ public class SimpleHDActivity implements Serializable {
         this.hdStatus = hdStatus.ordinal();
     }
 
+    public SimpleHDActivity(int hdId, String hdName, int hdOriginId, String hdOriginName, double hdLongitude, double hdLatitude, int hdType, int hdStatus) {
+        this.hdId = hdId;
+        this.hdName = hdName;
+        this.hdOriginId = hdOriginId;
+        this.hdOriginName = hdOriginName;
+        this.hdLongitude = hdLongitude;
+        this.hdLatitude = hdLatitude;
+        this.hdType = hdType;
+        this.hdStatus = hdStatus;
+    }
+
     public int getHdId() {
         return hdId;
     }
