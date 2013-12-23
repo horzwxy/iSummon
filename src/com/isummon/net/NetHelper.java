@@ -85,7 +85,7 @@ public abstract class NetHelper {
      *
      * @param hdId
      * @param targets
-     * @return SUCCEED OR FAIL
+     * @return SUCCEED (0) OR FAIL(-1)
      */
     public abstract int invite(int hdId, ArrayList<UserModel> targets);
 

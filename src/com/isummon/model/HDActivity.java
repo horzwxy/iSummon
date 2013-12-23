@@ -44,6 +44,7 @@ public class HDActivity implements Serializable {
         this.hdStatus = hdStatus;
     }
 
+   
     @Override
 	public String toString() {
 		return "HDActivity [hdName=" + hdName + ", hdAddress=" + hdAddress

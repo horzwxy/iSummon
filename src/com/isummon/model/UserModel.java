@@ -10,6 +10,9 @@ public class UserModel {
     public UserModel() {
 
     }
+    public UserModel(int userId) {
+        this.userId = userId;
+    }
 
     public UserModel(int userId, String userName, String nickName, String passwd, int avatar) {
         this.userId = userId;

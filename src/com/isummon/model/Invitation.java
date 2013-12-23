@@ -6,25 +6,15 @@ import java.io.Serializable;
  * Created by horzwxy on 12/16/13.
  */
 public class Invitation implements Serializable {
-   
-    @Override
-	public String toString() {
-		return "Invitation [originId=" + originId + ", targetId=" + targetId
-				+ ", actId=" + actId + "]";
-	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	public Invitation() {
-		super();
-	}
-
+    private static  final long serialVersionUID = -1239388387363463L;
 	private int originId;
     private int targetId;
     private int actId;
 
+    public Invitation() {
+
+    }
     public Invitation(int originId, int targetId, int actId) {
         this.setOriginId(originId);
         this.setTargetId(targetId);
@@ -55,7 +45,14 @@ public class Invitation implements Serializable {
 		this.actId = actId;
 	}
 
-	
+    @Override
+    public String toString() {
+        return "Invitation{" +
+                "originId=" + originId +
+                ", targetId=" + targetId +
+                ", actId=" + actId +
+                '}';
+    }
 
    
 }
