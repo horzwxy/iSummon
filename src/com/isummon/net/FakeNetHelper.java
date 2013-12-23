@@ -279,4 +279,9 @@ public class FakeNetHelper extends NetHelper {
         GlobalVariables.currentUser.setAvatar(avatarId);
         return true;
     }
+
+    @Override
+    public UserModel getUserById(int userId) {
+        return null;
+    }
 }

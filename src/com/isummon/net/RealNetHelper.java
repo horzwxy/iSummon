@@ -1,7 +1,6 @@
 package com.isummon.net;
 
 import android.util.Log;
-
 import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDType;
@@ -15,7 +14,6 @@ import com.isummon.model.UserModel;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
@@ -23,65 +21,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+
 /**
  * Created by horz on 12/20/13.
  */
 public class RealNetHelper extends NetHelper {
     private final String TAG ="iSummon";
     String userActionUrl = "http://10.131.251.146:8080/iSummon/services/UserActionImpl?wsdl";
+    String notiActionUrl = "http://10.131.251.146:8080/iSummon/services/NotificationActionImpl?wsdl";
     public RealNetHelper(){
         super();
     }
 
-    @Override
-    public ArrayList<SimpleHDActivity> getAllActs() {
-        // 定义调用的WebService方法名
-        String methodName = "getAllActs";
-        // 第1步：创建SoapObject对象，并指定WebService的命名空间和调用的方法名
-        SoapObject request = new SoapObject(namespace, methodName);
-        // 第2步：设置WebService方法的参数
-        request.addProperty("testArg", "test");
-        // 第3步：创建SoapSerializationEnvelope对象，并指定WebService的版本
-        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-                SoapEnvelope.VER11);
-        // 设置bodyOut属性
-        envelope.bodyOut = request;
 
-        // 第4步：创建HttpTransportSE对象，并指定WSDL文档的URL
-        HttpTransportSE ht = new HttpTransportSE(serviceUrl);
-        try {
-            // 第5步：调用WebService
-            ht.call(null, envelope);
-            if (envelope.getResponse() != null) {
-                // 第6步：使用getResponse方法获得WebService方法的返回结果
-                SoapObject soapObject = (SoapObject) envelope.getResponse();
-                // 通过getProperty方法获得Product对象的属性值
-                String result = "产品名称：" + soapObject.getProperty("name") + "\n";
-                result += "产品数量：" + soapObject.getProperty("productNumber")
-                        + "\n";
-                result += "产品价格：" + soapObject.getProperty("price");
-                //blabalbla
+    //---------------------------------UserA Action----------------------------------------------------------
 
-            } else {
-                //blabla
-            }
-        } catch (Exception e) {
-            //blalalb
-        }
-        return null;
-    }
-
-
-    //---------------------------------基本功能-----------------------------------------
-
-    /**
-     * 用户登录方法
-     * 登录成功后需要将GlobalVariable中的currentUser设为有效值
-     *
-     * @param username 这里的username应该是邮箱
-     * @param passwd   用户的密码
-     * @return 返回值为已登录用户的ID，验证失败返回-1
-     */
     public LogInResultType login(String username, String passwd) {
 
         Log.v(TAG, "in login: username " + username + "  passwd: " + passwd);
@@ -89,38 +43,22 @@ public class RealNetHelper extends NetHelper {
         SoapObject request = new SoapObject(namespace, methodName);
         request.addProperty("username", username);
         request.addProperty("passwd", passwd);
-        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-                SoapEnvelope.VER11);
-        envelope.bodyOut = request;
-        HttpTransportSE ht = new HttpTransportSE(userActionUrl);
-        try {
-            // 第5步：调用WebService
-            ht.call(null, envelope);
-            if (envelope.getResponse() != null) {
-//                SoapPrimitive soapPrimitive = (SoapPrimitive) envelope.getResponse();
-                SoapObject soapObject = (SoapObject)envelope.getResponse();
-                if(soapObject == null)
-                    return LogInResultType.FAIL_NOT_MATCH;
 
-                GlobalVariables.currentUser = parseUserModel(soapObject);
-                Log.v(TAG, GlobalVariables.currentUser.toString());
+        Object resultObj = makeKsoapCall(request, userActionUrl);
+        if(resultObj != null){
+            GlobalVariables.currentUser = parseUserModel((SoapObject)resultObj);
+            Log.v(TAG, GlobalVariables.currentUser.toString());
 //                register(new UserModel());
                 getAllContacts();
-                return LogInResultType.SUCCESS;
-            } else {
-                return LogInResultType.FAIL_NOT_MATCH;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+//                findUserByName("ubuntu");
+//            addContact(5);
+//            Log.v(TAG, getUserById(2).toString());
+
+            return LogInResultType.SUCCESS;
         }
-        return LogInResultType.FAIL_TIMEOUT;
+        return  LogInResultType.FAIL_NOT_MATCH;
     }
 
-    /**
-     *
-     * @param newUser
-     * @return
-     */
     public RegisterResultType register(UserModel newUser) {
         String methodName = "register";
         SoapObject request = new SoapObject(namespace, methodName);
@@ -128,26 +66,17 @@ public class RealNetHelper extends NetHelper {
         request.addProperty("nickname", newUser.getNickName());
         request.addProperty("passwd", newUser.getPasswd());
         request.addProperty("avatarId", newUser.getAvatar());
-        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-                SoapEnvelope.VER11);
-        envelope.bodyOut = request;
-        HttpTransportSE ht = new HttpTransportSE(userActionUrl);
-        try {
-            // 第5步：调用WebService
-            ht.call(null, envelope);
-            if (envelope.getResponse() != null) {
-                int retcode = Integer.parseInt( envelope.getResponse().toString());
-                if(retcode == 0)
-                    return RegisterResultType.SUCCESS;
-                else if(retcode == -2)
-                    return  RegisterResultType.FAIL_ON_USED_EMAIL;
-                else
-                    return RegisterResultType.FAIL_TIME_OUT;
-            } else {
+
+        Object resultObj = makeKsoapCall(request, userActionUrl);
+        if(resultObj != null){
+            int retcode = Integer.parseInt(resultObj.toString());
+            Log.v(TAG, "register result " + retcode);
+            if(retcode == 0)
+                return RegisterResultType.SUCCESS;
+            else if(retcode == -2)
+                return  RegisterResultType.FAIL_ON_USED_EMAIL;
+            else
                 return RegisterResultType.FAIL_TIME_OUT;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return RegisterResultType.FAIL_TIME_OUT;
     }
@@ -157,6 +86,107 @@ public class RealNetHelper extends NetHelper {
         GlobalVariables.currentUser = null;
     }
 
+    @Override
+    public UserModel getUserById(int userId) {
+        String methodName = "getUserById";
+        SoapObject request = new SoapObject(namespace, methodName);
+        request.addProperty("id", userId);
+        Object resultObj = makeKsoapCall(request, userActionUrl);
+        if(resultObj != null){
+            return parseUserModel((SoapObject)resultObj);
+        }
+        return  null;
+    }
+
+    @Override
+    public ArrayList<UserModel> findUserByName(String nickname) {
+        String methodName = "getUserByName";
+        SoapObject request = new SoapObject(namespace, methodName);
+        request.addProperty("name", nickname);
+
+        Object resultObj = makeKsoapCall(request, userActionUrl);
+        if(resultObj != null){
+            return  getUsersFromSoap(resultObj);
+        }
+        return  null;
+    }
+
+    @Override
+    public int addContact(int targetId) {
+        String methodName = "addContact";
+        SoapObject request = new SoapObject(namespace, methodName);
+        request.addProperty("originId", GlobalVariables.currentUser.getUserId());
+        request.addProperty("targetId", targetId);
+
+        Object resultObj = makeKsoapCall(request, userActionUrl);
+        if(resultObj != null){
+            int code = Integer.parseInt(resultObj.toString());
+            Log.v(TAG, "add contact: " + code);
+            return  code;
+        }
+        return -1;
+    }
+
+    @Override
+    public ArrayList<UserModel> getAllContacts() {
+        String methodName = "getAllContacts";
+        SoapObject request = new SoapObject(namespace, methodName);
+        request.addProperty("userId", GlobalVariables.currentUser.getUserId());
+        Object resultObj = makeKsoapCall(request, userActionUrl);
+        if(resultObj != null){
+            return getUsersFromSoap(resultObj);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isMyId(int userId) {
+        return (GlobalVariables.currentUser.getUserId() == userId);
+    }
+
+    @Override
+    public boolean updateAvatar(int avatarId) {
+        SoapObject request = new SoapObject(namespace, "updateAvatar");
+        request.addProperty("userId", GlobalVariables.currentUser.getUserId());
+        request.addProperty("avatarId", avatarId);
+
+        Object resultObj = makeKsoapCall(request, userActionUrl);
+        if(resultObj != null){
+            return Boolean.parseBoolean(resultObj.toString());
+        }
+        return  false;
+    }
+
+    /*-----------------------------------------------Notification-------------------------------------------------------------*/
+    @Override
+    public List<Notification> getNotifications() {
+        return null;
+    }
+
+    @Override
+    public int invite(int hdId, ArrayList<UserModel> targets) {
+        return  0;
+    }
+
+    @Override
+    public void onReadNotification(Notification notification) {
+
+    }
+
+    @Override
+    public ArrayList<MyInvitation> getMyInvitations() {
+        SoapObject request = new SoapObject(namespace, "getInvitationByOriginId");
+        request.addProperty("originID", GlobalVariables.currentUser.getUserId());
+
+        Object resultObj = makeKsoapCall(request, notiActionUrl);
+        if(resultObj != null){
+            return parseMyInvitationsFromSoap(resultObj);
+        }
+        return  null;
+    }
+
+
+    /*------------------------------------Activitation Action---------------------------------------------------------------------*/
     /**
      * 返回当前有效的活动简介
      * SimpleHDActivity用于网络传输的轻量级HDActivity，详情见其类定义
@@ -178,9 +208,12 @@ public class RealNetHelper extends NetHelper {
     }
 
     @Override
-    public List<Notification> getNotifications() {
-        return null;
+    public ArrayList<SimpleHDActivity> getAllActs() {
+        String methodName = "getValidSimpleAct";
+        SoapObject request = new SoapObject(namespace, methodName);
+        return  null;
     }
+
 
     /**
      * 查
@@ -197,8 +230,6 @@ public class RealNetHelper extends NetHelper {
     public HDActivity getHDActivityById(int hdId) {
         return null;
     }
-
-
 
     /**
      * 增
@@ -247,7 +278,7 @@ public class RealNetHelper extends NetHelper {
         return false;
     }
 
-//----------------------------------一系列的查询方法-------------------------------------------
+    //-------------------------------一系列的查询方法-----
 
     //我发起的活动
     @Override
@@ -279,106 +310,73 @@ public class RealNetHelper extends NetHelper {
         return null;
     }
 
-    //---------其他
-
-    //----------------------------通知用户--------------------------------------------------
-
-    /**
-     *
-     * @param hdId
-     * @param targets
-     * @return SUCCEED OR FAIL
-     */
-    @Override
-    public int invite(int hdId, ArrayList<UserModel> targets) {
-        return 0;
-    }
-
-    /**
-     *
-     * @param nickname
-     * @return empty list if no result
-     */
-    @Override
-    public ArrayList<UserModel> findUserByName(String nickname) {
-        return null;
-    }
-
-    /**
-     *
-     * @param targetId
-     * @return SUCCEED OR FAIL
-     */
-    @Override
-    public int addContact(int targetId) {
-        return 0;
-    }
-
-    @Override
-    public ArrayList<UserModel> getAllContacts() {
-        ArrayList<UserModel> resultList = new ArrayList<UserModel>();
-        String methodName = "getAllContacts";
-        SoapObject request = new SoapObject(namespace, methodName);
-        request.addProperty("userId", 1);
-        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-                SoapEnvelope.VER11);
-        envelope.bodyOut = request;
-        HttpTransportSE ht = new HttpTransportSE(userActionUrl);
-        try {
-            // 第5步：调用WebService
-            Log.v(TAG, "before call to getAllContacts");
-            ht.call(null, envelope);
-            if (envelope.getResponse() != null) {
-                Vector soapObject = (Vector)envelope.getResponse();
-                if(soapObject == null){
-                    Log.v(TAG, "soapObject  null!" );
-                    return  resultList;
-                }
-                Iterator ie = soapObject.iterator();
-                while (ie.hasNext()){
-                    UserModel um  = parseUserModel((SoapObject)ie.next());
-                    resultList.add(um);
-                }
-                Log.v(TAG, "getAllContacts() get " + resultList.size() + " contacts");
-            } else {
-                Log.v(TAG, "envelope.getResponse()  null!" );
-                return  resultList;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return resultList;
-    }
-
-    @Override
-    public void onReadNotification(Notification notification) {
-
-    }
-
-    @Override
-    public ArrayList<MyInvitation> getMyInvitations() {
-        return null;
-    }
-
-    @Override
-    public boolean isMyId(int userId) {
-        return false;
-    }
 
 
+
+
+
+    /**--------------------------Private methods--------------------------------------------------------------------------------*/
+
+
+    //-------------------------------------------User Model
     private UserModel parseUserModel(SoapObject soapObject){
         int userId = Integer.parseInt(soapObject.getProperty("userId").toString());
         String userName = soapObject.getProperty("userName").toString();
         String nickName = soapObject.getProperty("nickName").toString();
         int avatar = Integer.parseInt(soapObject.getProperty("avatar").toString());
-        UserModel userModel = new UserModel(userId, userName, nickName, null, avatar);
-        return userModel;
-
+        return new UserModel(userId, userName, nickName, null, avatar);
     }
 
-    @Override
-    public boolean updateAvatar(int avatarId) {
-        return false;
+    private ArrayList<UserModel> getUsersFromSoap(Object obj){
+        ArrayList<UserModel> resultList = new ArrayList<UserModel>();
+        Iterator ie = ((Vector)obj).iterator();
+        while (ie.hasNext()){
+            UserModel um  = parseUserModel((SoapObject)ie.next());
+            resultList.add(um);
+        }
+        Log.v(TAG, "get UserModel of  " + resultList.size() );
+        return  resultList;
+    }
+
+    //---------------------------------------------Notification
+    private MyInvitation parseMyInvitation(SoapObject soapObject){
+        String targetName = soapObject.getProperty("targetName").toString();
+        int targetAvatar = Integer.parseInt(soapObject.getProperty("targetAvatar").toString());
+        String activityName = soapObject.getProperty("activityName").toString();
+        int responseStatus = Integer.parseInt(soapObject.getProperty("responseStatus").toString());
+        return new MyInvitation(targetName, targetAvatar, activityName, MyInvitation.InvitationStatus.values()[responseStatus]);
+    }
+
+    private ArrayList<MyInvitation> parseMyInvitationsFromSoap(Object obj){
+        ArrayList<MyInvitation> resultList = new ArrayList<MyInvitation>();
+        Iterator ie = ((Vector)obj).iterator();
+        while (ie.hasNext()){
+            MyInvitation mi  = parseMyInvitation((SoapObject)ie.next());
+            resultList.add(mi);
+        }
+        Log.v(TAG, "get MyInvitation of  " + resultList.size() );
+        return  resultList;
+    }
+
+
+
+    private Object makeKsoapCall(SoapObject request, String url){
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.bodyOut = request;
+        HttpTransportSE ht = new HttpTransportSE(url);
+        try {
+            ht.call(null, envelope);
+            if (envelope.getResponse() != null) {
+                return envelope.getResponse();
+            } else {
+                Log.v(TAG, " null while make ksoap call");
+                return  null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 
