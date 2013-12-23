@@ -15,14 +15,36 @@ public class HDActivity implements Serializable {
 	private int hdOriginId;
     private String hdOriginName;
 	private String hdDesc;
-	private HDType hdType;
+	private int hdType;
 	private int hdNumLimit; // -1 if no limit
 	private int hdCurNum;
 
     private HDProperty hdProperty;
 	private HDStatus hdStatus;
 
-	@Override
+    public HDActivity() {
+
+    }
+
+    public HDActivity(int hdId, String hdName, String hdAddress, double longitude, double latitude, String hdStartTime, String hdEndTime, int hdOriginId, String hdOriginName, String hdDesc, HDType hdType, int hdNumLimit, int hdCurNum, HDProperty hdProperty, HDStatus hdStatus) {
+        this.hdId = hdId;
+        this.hdName = hdName;
+        this.hdAddress = hdAddress;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.hdStartTime = hdStartTime;
+        this.hdEndTime = hdEndTime;
+        this.hdOriginId = hdOriginId;
+        this.hdOriginName = hdOriginName;
+        this.hdDesc = hdDesc;
+        this.hdType = hdType.ordinal();
+        this.hdNumLimit = hdNumLimit;
+        this.hdCurNum = hdCurNum;
+        this.hdProperty = hdProperty;
+        this.hdStatus = hdStatus;
+    }
+
+    @Override
 	public String toString() {
 		return "HDActivity [hdName=" + hdName + ", hdAddress=" + hdAddress
 				+ ", hdStartTime=" + hdStartTime + ", hdEndTime=" + hdEndTime
@@ -105,11 +127,11 @@ public class HDActivity implements Serializable {
     }
 
     public HDType getHdType() {
-        return hdType;
+        return HDType.values()[hdType];
     }
 
     public void setHdType(HDType hdType) {
-        this.hdType = hdType;
+        this.hdType = hdType.ordinal();
     }
 
     public HDStatus getHdStatus() {
@@ -144,7 +166,7 @@ public class HDActivity implements Serializable {
                 hdOriginName,
                 longitude,
                 latitude,
-                hdType,
+                getHdType(),
                 hdStatus
         );
     }

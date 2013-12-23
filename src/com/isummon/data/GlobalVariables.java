@@ -10,4 +10,6 @@ public class GlobalVariables {
 
     public static NetHelper netHelper = NetHelper.getInstance();
     public static UserModel currentUser = netHelper.findUserByName("horzwxy").get(0);
+
+
 }

@@ -20,8 +20,8 @@ public class SimpleHDActivity implements Serializable {
     private int hdOriginId;
     private double hdLongitude;    //活动的经度
     private double hdLatitude;    //纬度
-    private HDType hdType;
-    private HDStatus hdStatus;
+    private int hdType;
+    private int hdStatus;
 
     public SimpleHDActivity(String hdName, double hdLatitude, double hdLongitude){
         this.hdName = hdName;
@@ -35,8 +35,8 @@ public class SimpleHDActivity implements Serializable {
         this.hdOriginName = hdOriginName;
         this.hdLongitude = hdLongitude;
         this.hdLatitude = hdLatitude;
-        this.hdType = hdType;
-        this.hdStatus = hdStatus;
+        this.hdType = hdType.ordinal();
+        this.hdStatus = hdStatus.ordinal();
     }
 
     public int getHdId() {
@@ -60,11 +60,11 @@ public class SimpleHDActivity implements Serializable {
     }
 
     public HDType getHdType() {
-        return hdType;
+        return HDType.values()[hdType];
     }
 
     public HDStatus getHdStatus() {
-        return hdStatus;
+        return HDStatus.values()[hdStatus];
     }
 
     public int getHdOriginId() {
