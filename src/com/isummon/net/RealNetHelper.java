@@ -182,12 +182,7 @@ public class RealNetHelper extends NetHelper {
 
 
     /*------------------------------------Activitation Action---------------------------------------------------------------------*/
-    /**
-     * 返回当前有效的活动简介
-     * SimpleHDActivity用于网络传输的轻量级HDActivity，详情见其类定义
-     *
-     * @return
-     */
+
     @Override
     public ArrayList<SimpleHDActivity> getCurrentSimpleHDActivities() {
 //        try {
@@ -216,18 +211,6 @@ public class RealNetHelper extends NetHelper {
         return  null;
     }
 
-
-    /**
-     * 查
-     * 返回相应id的活动详情
-     *
-     * @param hdId 活动id
-     * @return 活动详情
-     * <p/>
-     * 用例：
-     * 1. 用户在地图图层上点击某活动，或用户在活动管理列表中点击该活动时，
-     * 应跳转到ShowHDActivity界面，同时通过本方法获取活动详情并显示
-     */
     @Override
     public HDActivity getHDActivityById(int hdId) {
         SoapObject request = new SoapObject(namespace, "getActById");
@@ -239,43 +222,18 @@ public class RealNetHelper extends NetHelper {
         return null;
     }
 
-    /**
-     * 增
-     * 用户添加活动
-     *
-     * @param hdActivity 活动详情
-     * @return 添加后的活动id，添加失败返回-1
-     */
     @Override
     public int addHDActivity(HDActivity hdActivity) {
         int hdId = 0; // add hdactivity
         return hdId;
     }
 
-    /**
-     * 改
-     * 更改活动  （暂定为这样，可能返回类型较弱，考虑应返回具体出错信息）
-     *
-     * @param hdActivityNew 要更改的活动，hdId不能改变，其他可能可以改变
-     * @return 成功or失败，成功的话用客户端的备份更新原来内容
-     * <p/>
-     * 注意：
-     * 1. 只有活动发起者才能更改他发起的活动！！客户端调用该方法前要判断请求者userId与活动发起人hdOrigin是否一致
-     * 2. HDActivity中有些属性是不能更改的，客户端不能将这些属性暴露给用户
-     * 3. 更改活动之后服务器端应通知参加的用户
-     */
     @Override
     public boolean modifyHDActivity(HDActivity hdActivityNew) {
         return false;
     }
 
-    /**
-     * 删
-     * 活动发起者可以取消该活动，取消该活动之后服务端应通知参加的用户
-     *
-     * @param hdId
-     * @return
-     */
+
     @Override
     public boolean cancleHDActivity(int hdId) {
         return false;
@@ -345,14 +303,6 @@ public class RealNetHelper extends NetHelper {
 
     //----------------------------------------------Activity
     private SimpleHDActivity parseSimpleHDActivity(SoapObject soapObject){
-//        private int hdId;            //活动的id
-//        private String hdName;        //活动的名称
-//        private String hdOriginName;        //活动发起者的id，
-//        private int hdOriginId;
-//        private double hdLongitude;    //活动的经度
-//        private double hdLatitude;    //纬度
-//        private int hdType;
-//        private int hdStatus;
         int hdId = Integer.parseInt(soapObject.getProperty("hdId").toString());
         String hdName = soapObject.getProperty("hdName").toString();
         String hdOriginName = soapObject.getProperty("hdOriginName").toString();
