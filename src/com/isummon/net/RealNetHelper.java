@@ -6,8 +6,6 @@ import com.isummon.model.DisplayInvitation;
 import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
 import com.isummon.model.HDType;
-import com.isummon.model.Invitation;
-import com.isummon.model.InvitationList;
 import com.isummon.model.LogInResultType;
 import com.isummon.model.Notification;
 import com.isummon.model.RegisterResultType;
@@ -79,29 +77,25 @@ public class RealNetHelper extends NetHelper {
 //        getMyInvitations();
 //        getNotifications();
 //        getHDActivityByOriginId();
-        getHDActivityByOriginName("singo");
+//        getHDActivityByOriginName("singo");
+//        updateAvatar(3);
+//        getHDActivityById(3);
     }
 
-    private void modifyUserModel(UserModel user){
-        SoapObject request = new SoapObject(namespace, "modifyUser");
-        request.addProperty("user", user);
-        Object resultObj = makeKsoapCall(request, userActionUrl);
-        if(resultObj != null){
-            Log.v(TAG, resultObj.toString());
-        }
-        Log.v(TAG, "result null;");
-    }
 
     public RegisterResultType register(UserModel newUser) {
+        Log.v(TAG, "register received user " + newUser.toString());
+
         String methodName = "register";
         SoapObject request = new SoapObject(namespace, methodName);
         request.addProperty("username", newUser.getUserName());
         request.addProperty("nickname", newUser.getNickName());
         request.addProperty("passwd", newUser.getPasswd());
         request.addProperty("avatarId", newUser.getAvatar());
-
+//        Log.v(TAG, request.getProperty("nickname").toString());
         Object resultObj = makeKsoapCall(request, userActionUrl);
         if(resultObj != null){
+            Log.v(TAG, resultObj.toString());
             int retcode = Integer.parseInt(resultObj.toString());
             Log.v(TAG, "register result " + retcode);
             if(retcode == 0)
@@ -161,6 +155,22 @@ public class RealNetHelper extends NetHelper {
     }
 
     @Override
+    public int removeContact(int targetId) {
+        String methodName = "removeContact";
+        SoapObject request = new SoapObject(namespace, methodName);
+        request.addProperty("originId", GlobalVariables.currentUser.getUserId());
+        request.addProperty("targetId", targetId);
+
+        Object resultObj = makeKsoapCall(request, userActionUrl);
+        if(resultObj != null){
+            int code = Integer.parseInt(resultObj.toString());
+            Log.v(TAG, "remove contact: " + code);
+            return  code;
+        }
+        return -1;
+    }
+
+    @Override
     public ArrayList<UserModel> getAllContacts() {
         String methodName = "getAllContacts";
         SoapObject request = new SoapObject(namespace, methodName);
@@ -206,25 +216,34 @@ public class RealNetHelper extends NetHelper {
     @Override
     public int invite(int hdId, ArrayList<UserModel> targets) {
         if(targets == null || targets.size() == 0)
-            return 0;
-        Invitation[] inviteList = new Invitation[targets.size()];
-        for(int i =0; i< targets.size(); i++){
-            inviteList[i] = new Invitation(GlobalVariables.currentUser.getUserId(), targets.get(i).getUserId(), hdId);
+            return -1;
+        int originId = GlobalVariables.currentUser.getUserId();
+        for(UserModel user : targets){
+            SoapObject request = new SoapObject(namespace, "addInvitation");
+            request.addProperty("originId", originId);
+            request.addProperty("targetId", user.getUserId());
+            request.addProperty("actId", hdId);
+            Object resultObj = makeKsoapCall(request, notiActionUrl);
+            if(resultObj != null){
+                Log.v(TAG, "invite result: " + resultObj.toString());
+                if(Integer.parseInt(resultObj.toString()) != 0)
+                    return -1;
+            }
         }
-        SoapObject request = new SoapObject(namespace, "addInvitation");
-        request.addProperty("inviteList", inviteList);
-        Object resultObj = makeKsoapCall(request, notiActionUrl);
-        if(resultObj != null){
-            Log.v(TAG, "invite result: " + resultObj.toString());
-            if(Integer.parseInt(resultObj.toString()) == 0)
-                return 0;
-        }
-        return  -1;
+        return  0;
     }
+
 
     @Override
     public void onReadNotification(Notification notification) {
+        SoapObject request = new SoapObject(namespace, "responseInvitation");
+        request.addProperty("id", notification.getId());
+        Object resultObj = makeKsoapCall(request, notiActionUrl);
+        if(resultObj != null){
+            Log.v(TAG, "responseNotification: " + resultObj.toString());
 
+        }
+        Log.v(TAG, "on read notification result null");
     }
 
     @Override
@@ -256,7 +275,7 @@ public class RealNetHelper extends NetHelper {
 
     @Override
     public ArrayList<SimpleHDActivity> getAllActs() {
-        return  null;
+        return  getCurrentSimpleHDActivities();
     }
 
     @Override
@@ -272,12 +291,25 @@ public class RealNetHelper extends NetHelper {
 
     @Override
     public int addHDActivity(HDActivity hdActivity) {
-        int hdId = 0; // add hdactivity
-        return hdId;
+        SoapObject request = new SoapObject(namespace, "addAct");
+        request = formHDActivity(request, hdActivity);
+        Object resultObj = makeKsoapCall(request, activityUrl);
+        if(resultObj != null){
+               Log.v(TAG, "add Hd activity get hdId: " + resultObj.toString());
+            return (Integer.parseInt(resultObj.toString()) ==1) ? 0 : -1;
+        }
+        return -1;
     }
 
     @Override
     public boolean modifyHDActivity(HDActivity hdActivityNew) {
+        SoapObject request = new SoapObject(namespace, "addAct");
+        request.addProperty("id", hdActivityNew.getHdId());
+        request = formHDActivity(request, hdActivityNew);
+        Object resultObj = makeKsoapCall(request, activityUrl);
+        if(resultObj != null){
+            return (Integer.parseInt(resultObj.toString()) == 1) ? true: false;
+        }
         return false;
     }
 
@@ -289,7 +321,7 @@ public class RealNetHelper extends NetHelper {
         Object resultObj = makeKsoapCall(request, activityUrl);
         if(resultObj != null){
             Log.v(TAG, "in cancleHDActivity resultObj:　" + resultObj.toString());
-//            return  Integer.parseInt(resultObj.toString());
+            return  (Integer.parseInt(resultObj.toString()) == 1)? true: false;
         }
         return false;
     }
@@ -302,7 +334,7 @@ public class RealNetHelper extends NetHelper {
         Object resultObj = makeKsoapCall(request, activityUrl);
         if(resultObj != null){
             Log.v(TAG, "in applyHDActivity resultObj:　" + resultObj.toString());
-//            return  Integer.parseInt(resultObj.toString())
+            return  (Integer.parseInt(resultObj.toString()) == 1) ? true :false;
         }
         return false;
     }
@@ -460,11 +492,29 @@ public class RealNetHelper extends NetHelper {
         int hdProperty = Integer.parseInt(soapObject.getProperty("hdProperty").toString());
         int hdStatus = Integer.parseInt(soapObject.getProperty("hdStatus").toString());
 
-//        HDActivity hd = new HDActivity(hdId,hdName,hdAddress,longitude, latitude, hdStartTime,
-//                hdEndTime, hdOriginId, hdOriginName, hdType, hdNumLimit, hdCurNum, hdProperty, hdStatus);
+        HDActivity hd = new HDActivity(hdId,hdName,hdAddress,longitude, latitude, hdStartTime,
+                hdEndTime, hdOriginId, hdOriginName, hdDesc, hdType, hdNumLimit, hdCurNum, hdProperty, hdStatus);
 
+        Log.v(TAG, hd.toString());
+        return hd;
+    }
 
-        return null;
+    private SoapObject formHDActivity(SoapObject request, HDActivity act){
+        request.addProperty("name", act.getHdName());
+        request.addProperty("address", act.getHdAddress());
+        request.addProperty("longitude", act.getLongitude());
+        request.addProperty("latitude", act.getLatitude());
+        request.addProperty("startTime", act.getHdStartTime());
+        request.addProperty("endTime", act.getHdEndTime());
+        request.addProperty("originId", act.getHdOriginId());
+        request.addProperty("desc", act.getHdDesc());
+        request.addProperty("type", act.getHdType());
+        request.addProperty("numLimit", act.getHdNumLimit());
+        request.addProperty("curNum", act.getHdCurNum());
+        request.addProperty("property", act.getHdProperty());
+        request.addProperty("status", act.getHdStatus());
+        return  request;
+
     }
 
     //---------------------------------------------Notification
@@ -487,7 +537,7 @@ public class RealNetHelper extends NetHelper {
         return  resultList;
     }
 
-    private Notification pareNotification(SoapObject soapObject){
+    private Notification parseNotification(SoapObject soapObject){
         int notificationId = Integer.parseInt(soapObject.getProperty("id").toString());
         int hdId = Integer.parseInt(soapObject.getProperty("hdId").toString());
         int responseStatus = Integer.parseInt(soapObject.getProperty("responseStatus").toString());
@@ -502,7 +552,7 @@ public class RealNetHelper extends NetHelper {
         ArrayList<Notification> resultList = new ArrayList<Notification>();
         Iterator ie = ((Vector)obj).iterator();
         while (ie.hasNext()){
-            Notification noti  = pareNotification((SoapObject)ie.next());
+            Notification noti  = parseNotification((SoapObject) ie.next());
             resultList.add(noti);
         }
         Log.v(TAG, "get Notification of  " + resultList.size() );

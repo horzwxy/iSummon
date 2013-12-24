@@ -65,7 +65,7 @@ public abstract class NetHelper {
     /**
      *
      * @param targetId
-     * @return SUCCEED OR FAIL
+     * @return 0 if normal, -1 if unexpected excepton , -2 if already been contacts
      */
     public abstract int addContact(int targetId);
 
@@ -75,6 +75,13 @@ public abstract class NetHelper {
     public abstract boolean isMyId(int userId);
 
     public abstract boolean updateAvatar(int avatarId);
+
+    /**
+     *
+     * @param targetId
+     * @return 0 if normal, -1 if unexpected excepton , -2 if no such contacts
+     */
+    public abstract int removeContact(int targetId);
 
     /*-----------------------------------Notification Action--------------------------------------------------------------------------------*/
 

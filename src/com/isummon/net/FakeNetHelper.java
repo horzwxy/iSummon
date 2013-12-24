@@ -248,7 +248,10 @@ public class FakeNetHelper extends NetHelper {
     public int addContact(int targetId) {
         return 1;
     }
-
+    @Override
+    public int removeContact(int targetId) {
+        return 0;
+    }
     @Override
     public ArrayList<UserModel> getAllContacts() {
         return contacts;
