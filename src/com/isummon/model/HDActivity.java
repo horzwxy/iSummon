@@ -19,8 +19,8 @@ public class HDActivity implements Serializable {
 	private int hdNumLimit; // -1 if no limit
 	private int hdCurNum;
 
-    private HDProperty hdProperty;
-	private HDStatus hdStatus;
+    private int hdProperty;
+	private int hdStatus;
 
     public HDActivity() {
 
@@ -38,6 +38,24 @@ public class HDActivity implements Serializable {
         this.hdOriginName = hdOriginName;
         this.hdDesc = hdDesc;
         this.hdType = hdType.ordinal();
+        this.hdNumLimit = hdNumLimit;
+        this.hdCurNum = hdCurNum;
+        this.hdProperty = hdProperty.ordinal();
+        this.hdStatus = hdStatus.ordinal();
+    }
+
+    public HDActivity(int hdId, String hdName, String hdAddress, double longitude, double latitude, String hdStartTime, String hdEndTime, int hdOriginId, String hdOriginName, String hdDesc, int hdType, int hdNumLimit, int hdCurNum, int hdProperty, int hdStatus) {
+        this.hdId = hdId;
+        this.hdName = hdName;
+        this.hdAddress = hdAddress;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.hdStartTime = hdStartTime;
+        this.hdEndTime = hdEndTime;
+        this.hdOriginId = hdOriginId;
+        this.hdOriginName = hdOriginName;
+        this.hdDesc = hdDesc;
+        this.hdType = hdType;
         this.hdNumLimit = hdNumLimit;
         this.hdCurNum = hdCurNum;
         this.hdProperty = hdProperty;
@@ -136,19 +154,19 @@ public class HDActivity implements Serializable {
     }
 
     public HDStatus getHdStatus() {
-        return hdStatus;
+        return HDStatus.values()[hdStatus];
     }
 
     public void setHdStatus(HDStatus hdStatus) {
-        this.hdStatus = hdStatus;
+        this.hdStatus = hdStatus.ordinal();
     }
 
     public HDProperty getHdProperty() {
-        return hdProperty;
+        return HDProperty.values()[hdProperty];
     }
 
     public void setHdProperty(HDProperty hdProperty) {
-        this.hdProperty = hdProperty;
+        this.hdProperty = hdProperty.ordinal();
     }
 
     public String getHdOriginName() {
@@ -168,7 +186,7 @@ public class HDActivity implements Serializable {
                 longitude,
                 latitude,
                 getHdType(),
-                hdStatus
+                getHdStatus()
         );
     }
 }
