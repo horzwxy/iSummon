@@ -291,8 +291,10 @@ public class RealNetHelper extends NetHelper {
 
     @Override
     public int addHDActivity(HDActivity hdActivity) {
+        Log.v(TAG, "get hd: " + hdActivity.toString());
         SoapObject request = new SoapObject(namespace, "addAct");
         request = formHDActivity(request, hdActivity);
+
         Object resultObj = makeKsoapCall(request, activityUrl);
         if(resultObj != null){
                Log.v(TAG, "add Hd activity get hdId: " + resultObj.toString());
@@ -562,6 +564,7 @@ public class RealNetHelper extends NetHelper {
 
 
     private Object makeKsoapCall(SoapObject request, String url){
+        Log.v(TAG, "try to make soap call: " + request.toString());
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                 SoapEnvelope.VER11);
         envelope.bodyOut = request;
