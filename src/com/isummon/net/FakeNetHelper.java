@@ -287,4 +287,14 @@ public class FakeNetHelper extends NetHelper {
     public UserModel getUserById(int userId) {
         return null;
     }
+
+    @Override
+    public ArrayList<SimpleHDActivity> getHDActivityByOriginName(String originName) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<SimpleHDActivity> getHDActivityByAddress(String address) {
+        return null;
+    }
 }

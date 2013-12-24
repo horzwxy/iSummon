@@ -175,6 +175,10 @@ public abstract class NetHelper {
     //查询某时间范围以内的活动，两个参数可以一个为null，如(startTime, null)表示startTime以后的所有活动
     public abstract ArrayList<SimpleHDActivity> getHDActivityByTime(String startTime, String endTime);
 
+    public abstract ArrayList<SimpleHDActivity> getHDActivityByOriginName(String originName);
+
+    public abstract ArrayList<SimpleHDActivity> getHDActivityByAddress(String address);
+
 
 
 

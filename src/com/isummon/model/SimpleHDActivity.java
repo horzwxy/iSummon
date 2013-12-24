@@ -85,4 +85,18 @@ public class SimpleHDActivity implements Serializable {
     public void setHdOriginId(int hdOriginId) {
         this.hdOriginId = hdOriginId;
     }
+
+    @Override
+    public String toString() {
+        return "SimpleHDActivity{" +
+                "hdId=" + hdId +
+                ", hdName='" + hdName + '\'' +
+                ", hdOriginName='" + hdOriginName + '\'' +
+                ", hdOriginId=" + hdOriginId +
+                ", hdLongitude=" + hdLongitude +
+                ", hdLatitude=" + hdLatitude +
+                ", hdType=" + hdType +
+                ", hdStatus=" + hdStatus +
+                '}';
+    }
 }
