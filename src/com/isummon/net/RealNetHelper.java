@@ -1,5 +1,6 @@
 package com.isummon.net;
 
+import org.kobjects.base64.Base64;
 import android.util.Log;
 import com.isummon.model.DisplayInvitation;
 import com.isummon.data.GlobalVariables;
@@ -15,6 +16,7 @@ import com.isummon.model.UserModel;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
@@ -71,7 +73,8 @@ public class RealNetHelper extends NetHelper {
 //        invite(3, targets);
 //        getCurrentSimpleHDActivities();
 //        getHDActivityById(2);
-        modifyUserModel(new UserModel(5, "ubuntu", "ubuntu111", "ubuntu", 3));
+//        modifyUserModel(new UserModel(5, "ubuntu", "ubuntu111", "ubuntu", 3));
+        testDemo();
     }
 
     private void modifyUserModel(UserModel user){
@@ -419,6 +422,28 @@ public class RealNetHelper extends NetHelper {
         }
 
         return null;
+    }
+
+
+    /*-------------------------------Fake test----------------------------------**/
+    private void testDemo(){
+        String url = "http://10.131.251.146:8080/iSummon/services/TestActionImpl?wsdl";
+        String ret;
+        SoapObject request = new SoapObject(namespace, "testA");
+        request.addProperty("a", 420);
+        request.addProperty("b", new DemoBean(1, "ss"));
+        Object resultObj = makeKsoapCall(request, url);
+        if(resultObj != null){
+            Log.v(TAG, resultObj.toString());
+            SoapPrimitive response = (SoapPrimitive)resultObj;
+            ret = response.toString();
+            byte[] bytes = Base64.decode(ret);
+            DemoBean demoBean = DemoBean.deserialize(bytes);
+            ret = "Id=" + demoBean.getId() + " Name=" + demoBean.getName();
+            Log.v(TAG, ret);
+        }
+        Log.v(TAG, "resultObj null");
+        return ;
     }
 
 
