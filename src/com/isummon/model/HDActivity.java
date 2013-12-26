@@ -8,8 +8,8 @@ public class HDActivity implements Serializable {
     private int hdId;
 	private String hdName;
 	private String hdAddress;
-    private double longitude;
-    private double latitude;
+    private int longitude;
+    private int latitude;
 	private String hdStartTime;
     private String hdEndTime;
 	private int hdOriginId;
@@ -26,7 +26,7 @@ public class HDActivity implements Serializable {
 
     }
 
-    public HDActivity(int hdId, String hdName, String hdAddress, double longitude, double latitude, String hdStartTime, String hdEndTime, int hdOriginId, String hdOriginName, String hdDesc, HDType hdType, int hdNumLimit, int hdCurNum, HDProperty hdProperty, HDStatus hdStatus) {
+    public HDActivity(int hdId, String hdName, String hdAddress, int longitude, int latitude, String hdStartTime, String hdEndTime, int hdOriginId, String hdOriginName, String hdDesc, HDType hdType, int hdNumLimit, int hdCurNum, HDProperty hdProperty, HDStatus hdStatus) {
         this.hdId = hdId;
         this.hdName = hdName;
         this.hdAddress = hdAddress;
@@ -44,7 +44,7 @@ public class HDActivity implements Serializable {
         this.hdStatus = hdStatus.ordinal();
     }
 
-    public HDActivity(int hdId, String hdName, String hdAddress, double longitude, double latitude, String hdStartTime, String hdEndTime, int hdOriginId, String hdOriginName, String hdDesc, int hdType, int hdNumLimit, int hdCurNum, int hdProperty, int hdStatus) {
+    public HDActivity(int hdId, String hdName, String hdAddress, int longitude, int latitude, String hdStartTime, String hdEndTime, int hdOriginId, String hdOriginName, String hdDesc, int hdType, int hdNumLimit, int hdCurNum, int hdProperty, int hdStatus) {
         this.hdId = hdId;
         this.hdName = hdName;
         this.hdAddress = hdAddress;
@@ -120,19 +120,19 @@ public class HDActivity implements Serializable {
 		this.hdCurNum = hdCurNum;
 	}
 
-    public double getLongitude() {
+    public int getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(int longitude) {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public int getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(int latitude) {
         this.latitude = latitude;
     }
 

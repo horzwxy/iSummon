@@ -70,8 +70,8 @@ public class FakeNetHelper extends NetHelper {
         a1.setHdProperty(HDProperty.ANYTIME_OPEN);
         a1.setHdStatus(HDStatus.NO_VACANCY);
         a1.setHdOriginName("horzwxy");
-        a1.setLatitude(31.195719 * 1E6);
-        a1.setLongitude(121.604423 * 1E6);
+//        a1.setLatitude(31.195719 * 1E6);
+//        a1.setLongitude(121.604423 * 1E6);
         hdArray.add(a1);
 
         HDActivity a2 = new HDActivity();
@@ -88,8 +88,8 @@ public class FakeNetHelper extends NetHelper {
         a2.setHdProperty(HDProperty.OTHER);
         a2.setHdStatus(HDStatus.OPEN);
         a2.setHdOriginName("罗玉凤");
-        a2.setLatitude(31.195720 * 1E6);
-        a2.setLongitude(121.604424 * 1E6);
+//        a2.setLatitude(31.195720 * 1E6);
+//        a2.setLongitude(121.604424 * 1E6);
         hdArray.add(a2);
 
         HDActivity a3 = new HDActivity();
@@ -105,8 +105,8 @@ public class FakeNetHelper extends NetHelper {
         a3.setHdProperty(HDProperty.SECRET);
         a3.setHdStatus(HDStatus.CANCELED);
         a3.setHdOriginName("陈水扁");
-        a3.setLatitude(31.195722 * 1E6);
-        a3.setLongitude(121.604425 * 1E6);
+//        a3.setLatitude(31.195722 * 1E6);
+//        a3.setLongitude(121.604425 * 1E6);
         hdArray.add(a3);
 
         Notification n1 = new Notification(

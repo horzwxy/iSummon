@@ -44,8 +44,8 @@ public class AddActActivity extends ISummonActivity {
     public static final String LATITUDE = "latitude";
     public static final int GET_ADDRESS = 876;
 
-    private final static double DEFAULT_LATITUDE = 120000000d;
-    private final static double DEFAULT_LONGITUDE = 35000000d;
+    private final static int DEFAULT_LATITUDE = 0;
+    private final static int DEFAULT_LONGITUDE = 0;
 
     protected HDActivity result;
     protected Calendar hdStartDate;
@@ -70,13 +70,13 @@ public class AddActActivity extends ISummonActivity {
         hdStartDate = hdEndDate = hdStartTime = hdEndTime = Calendar.getInstance();
 
         Intent intent = getIntent();
-        double longitude = intent.getDoubleExtra( LONGITUDE, -200000000d );
-        double latitude = intent.getDoubleExtra( LATITUDE, -200000000d );
+        int longitude = intent.getIntExtra(LONGITUDE, DEFAULT_LONGITUDE);
+        int latitude = intent.getIntExtra( LATITUDE, DEFAULT_LATITUDE );
         EditText et = (EditText) findViewById(R.id.actPlace);
         et.setHint(R.string.act_place_prompt);
         // if longitude is greater than -181 degrees, it must be a valid number
         // in unit of 1e-6 degrees
-        if(longitude > -181000000d ) {
+        if(longitude > -181 ) {
             result.setLongitude(longitude);
             result.setLatitude(latitude);
             et.setOnClickListener(new View.OnClickListener() {
@@ -161,8 +161,8 @@ public class AddActActivity extends ISummonActivity {
         if(requestCode == GET_ADDRESS) {
             if(resultCode == RESULT_OK) {
                 ((EditText)findViewById(R.id.actPlace)).setText(data.getStringExtra(ADDRESS_NAME));
-                result.setLatitude(data.getDoubleExtra(LATITUDE, DEFAULT_LATITUDE));
-                result.setLongitude(data.getDoubleExtra(LONGITUDE, DEFAULT_LONGITUDE));
+                result.setLatitude(data.getIntExtra(LATITUDE, DEFAULT_LATITUDE));
+                result.setLongitude(data.getIntExtra(LONGITUDE, DEFAULT_LONGITUDE));
             }
             else {
                 // on error

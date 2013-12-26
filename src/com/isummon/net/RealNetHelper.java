@@ -483,8 +483,8 @@ public class RealNetHelper extends NetHelper {
         int hdId = Integer.parseInt(soapObject.getProperty("hdId").toString());
         String hdName = soapObject.getProperty("hdName").toString();
         String hdAddress = soapObject.getProperty("hdAddress").toString();
-        Double longitude = Double.parseDouble(soapObject.getProperty("longitude").toString());
-        Double latitude = Double.parseDouble(soapObject.getProperty("latitude").toString());
+        int longitude = Integer.parseInt(soapObject.getProperty("longitude").toString());
+        int latitude = Integer.parseInt(soapObject.getProperty("latitude").toString());
         String hdStartTime = soapObject.getProperty("hdStartTime").toString();
         String hdEndTime = soapObject.getProperty("hdEndTime").toString();
         int hdOriginId = Integer.parseInt(soapObject.getProperty("hdOriginId").toString());
@@ -506,19 +506,19 @@ public class RealNetHelper extends NetHelper {
     private SoapObject formHDActivity(SoapObject request, HDActivity act){
         request.addProperty("name", act.getHdName());
         request.addProperty("address", act.getHdAddress());
-        request.addProperty("longitude", String.valueOf(act.getLongitude()));
-        request.addProperty("latitude", String.valueOf(act.getLatitude()));
+        request.addProperty("longitude", act.getLongitude());
+        request.addProperty("latitude", act.getLatitude());
 //        request.addProperty("longitude", 11.0);
 //        request.addProperty("latitude", 11.0);
         request.addProperty("startTime", act.getHdStartTime());
         request.addProperty("endTime", act.getHdEndTime());
         request.addProperty("originId", act.getHdOriginId());
         request.addProperty("desc", act.getHdDesc());
-        request.addProperty("type", act.getHdTypeInstance());
+        request.addProperty("type", act.getHdType());
         request.addProperty("numLimit", act.getHdNumLimit());
         request.addProperty("curNum", act.getHdCurNum());
-        request.addProperty("property", act.getHdPropertyInstance());
-        request.addProperty("status", act.getHdStatusInstance());
+        request.addProperty("property", act.getHdProperty());
+        request.addProperty("status", act.getHdStatus());
         return  request;
 
     }
