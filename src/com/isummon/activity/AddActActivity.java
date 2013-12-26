@@ -24,13 +24,25 @@ import com.isummon.widget.ProgressTaskBundle;
 
 import java.util.Calendar;
 
-
+/**
+ * 创建活动。
+ * 可以通过Intent传入活动地点的经纬度，也可以不传，界面上提供弹出
+ */
 public class AddActActivity extends ISummonActivity {
 
-    static final String ADDRESS_NAME = "address_name";
-    static final String LONGITUDE = "longitude";
-    static final String LATITUDE = "latitude";
-    static final int GET_ADDRESS = 876;
+    /**
+     * key in Intent, 活动地点的中文表述
+     */
+    public static final String ADDRESS_NAME = "address_name";
+    /**
+     * key in Intent, 活动地点的经度
+     */
+    public static final String LONGITUDE = "longitude";
+    /**
+     * key in Intent, 活动地点的纬度
+     */
+    public static final String LATITUDE = "latitude";
+    public static final int GET_ADDRESS = 876;
 
     private final static double DEFAULT_LATITUDE = 120000000d;
     private final static double DEFAULT_LONGITUDE = 35000000d;

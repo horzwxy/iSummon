@@ -57,12 +57,12 @@ public class ShowHdDetailsActivity extends ISummonActivity {
 
         setText(R.id.actContent, R.string.act_content_prompt, hdActivity.getHdDesc());
         setText(R.id.act_participants, R.string.act_participants_prompt, hdActivity.getHdCurNum() + "/" + hdActivity.getHdNumLimit());
-        setText(R.id.act_property, R.string.act_property_prompt, hdActivity.getHdProperty().getChn());
+        setText(R.id.act_property, R.string.act_property_prompt, hdActivity.getHdPropertyInstance().getChn());
 
         ImageView typeImage = (ImageView)findViewById(R.id.act_type_image);
         TextView typeText = (TextView)findViewById(R.id.act_type_name);
 
-        HDType type = hdActivity.getHdType();
+        HDType type = hdActivity.getHdTypeInstance();
 
         int imageId = getResources().getIdentifier(
                 "com.isummon:drawable/" + type.name().toLowerCase(),
@@ -79,8 +79,8 @@ public class ShowHdDetailsActivity extends ISummonActivity {
         }
         else {
             findViewById(R.id.origin_can_see).setVisibility(View.GONE);
-            if(hdActivity.getHdStatus() == HDStatus.CANCELED
-                    || hdActivity.getHdStatus() == HDStatus.NO_VACANCY) {
+            if(hdActivity.getHdStatusInstance() == HDStatus.CANCELED
+                    || hdActivity.getHdStatusInstance() == HDStatus.NO_VACANCY) {
                 Button applyButton = (Button) findViewById(R.id.apply_in);
                 applyButton.setBackgroundResource(
                         R.drawable.button_bg_disabled);

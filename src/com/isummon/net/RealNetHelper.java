@@ -514,11 +514,11 @@ public class RealNetHelper extends NetHelper {
         request.addProperty("endTime", act.getHdEndTime());
         request.addProperty("originId", act.getHdOriginId());
         request.addProperty("desc", act.getHdDesc());
-        request.addProperty("type", act.getHdType());
+        request.addProperty("type", act.getHdTypeInstance());
         request.addProperty("numLimit", act.getHdNumLimit());
         request.addProperty("curNum", act.getHdCurNum());
-        request.addProperty("property", act.getHdProperty());
-        request.addProperty("status", act.getHdStatus());
+        request.addProperty("property", act.getHdPropertyInstance());
+        request.addProperty("status", act.getHdStatusInstance());
         return  request;
 
     }
