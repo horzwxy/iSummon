@@ -12,7 +12,7 @@ import com.isummon.R;
 import java.util.ArrayList;
 
 /**
- * Created by horzwxy on 12/22/13.
+ * 用于列表显示用户头像的adapter
  */
 public class AvatarAdapter extends BaseAdapter {
 

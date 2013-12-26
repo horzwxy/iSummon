@@ -9,7 +9,9 @@ import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.MKGeneralListener;
 import com.baidu.mapapi.map.MKEvent;
 
-
+/**
+ * 按照应用需求定制的Application类，包含了使用百度地图相关的逻辑。
+ */
 public class TestApplication extends Application {
 
     private static TestApplication mInstance = null;

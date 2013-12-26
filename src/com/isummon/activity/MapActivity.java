@@ -6,10 +6,13 @@ import com.isummon.R;
 import com.isummon.widget.ISummonMapView;
 
 /**
- * Created by horzwxy on 12/19/13.
+ * 包含有地图界面的Activity。
  */
 public class MapActivity extends ISummonActivity {
 
+    /**
+     * 显示地图的View
+     */
     protected ISummonMapView mMapView;
 
     @Override

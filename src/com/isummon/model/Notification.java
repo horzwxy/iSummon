@@ -3,9 +3,10 @@ package com.isummon.model;
 import java.io.Serializable;
 
 /**
- * Created by horzwxy on 12/16/13.
+ * 用户收到的邀请信息
  */
 public class Notification implements Serializable {
+
     @Override
     public String toString() {
         return "Notification [id=" + id + ", hdId=" + hdId

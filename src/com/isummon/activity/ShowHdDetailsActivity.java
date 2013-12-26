@@ -20,11 +20,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by horzwxy on 12/18/13.
+ * 显示活动详情的界面
  */
 public class ShowHdDetailsActivity extends ISummonActivity {
 
+    /**
+     * 通过Intent传入HDActivity实例时的key
+     */
     public static final String HDACTIVITY = "hdActivity";
+
     private HDActivity hdActivity;
 
     @Override
@@ -95,6 +99,10 @@ public class ShowHdDetailsActivity extends ISummonActivity {
         editText.setText(getString(hintStringId) + " : " + content);
     }
 
+    /**
+     * 响应用户点击“申请加入”的事件
+     * @param v
+     */
     public void applyIn(View v) {
         new ProgressTaskBundle<Integer, Boolean>(
                 this,
@@ -117,6 +125,10 @@ public class ShowHdDetailsActivity extends ISummonActivity {
         }.action(hdActivity.getHdId());
     }
 
+    /**
+     * 响应活动发起者取消活动的事件
+     * @param v
+     */
     public void cancelAct(View v) {
         new ProgressTaskBundle<Integer,Boolean>(
                 this,
@@ -140,6 +152,10 @@ public class ShowHdDetailsActivity extends ISummonActivity {
         }.action(hdActivity.getHdId());
     }
 
+    /**
+     * 响应活动发起者修改活动详情的事件
+     * @param v
+     */
     public void modifyAct(View v) {
         Intent intent = new Intent(this, ModifyHdActivity.class);
         intent.putExtra(ModifyHdActivity.ACTIVITY, hdActivity);

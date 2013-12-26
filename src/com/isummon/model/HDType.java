@@ -1,17 +1,30 @@
 package com.isummon.model;
 
-import com.isummon.R;
-
 import java.io.Serializable;
 
 /**
- * Created by horzwxy on 12/15/13.
+ * 活动类别
  */
 public enum HDType implements Serializable {
+    /**
+     * 运动
+     */
     SPORT("运动"),
+    /**
+     * 学习
+     */
     STUDY("学习"),
+    /**
+     * 娱乐
+     */
     ENTERTAINMENT("娱乐"),
+    /**
+     * 聚餐
+     */
     DINING("聚餐"),
+    /**
+     * 其他活动类别
+     */
     OTHER("其他");
 
     private String chn;
@@ -20,10 +33,18 @@ public enum HDType implements Serializable {
         this.chn = chn;
     }
 
+    /**
+     * 获取活动类别的汉语表示
+     * @return
+     */
     public String getChn() {
         return this.chn;
     }
 
+    /**
+     * 获取所有活动类别的汉语表示
+     * @return
+     */
     public static String[] getChns() {
         HDType[] types = values();
         String[] result = new String[types.length];
@@ -33,6 +54,10 @@ public enum HDType implements Serializable {
         return result;
     }
 
+    /**
+     *
+     * @return 返回活动类别的汉语表示
+     */
     @Override
     public String toString() {
         return this.chn;

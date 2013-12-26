@@ -12,7 +12,7 @@ import com.isummon.widget.ProgressTaskBundle;
 import java.util.ArrayList;
 
 /**
- * Created by horz on 12/22/13.
+ * 列表显示登录用户收到的邀请信息。
  */
 public class ListInvitationActivity extends ISummonActivity {
 

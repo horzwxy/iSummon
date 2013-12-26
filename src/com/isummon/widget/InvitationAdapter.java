@@ -15,7 +15,7 @@ import com.isummon.model.DisplayInvitation;
 import java.util.ArrayList;
 
 /**
- * Created by horz on 12/22/13.
+ * 用于列表显示邀请信息的adapter
  */
 public class InvitationAdapter extends BaseAdapter {
 

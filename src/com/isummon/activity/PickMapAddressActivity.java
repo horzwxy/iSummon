@@ -11,7 +11,7 @@ import com.isummon.R;
 import com.isummon.widget.ISummonMapView;
 
 /**
- * Created by horzwxy on 12/15/13.
+ * 在地图上单击选择活动地点的界面，继承自通用的地图界面
  */
 public class PickMapAddressActivity extends MapActivity {
 
@@ -66,13 +66,16 @@ public class PickMapAddressActivity extends MapActivity {
 
     private void onReturnAddressResult(String name, double longitude, double latitude) {
         Intent intent = new Intent();
-        intent.putExtra(AddActActivity.ADDRESS_NAME, name );
-        intent.putExtra(AddActActivity.LONGITUDE, longitude);
-        intent.putExtra(AddActActivity.LATITUDE, latitude);
+        intent.putExtra(ActEditActivity.ADDRESS_NAME, name );
+        intent.putExtra(ActEditActivity.LONGITUDE, longitude);
+        intent.putExtra(ActEditActivity.LATITUDE, latitude);
         setResult(RESULT_OK, intent);
         finish();
     }
 
+    /**
+     * Activity向地图视图注册回调函数，用来响应单击事件
+     */
     public interface AddressPickedListener {
         public void onAddressPicked(double longitude, double latitude);
     }

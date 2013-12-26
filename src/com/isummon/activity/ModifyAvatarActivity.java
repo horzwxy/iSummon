@@ -14,11 +14,17 @@ import com.isummon.widget.ProgressTaskBundle;
 import java.util.ArrayList;
 
 /**
- * Created by horzwxy on 12/22/13.
+ * 修改头像的界面
  */
 public class ModifyAvatarActivity extends ISummonActivity {
 
+    /**
+     * 其他界面向此界面发起修改头像请求的request code
+     */
     public final static int MODIFY_AVATAR = 757347;
+    /**
+     * 返回Intent中包含头像id的key
+     */
     public final static String AVATAR_ID = "avatar_id";
 
     @Override

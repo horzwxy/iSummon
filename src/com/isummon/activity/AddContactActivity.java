@@ -18,7 +18,7 @@ import com.isummon.widget.ProgressTaskBundle;
 import java.util.ArrayList;
 
 /**
- * Created by horzwxy on 12/19/13.
+ * 添加好友的界面。
  */
 public class AddContactActivity extends ISummonActivity {
 
@@ -28,10 +28,13 @@ public class AddContactActivity extends ISummonActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_contact);
 
-
         getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg_black);
     }
 
+    /**
+     * 点击按钮，按名字搜索用户，并加为好友
+     * @param v
+     */
     public void doSearch(View v) {
         EditText input = (EditText) findViewById(R.id.search_contact_name_input);
         String username = input.getText().toString();

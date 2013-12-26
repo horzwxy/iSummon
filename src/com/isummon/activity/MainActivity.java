@@ -31,7 +31,9 @@ import com.isummon.widget.ProgressTaskBundle;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 应用主界面。包含一个地图视图，Action Bar和侧边导航栏。
+ */
 public class MainActivity extends ISummonActivity {
     private BMapManager mBMapMan;
     private ISummonMapView mMapView;
@@ -124,7 +126,7 @@ public class MainActivity extends ISummonActivity {
                         finish();
                         break;
                     case ADD_ACT:
-                        startActivity(new Intent(getApplicationContext(), AddActActivity.class));
+                        startActivity(new Intent(getApplicationContext(), ActEditActivity.class));
                         break;
                     case EXIT:
                         android.os.Process.killProcess(android.os.Process.myPid());
@@ -286,6 +288,10 @@ public class MainActivity extends ISummonActivity {
         }.action(query);
     }
 
+    /**
+     * 响应修改头像事件
+     * @param v
+     */
     public void modifyAvatar(View v) {
         startActivityForResult(
                 new Intent(this, ModifyAvatarActivity.class),

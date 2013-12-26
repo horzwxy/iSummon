@@ -2,7 +2,13 @@ package com.isummon.model;
 
 import java.io.Serializable;
 
+/**
+ * 包含活动详细信息的model。
+ */
 public class HDActivity implements Serializable {
+    /**
+     * 活动时间字符串的格式
+     */
 	public static final String tmFormat = "yyyy-MM-dd hh:mm";
 
     private int hdId;
@@ -22,10 +28,31 @@ public class HDActivity implements Serializable {
     private int hdProperty;
 	private int hdStatus;
 
+    /**
+     * 默认构造函数
+     */
     public HDActivity() {
 
     }
 
+    /**
+     * 直接用枚举类型做函数构造活动详情的构造函数
+     * @param hdId 活动id
+     * @param hdName 活动名称
+     * @param hdAddress 活动地点
+     * @param longitude 活动地点的经度
+     * @param latitude 活动地点的纬度
+     * @param hdStartTime 活动开始时间
+     * @param hdEndTime 活动结束时间
+     * @param hdOriginId 活动发起者的id
+     * @param hdOriginName 活动发起者的昵称
+     * @param hdDesc 活动详情描述
+     * @param hdType 活动类型
+     * @param hdNumLimit 活动人数上限
+     * @param hdCurNum 当前参加活动的人数
+     * @param hdProperty 活动的其他属性
+     * @param hdStatus 活动当前的状态
+     */
     public HDActivity(int hdId, String hdName, String hdAddress, double longitude, double latitude, String hdStartTime, String hdEndTime, int hdOriginId, String hdOriginName, String hdDesc, HDType hdType, int hdNumLimit, int hdCurNum, HDProperty hdProperty, HDStatus hdStatus) {
         this.hdId = hdId;
         this.hdName = hdName;
@@ -44,6 +71,25 @@ public class HDActivity implements Serializable {
         this.hdStatus = hdStatus.ordinal();
     }
 
+    /**
+     *
+     * 用int值指代枚举类型实例构造活动详情的构造函数
+     * @param hdId 活动id
+     * @param hdName 活动名称
+     * @param hdAddress 活动地点
+     * @param longitude 活动地点的经度
+     * @param latitude 活动地点的纬度
+     * @param hdStartTime 活动开始时间
+     * @param hdEndTime 活动结束时间
+     * @param hdOriginId 活动发起者的id
+     * @param hdOriginName 活动发起者的昵称
+     * @param hdDesc 活动详情描述
+     * @param hdType 活动类型，为HDType枚举实例对应的int
+     * @param hdNumLimit 活动人数上限
+     * @param hdCurNum 当前参加活动的人数
+     * @param hdProperty 活动的其他属性，为HDProperty枚举实例对应的int
+     * @param hdStatus 活动当前的状态，为HDStatus枚举实例对应的int
+     */
     public HDActivity(int hdId, String hdName, String hdAddress, double longitude, double latitude, String hdStartTime, String hdEndTime, int hdOriginId, String hdOriginName, String hdDesc, int hdType, int hdNumLimit, int hdCurNum, int hdProperty, int hdStatus) {
         this.hdId = hdId;
         this.hdName = hdName;
@@ -186,6 +232,10 @@ public class HDActivity implements Serializable {
         this.hdOriginName = hdOriginName;
     }
 
+    /**
+     * 由活动详情的model构造活动简略的model
+     * @return
+     */
     public SimpleHDActivity getSimpleModel() {
         return new SimpleHDActivity(
                 hdId,

@@ -7,7 +7,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 /**
- * Created by hankzhang on 13-12-23.
+ * 用于向服务器端传输的邀请列表
  */
 public class InvitationList extends Vector<Invitation> implements KvmSerializable {
     public  static final long serialVersionUID = -324324431433343L;

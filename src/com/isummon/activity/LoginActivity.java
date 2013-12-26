@@ -21,15 +21,14 @@ import com.isummon.widget.ProgressTaskBundle;
 
 
 /**
- * Activity which displays a login screen to the user, offering registration as
- * well.
+ * 登录界面。
  *
  * @author xhzhang
  * @author horzwxy
  */
 public class LoginActivity extends ISummonActivity {
 
-    public static final int ANIMATION_DURATION = 100;
+    private static final int ANIMATION_DURATION = 100;
 
     // Values for email and password at the time of the login attempt.
     private String mEmail;
@@ -58,7 +57,7 @@ public class LoginActivity extends ISummonActivity {
     }
 
     /**
-     * do signing in work
+     * 响应登录事件
      */
     public void login(View v) {
         // Reset errors.
@@ -143,7 +142,7 @@ public class LoginActivity extends ISummonActivity {
     }
 
     /**
-     * do registering work
+     * 响应注册事件
      */
     public void register(View v) {
         View focusView = null;
@@ -226,7 +225,7 @@ public class LoginActivity extends ISummonActivity {
     }
 
     /**
-     * transform to register view
+     * 切换至注册界面
      */
     public void toRegister(View v) {
         ValueAnimator loginAnimation = ObjectAnimator.ofFloat(
@@ -245,7 +244,7 @@ public class LoginActivity extends ISummonActivity {
     }
 
     /**
-     * transform to sign in view
+     * 切换至登录界面
      */
     public void toLogIn(View v) {
         ValueAnimator loginAnimation = ObjectAnimator.ofFloat(

@@ -1,5 +1,8 @@
 package com.isummon.model;
 
+/**
+ * 用户model
+ */
 public class UserModel  {
 	private int userId;
 	private String userName;

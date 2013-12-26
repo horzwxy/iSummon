@@ -15,7 +15,7 @@ import com.isummon.model.Notification;
 import java.util.List;
 
 /**
- * Created by horzwxy on 12/20/13.
+ * 列表显示用户收到的邀请信息的adapter
  */
 public class NotificationAdapter extends BaseAdapter {
 

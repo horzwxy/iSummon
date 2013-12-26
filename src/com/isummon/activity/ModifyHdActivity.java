@@ -21,10 +21,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
- * Created by horzwxy on 12/21/13.
+ * 修改活动信息的界面，继承自通用的活动信息编辑界面。
  */
-public class ModifyHdActivity extends AddActActivity {
+public class ModifyHdActivity extends ActEditActivity {
 
+    /**
+     * 通过Intent传入HDActivity实例时的key
+     */
     public final static String ACTIVITY = "hdact";
 
     private HDActivity hdActivity;

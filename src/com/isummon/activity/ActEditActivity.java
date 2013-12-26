@@ -25,10 +25,12 @@ import com.isummon.widget.ProgressTaskBundle;
 import java.util.Calendar;
 
 /**
- * 创建活动。
- * 可以通过Intent传入活动地点的经纬度，也可以不传，界面上提供弹出
+ * 显示活动编辑界面，可用来创建活动，或修改活动。
+ * 具体功能应由其子类实现。
+ * 可以通过Intent传入活动地点的经纬度，也可以不传，界面上提供弹出地图界面选择地点的按钮。
+ * 经纬度类型为double，单位为百万分之一度。
  */
-public class AddActActivity extends ISummonActivity {
+public class ActEditActivity extends ISummonActivity {
 
     /**
      * key in Intent, 活动地点的中文表述
@@ -42,15 +44,33 @@ public class AddActActivity extends ISummonActivity {
      * key in Intent, 活动地点的纬度
      */
     public static final String LATITUDE = "latitude";
+    /**
+     * 向地图界面获取地址的request code
+     */
     public static final int GET_ADDRESS = 876;
 
     private final static double DEFAULT_LATITUDE = 120000000d;
     private final static double DEFAULT_LONGITUDE = 35000000d;
 
+    /**
+     * 正在编辑的活动实例
+     */
     protected HDActivity result;
+    /**
+     * 活动的开始日期
+     */
     protected Calendar hdStartDate;
+    /**
+     * 活动的开始时间
+     */
     protected Calendar hdStartTime;
+    /**
+     * 活动的结束日期
+     */
     protected Calendar hdEndDate;
+    /**
+     * 活动的结束时间
+     */
     protected Calendar hdEndTime;
 
     @Override
@@ -304,6 +324,9 @@ public class AddActActivity extends ISummonActivity {
         return "".equals(s);
     }
 
+    /**
+     * 显示选择活动类型的界面
+     */
     protected void showTypePicker() {
         final ImageView typeImage = (ImageView)findViewById(R.id.act_type_image);
         final TextView typeText = (TextView)findViewById(R.id.act_type_name);

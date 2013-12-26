@@ -20,10 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by horzwxy on 12/20/13.
+ * 创建活动后弹出此界面，邀请好友参加活动。
+ * 需传入活动的id。
  */
 public class InviteActivity extends ISummonActivity {
 
+    /**
+     * 活动id的key
+     */
     public static final String HD_ID = "hdid";
 
     private ArrayList<UserModel> invitedList;
@@ -98,6 +102,10 @@ public class InviteActivity extends ISummonActivity {
         });
     }
 
+    /**
+     * 提交邀请的用户列表。
+     * @param v
+     */
     public void submitInivitation(View v) {
         new ProgressTaskBundle<Void, Integer>(
                 this,
@@ -121,6 +129,10 @@ public class InviteActivity extends ISummonActivity {
         }.action();
     }
 
+    /**
+     * 跳过邀请阶段。
+     * @param v
+     */
     public void skip(View v) {
         finish();
     }

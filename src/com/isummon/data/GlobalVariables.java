@@ -4,10 +4,16 @@ import com.isummon.model.UserModel;
 import com.isummon.net.NetHelper;
 
 /**
- * Created by horzwxy on 12/16/13.
+ * 应用内部各个类共享的数据。
  */
 public class GlobalVariables {
 
+    /**
+     * 网络连接工具，用于与服务器端通信。
+     */
     public static NetHelper netHelper = NetHelper.getInstance();
+    /**
+     * 在此保留登录用户的实例。
+     */
     public static UserModel currentUser = new UserModel();
 }

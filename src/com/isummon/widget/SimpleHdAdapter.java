@@ -15,7 +15,7 @@ import com.isummon.model.SimpleHDActivity;
 import java.util.List;
 
 /**
- * Created by horzwxy on 12/18/13.
+ * 列表显示活动简略信息的adapter
  */
 public class SimpleHdAdapter extends BaseAdapter {
 

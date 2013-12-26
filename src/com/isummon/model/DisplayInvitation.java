@@ -3,7 +3,7 @@ package com.isummon.model;
 import java.io.Serializable;
 
 /**
- * Created by horzwxy on 12/16/13.
+ * 在客户端上显示的邀请信息，即用户收到的邀请信息。
  */
 public class DisplayInvitation implements Serializable {
    
@@ -16,6 +16,13 @@ public class DisplayInvitation implements Serializable {
     private String activityName;
     private int responseStatus;
 
+    /**
+     *
+     * @param targetName 被邀请人的昵称
+     * @param targetAvatar 被邀请人的头像id
+     * @param activityName 活动的名称
+     * @param responseStatus 被邀请人是否已处理此邀请
+     */
     public DisplayInvitation(String targetName, int targetAvatar,String activityName, int responseStatus) {
         this.setTargetName(targetName);
         this.setTargetAvatar(targetAvatar);
@@ -23,6 +30,9 @@ public class DisplayInvitation implements Serializable {
         this.setResponseStatus(responseStatus);
     }
 
+    /**
+     * 默认构造函数
+     */
 	public DisplayInvitation() {
 		super();
 	}

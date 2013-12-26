@@ -3,7 +3,6 @@ package com.isummon.widget;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,38 +18,28 @@ import com.baidu.mapapi.map.PopupClickListener;
 import com.baidu.mapapi.map.PopupOverlay;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.isummon.R;
-import com.isummon.activity.AddActActivity;
+import com.isummon.activity.ActEditActivity;
 import com.isummon.activity.PickMapAddressActivity;
 import com.isummon.activity.ShowHdDetailsActivity;
-import com.isummon.data.GlobalVariables;
 import com.isummon.model.SimpleHDActivity;
-import com.isummon.net.NetHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import android.graphics.Bitmap;
 
-import javax.microedition.khronos.opengles.GL;
-
 /**
- * Created by horzwxy on 12/15/13.
+ * 地图视图，其中包含了百度地图的调用逻辑
  */
 public class ISummonMapView extends MapView {
-
-    public final static int ADD_ACT = 876543;
-    public final static String SIMPLE_HD = "simple_hd";
 
     private MyOverlay mOverlay = null;
     private PointOverlay pointOverlay;
     private PickMapAddressActivity.AddressPickedListener listener;
     private boolean longTouchEnable = true;
     private ArrayList<SimpleHDActivity> currentHDList;
-
-
 
     public ISummonMapView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -84,8 +73,8 @@ public class ISummonMapView extends MapView {
                 mOverlay.addItem(new OverlayItem(point, "", ""));
                 refresh();
 
-                // I don't know why, but MapView completes invalidating not before the AddActActivity starts
-                // So I cannot see the newly-added balloon through the AddActActivity background
+                // I don't know why, but MapView completes invalidating not before the ActEditActivity starts
+                // So I cannot see the newly-added balloon through the ActEditActivity background
                 // this is the dummy solution: delay starting activity
                 // todo
                 Timer timer = new Timer();
@@ -144,7 +133,7 @@ public class ISummonMapView extends MapView {
     }
 
     private void showAddActActivity(double longitude, double latitude) {
-        Intent intent = new Intent(getContext(), AddActActivity.class);
+        Intent intent = new Intent(getContext(), ActEditActivity.class);
         intent.putExtra("longitude", longitude);
         intent.putExtra("latitude", latitude);
         getContext().startActivity(intent);

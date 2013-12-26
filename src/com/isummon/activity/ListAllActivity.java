@@ -17,6 +17,9 @@ import com.isummon.widget.ProgressTaskBundle;
 import java.util.ArrayList;
 
 
+/**
+ * 列表显示当前所有的活动，无需传入活动列表，此界面中自动发起请求从服务器端获取活动列表。
+ */
 public class ListAllActivity extends ListActActivity {
 
     @Override

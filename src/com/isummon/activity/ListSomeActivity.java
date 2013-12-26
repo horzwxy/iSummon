@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.isummon.R;
 
 /**
- * Created by horz on 12/20/13.
+ * 列表显示传入的一些活动信息，活动列表通过Intent传入。
  */
 public class ListSomeActivity extends ListActActivity {
 

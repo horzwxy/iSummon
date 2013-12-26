@@ -19,10 +19,13 @@ import com.isummon.widget.ProgressTaskBundle;
 import java.util.List;
 
 /**
- * Created by horzwxy on 12/19/13.
+ * 列表显示好友列表，并可以添加、删除好友
  */
 public class ManageContactActivity extends ISummonActivity {
 
+    /**
+     * 切换至添加好友界面的request
+     */
     public static final int ADD_CONTACT = 7865;
 
     @Override

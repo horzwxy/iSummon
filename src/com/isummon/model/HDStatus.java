@@ -1,11 +1,20 @@
 package com.isummon.model;
 
 /**
- * Created by horzwxy on 12/15/13.
+ * 活动状态
  */
 public enum HDStatus {
+    /**
+     * 活动名额已满
+     */
     NO_VACANCY("名额已满"),
+    /**
+     * 活动已取消
+     */
     CANCELED("已取消"),
+    /**
+     * 允许加入
+     */
     OPEN("正在招募受骗者");
 
     private String chn;
@@ -14,10 +23,18 @@ public enum HDStatus {
         this.chn = chn;
     }
 
+    /**
+     * 获取活动状态的汉语表示
+     * @return
+     */
     public String getChn() {
         return chn;
     }
 
+    /**
+     * 获取各种活动状态的汉语表示
+     * @return
+     */
     public static String[] getChns() {
         HDStatus[] values = values();
         String[] result = new String[values.length];

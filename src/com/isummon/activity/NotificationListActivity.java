@@ -19,7 +19,7 @@ import com.isummon.widget.ProgressTaskBundle;
 import java.util.List;
 
 /**
- * Created by horzwxy on 12/20/13.
+ * 列表显示用户收到的邀请的界面
  */
 public class NotificationListActivity extends ISummonActivity {
 

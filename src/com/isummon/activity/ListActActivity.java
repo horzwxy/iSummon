@@ -17,12 +17,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by horz on 12/20/13.
+ * 显示活动列表。显示方式由其子类实现。
  */
 public class ListActActivity extends ISummonActivity {
 
+    /**
+     * 传入的活动列表key
+     */
     public static final String SIMPLE_ACTS = "simple_acts";
 
+    /**
+     * 要显示的活动简要信息列表
+     */
     protected List<SimpleHDActivity> displayedActs;
 
     @Override
@@ -33,6 +39,9 @@ public class ListActActivity extends ISummonActivity {
         displayedActs = (List<SimpleHDActivity>) intent.getSerializableExtra(SIMPLE_ACTS);
     }
 
+    /**
+     * 初始化活动列表
+     */
     protected void init() {
         ListView listView = ((ListView) findViewById(R.id.list_content));
         listView.setAdapter(
@@ -47,6 +56,9 @@ public class ListActActivity extends ISummonActivity {
         });
     }
 
+    /**
+     * 切换至地图界面显示活动
+     */
     protected void showOnMap() {
         Intent intent = new Intent(this, ActMapActivity.class);
         intent.putExtra(ActMapActivity.SIMPLE_ACTS,
@@ -54,12 +66,22 @@ public class ListActActivity extends ISummonActivity {
         startActivity(intent);
     }
 
+    /**
+     * 创建Action Bar项目
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list, menu);
         return true;
     }
 
+    /**
+     * 响应Action Bar事件
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

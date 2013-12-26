@@ -3,7 +3,7 @@ package com.isummon.model;
 import java.io.Serializable;
 
 /**
- * Created by horzwxy on 12/16/13.
+ * 用于向服务器提交的邀请model
  */
 public class Invitation implements Serializable {
 

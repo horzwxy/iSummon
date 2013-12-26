@@ -41,7 +41,7 @@
 
         <activity
             android:theme="@android:style/Theme.Dialog"
-            android:name=".activity.AddActActivity"/>
+            android:name=".activity.ActEditActivity"/>
         <activity
             android:name="com.isummon.activity.LoginActivity"
             android:label="@string/title_activity_login"

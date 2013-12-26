@@ -15,7 +15,7 @@ import com.isummon.model.UserModel;
 import java.util.List;
 
 /**
- * Created by horzwxy on 12/19/13.
+ * 用于列表显示好友信息的adapter
  */
 public class ContactAdapter extends BaseAdapter {
 
