@@ -8,10 +8,14 @@ import com.isummon.widget.ISummonMapView;
 import java.util.List;
 
 /**
- * Created by horzwxy on 12/19/13.
+ * 在地图上显示一系列的活动，由通过Intent传入的活动列表指定。
+ * 活动列表需为List&lt;SimpleHDActivity&gt;类型。
  */
 public class ActMapActivity extends MapActivity {
 
+    /**
+     * key in Intent
+     */
     public static final String SIMPLE_ACTS = "simplehds";
 
     private List<SimpleHDActivity> displayedActs;

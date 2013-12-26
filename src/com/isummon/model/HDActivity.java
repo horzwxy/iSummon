@@ -119,9 +119,6 @@ public class HDActivity implements Serializable {
 	public void setHdCurNum(int hdCurNum) {
 		this.hdCurNum = hdCurNum;
 	}
-	public static String getTmformat() {
-		return tmFormat;
-	}
 
     public double getLongitude() {
         return longitude;
@@ -145,24 +142,36 @@ public class HDActivity implements Serializable {
         return hdId;
     }
 
-    public HDType getHdType() {
+    public HDType getHdTypeInstance() {
         return HDType.values()[hdType];
+    }
+
+    public int getHdType() {
+        return hdType;
     }
 
     public void setHdType(HDType hdType) {
         this.hdType = hdType.ordinal();
     }
 
-    public HDStatus getHdStatus() {
+    public HDStatus getHdStatusInstance() {
         return HDStatus.values()[hdStatus];
+    }
+
+    public int getHdStatus() {
+        return hdStatus;
     }
 
     public void setHdStatus(HDStatus hdStatus) {
         this.hdStatus = hdStatus.ordinal();
     }
 
-    public HDProperty getHdProperty() {
+    public HDProperty getHdPropertyInstance() {
         return HDProperty.values()[hdProperty];
+    }
+
+    public int getHdProperty() {
+        return hdProperty;
     }
 
     public void setHdProperty(HDProperty hdProperty) {
@@ -185,8 +194,8 @@ public class HDActivity implements Serializable {
                 hdOriginName,
                 longitude,
                 latitude,
-                getHdType(),
-                getHdStatus()
+                getHdTypeInstance(),
+                getHdStatusInstance()
         );
     }
 }

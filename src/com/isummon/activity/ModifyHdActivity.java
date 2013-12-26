@@ -95,7 +95,7 @@ public class ModifyHdActivity extends AddActActivity {
         final ImageView typeImage = (ImageView)findViewById(R.id.act_type_image);
         final TextView typeText = (TextView)findViewById(R.id.act_type_name);
 
-        HDType hdType = hdActivity.getHdType();
+        HDType hdType = hdActivity.getHdTypeInstance();
         typeImage.setImageResource(
                 getResources().getIdentifier(
                         "com.isummon:drawable/" + hdType.name().toLowerCase(),
@@ -154,7 +154,7 @@ public class ModifyHdActivity extends AddActActivity {
         });
 
         EditText propertyEditor = (EditText) findViewById(R.id.act_property);
-        propertyEditor.setText(hdActivity.getHdProperty().getChn());
+        propertyEditor.setText(hdActivity.getHdPropertyInstance().getChn());
 
         Button modifyButton = (Button) findViewById(R.id.act_positive);
         modifyButton.setText(getString(R.string.modify_act));
