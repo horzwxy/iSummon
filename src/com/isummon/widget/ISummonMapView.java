@@ -258,7 +258,7 @@ public class ISummonMapView extends MapView {
         public boolean onTap(GeoPoint geoPoint, MapView mapView) {
 //            Toast.makeText(getContext(), "hello!" + geoPoint.getLatitudeE6() + " " + geoPoint.getLongitudeE6(), Toast.LENGTH_SHORT).show();
             //Now I get the geo point, so I can give it back
-            listener.onAddressPicked(geoPoint.getLongitudeE6(), geoPoint.getLongitudeE6());
+            listener.onAddressPicked(geoPoint.getLongitudeE6(), geoPoint.getLatitudeE6());
             return true;
         }
 

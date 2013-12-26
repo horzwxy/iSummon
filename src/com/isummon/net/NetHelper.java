@@ -51,8 +51,16 @@ public abstract class NetHelper {
      */
     public abstract RegisterResultType register(UserModel newUser);
 
+    /**
+     *  注销
+     */
     public abstract void logOut();
 
+    /**
+     *        通过userId得到用户
+     * @param userId
+     * @return
+     */
     public abstract  UserModel getUserById(int userId);
 
     /**
@@ -167,19 +175,45 @@ public abstract class NetHelper {
 
     //----------------------------------一系列的查询方法-----
 
-    //我发起的活动
+    /**
+     *    我发起的活动
+     */
     public abstract ArrayList<SimpleHDActivity> getHDActivityByOriginId();
 
-    //我参加的活动
+    //
+
+    /**
+     *我参加的活动
+     * @return
+     */
     public abstract ArrayList<SimpleHDActivity> getHDActivityByUserId();
 
-    //根据活动名称查询，如查询活动名称带有“三国杀”的活动
+    //
+
+    /**
+     *根据活动名称查询，如查询活动名称带有“三国杀”的活动
+     * @param hdName
+     * @return
+     */
     public abstract ArrayList<SimpleHDActivity> getHDActivityByHdName(String hdName);
 
-    //根据活动标签查询，如查询“娱乐”类的活动
+    //
+
+    /**
+     *根据活动标签查询，如查询“娱乐”类的活动
+     * @param hdType
+     * @return
+     */
     public abstract ArrayList<SimpleHDActivity> getHDActivityByHdType(HDType hdType);
 
-    //查询某时间范围以内的活动，两个参数可以一个为null，如(startTime, null)表示startTime以后的所有活动
+    //
+
+    /**
+     *查询某时间范围以内的活动，两个参数可以一个为null，如(startTime, null)表示startTime以后的所有活动
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     public abstract ArrayList<SimpleHDActivity> getHDActivityByTime(String startTime, String endTime);
 
     public abstract ArrayList<SimpleHDActivity> getHDActivityByOriginName(String originName);

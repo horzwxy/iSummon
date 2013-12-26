@@ -291,8 +291,10 @@ public class RealNetHelper extends NetHelper {
 
     @Override
     public int addHDActivity(HDActivity hdActivity) {
+        Log.v(TAG, hdActivity.toString());
         SoapObject request = new SoapObject(namespace, "addAct");
         request = formHDActivity(request, hdActivity);
+        Log.v(TAG, request.toString());
         Object resultObj = makeKsoapCall(request, activityUrl);
         if(resultObj != null){
                Log.v(TAG, "add Hd activity get hdId: " + resultObj.toString());
@@ -502,8 +504,10 @@ public class RealNetHelper extends NetHelper {
     private SoapObject formHDActivity(SoapObject request, HDActivity act){
         request.addProperty("name", act.getHdName());
         request.addProperty("address", act.getHdAddress());
-        request.addProperty("longitude", act.getLongitude());
-        request.addProperty("latitude", act.getLatitude());
+        request.addProperty("longitude", String.valueOf(act.getLongitude()));
+        request.addProperty("latitude", String.valueOf(act.getLatitude()));
+//        request.addProperty("longitude", 11.0);
+//        request.addProperty("latitude", 11.0);
         request.addProperty("startTime", act.getHdStartTime());
         request.addProperty("endTime", act.getHdEndTime());
         request.addProperty("originId", act.getHdOriginId());
