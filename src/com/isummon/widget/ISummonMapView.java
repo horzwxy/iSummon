@@ -29,6 +29,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.graphics.Bitmap;
+import android.widget.Toast;
 
 /**
  * 地图视图，其中包含了百度地图的调用逻辑
@@ -67,7 +68,7 @@ public class ISummonMapView extends MapView {
             public void onMapLongClick(GeoPoint point) {
                 if(!longTouchEnable)
                     return;
-                final int longitude = point.getLatitudeE6();
+                final int longitude = point.getLongitudeE6();
                 final int latitude = point.getLatitudeE6();
 
                 mOverlay.addItem(new OverlayItem(point, "", ""));
@@ -132,10 +133,10 @@ public class ISummonMapView extends MapView {
        mOverlay.addItem(getItemFromHdActivity(currentHDList));
     }
 
-    private void showAddActActivity(double longitude, double latitude) {
+    private void showAddActActivity(int longitude, int latitude) {
         Intent intent = new Intent(getContext(), ActEditActivity.class);
-        intent.putExtra("longitude", longitude);
-        intent.putExtra("latitude", latitude);
+        intent.putExtra(ActEditActivity.LONGITUDE, longitude);
+        intent.putExtra(ActEditActivity.LATITUDE, latitude);
         getContext().startActivity(intent);
     }
 
@@ -247,6 +248,7 @@ public class ISummonMapView extends MapView {
         public boolean onTap(GeoPoint geoPoint, MapView mapView) {
 //            Toast.makeText(getContext(), "hello!" + geoPoint.getLatitudeE6() + " " + geoPoint.getLongitudeE6(), Toast.LENGTH_SHORT).show();
             //Now I get the geo point, so I can give it back
+            Log.v("iSummon-----------------", geoPoint.toString());
             listener.onAddressPicked(geoPoint.getLongitudeE6(), geoPoint.getLatitudeE6());
             return true;
         }
