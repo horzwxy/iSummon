@@ -305,7 +305,7 @@ public class RealNetHelper extends NetHelper {
         Object resultObj = makeKsoapCall(request, activityUrl);
         if(resultObj != null){
                Log.v(TAG, "add Hd activity get hdId: " + resultObj.toString());
-            return (Integer.parseInt(resultObj.toString()) ==1) ? 0 : -1;
+            return (Integer.parseInt(resultObj.toString()) > 0) ? 0 : -1;
         }
         return -1;
     }
