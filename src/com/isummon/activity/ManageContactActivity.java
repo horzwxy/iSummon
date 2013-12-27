@@ -73,7 +73,7 @@ public class ManageContactActivity extends ISummonActivity {
         });
     }
 
-    private void showConfirmRemove(UserModel userModel) {
+    private void showConfirmRemove(final UserModel userModel) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.remove_contact_confirm_1)
                 + userModel.getNickName() + getString(R.string.remove_contact_confirm_2));
@@ -81,7 +81,7 @@ public class ManageContactActivity extends ISummonActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        onRemoveContact(userModel.getUserId());
                     }
                 });
         builder.setNegativeButton(R.string.remove_contact_confirm_negative,
@@ -92,6 +92,29 @@ public class ManageContactActivity extends ISummonActivity {
                     }
                 });
         builder.create().show();
+    }
+
+    private void onRemoveContact(int targetId) {
+        new ProgressTaskBundle<Integer, Integer>(
+                this,
+                R.string.delivering
+        ){
+            @Override
+            protected Integer doWork(Integer... params) {
+                return GlobalVariables.netHelper.removeContact(params[0]);
+            }
+
+            @Override
+            protected void dealResult(Integer result) {
+                if(result != -1) {
+                    showToast(R.string.submitting_success);
+                    fetchContacts();
+                }
+                else {
+                    showToast(R.string.submitting_failed);
+                }
+            }
+        }.action(targetId);
     }
 
     @Override

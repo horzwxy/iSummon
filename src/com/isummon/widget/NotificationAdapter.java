@@ -57,8 +57,7 @@ public class NotificationAdapter extends BaseAdapter {
                 )
         );
         TextView originName = (TextView) convertView.findViewById(R.id.origin_name);
-        originName.setText(getItem(position).getOriginName() + "邀请你参加\"" +
-                getItem(position).getHdName() + "\"");
+        originName.setText(getItem(position).getHdName());
 
         return convertView;
     }

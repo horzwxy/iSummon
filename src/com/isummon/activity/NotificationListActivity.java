@@ -3,6 +3,7 @@ package com.isummon.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +13,7 @@ import com.isummon.R;
 import com.isummon.activity.listmodel.NotificationRespondMode;
 import com.isummon.data.GlobalVariables;
 import com.isummon.model.HDActivity;
+import com.isummon.model.InvitationStatus;
 import com.isummon.model.Notification;
 import com.isummon.widget.NotificationAdapter;
 import com.isummon.widget.ProgressTaskBundle;
@@ -53,21 +55,20 @@ public class NotificationListActivity extends ISummonActivity {
         }.action();
     }
 
-    private void updateList(List<Notification> notifications) {
+    private void updateList(final List<Notification> notifications) {
         ListView listView = (ListView) findViewById(R.id.notification_list);
         listView.setAdapter(new NotificationAdapter(this, notifications));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-                onShowOptions((int) id);
+                System.out.println(position);
+                onShowOptions(notifications.get(position));
                 //onShowDetails((int)id);
             }
         });
     }
 
-    private void onShowOptions(final int id) {
+    private void onShowOptions(final Notification notification) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.choose_respond_mode);
         builder.setItems(NotificationRespondMode.getChns(), new DialogInterface.OnClickListener() {
@@ -75,12 +76,27 @@ public class NotificationListActivity extends ISummonActivity {
                 NotificationRespondMode mode = NotificationRespondMode.values()[which];
                 switch (mode) {
                     case LATER:
-                        // nothing
                         break;
                     case REJECT:
+                        notification.setResponseStatus(InvitationStatus.REJECTED.ordinal());
+                        new AsyncTask<Notification, Void, Void>() {
+                            @Override
+                            protected Void doInBackground(Notification... notifications) {
+                                GlobalVariables.netHelper.onReadNotification(notifications[0]);
+                                return null;
+                            }
+                        }.execute(notification);
                         break;
                     case VIEW_DETAILS:
-                        onShowDetails(id);
+                        notification.setResponseStatus(InvitationStatus.READ.ordinal());
+                        new AsyncTask<Notification, Void, Void>() {
+                            @Override
+                            protected Void doInBackground(Notification... notifications) {
+                                GlobalVariables.netHelper.onReadNotification(notifications[0]);
+                                return null;
+                            }
+                        }.execute(notification);
+                        onShowDetails(notification.getHdId());
                         break;
                 }
             }

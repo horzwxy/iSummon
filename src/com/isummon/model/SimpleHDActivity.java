@@ -18,17 +18,17 @@ public class SimpleHDActivity implements Serializable {
     private String hdName;        //活动的名称
     private String hdOriginName;        //活动发起者的id，
     private int hdOriginId;
-    private double hdLongitude;    //活动的经度
-    private double hdLatitude;    //纬度
+    private int hdLongitude;    //活动的经度
+    private int hdLatitude;    //纬度
     private int hdType;
     private int hdStatus;
 
-    public SimpleHDActivity(String hdName, double hdLatitude, double hdLongitude){
+    public SimpleHDActivity(String hdName, int hdLatitude, int hdLongitude){
         this.hdName = hdName;
         this.hdLatitude = hdLatitude;
         this.hdLongitude = hdLongitude;
     }
-    public SimpleHDActivity(int hdId, String hdName, int hdOriginId, String hdOriginName, double hdLongitude, double hdLatitude, HDType hdType, HDStatus hdStatus) {
+    public SimpleHDActivity(int hdId, String hdName, int hdOriginId, String hdOriginName, int hdLongitude, int hdLatitude, HDType hdType, HDStatus hdStatus) {
         this.hdId = hdId;
         this.hdName = hdName;
         this.hdOriginId = hdOriginId;
@@ -39,7 +39,7 @@ public class SimpleHDActivity implements Serializable {
         this.hdStatus = hdStatus.ordinal();
     }
 
-    public SimpleHDActivity(int hdId, String hdName, int hdOriginId, String hdOriginName, double hdLongitude, double hdLatitude, int hdType, int hdStatus) {
+    public SimpleHDActivity(int hdId, String hdName, int hdOriginId, String hdOriginName, int hdLongitude, int hdLatitude, int hdType, int hdStatus) {
         this.hdId = hdId;
         this.hdName = hdName;
         this.hdOriginId = hdOriginId;
