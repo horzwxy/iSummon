@@ -341,16 +341,18 @@ public class RealNetHelper extends NetHelper {
     }
 
     @Override
-    public boolean applyHDActivity(int hdId) {
+    public int applyHDActivity(int hdId, int how) {
         SoapObject request = new SoapObject(namespace, "applyHDActivity");
-        request.addProperty("applierId", GlobalVariables.currentUser.getUserId());
-        request.addProperty("id", hdId);
+        request.addProperty("hdId", hdId);
+        request.addProperty("userId", GlobalVariables.currentUser.getUserId());
+        request.addProperty("howEvolved", how);
         Object resultObj = makeKsoapCall(request, activityUrl);
         if(resultObj != null){
             Log.v(TAG, "in applyHDActivity resultObj:　" + resultObj.toString());
-            return  (Integer.parseInt(resultObj.toString()) == 1) ? true :false;
+            return Integer.parseInt(resultObj.toString());
+
         }
-        return false;
+        return 0;
     }
 
     //-------------------------------一系列的查询方法-----

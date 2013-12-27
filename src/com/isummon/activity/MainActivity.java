@@ -67,7 +67,7 @@ public class MainActivity extends ISummonActivity {
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(R.string.fake_nickname);
+                getActionBar().setTitle(GlobalVariables.currentUser.getNickName());
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -147,6 +147,23 @@ public class MainActivity extends ISummonActivity {
 
         TextView nameText = (TextView) findViewById(R.id.main_user_nickname);
         nameText.setText(GlobalVariables.currentUser.getNickName());
+
+        new ProgressTaskBundle<Void, ArrayList<SimpleHDActivity>>(
+                this,
+                R.string.fetching_act
+        ) {
+            @Override
+            protected ArrayList<SimpleHDActivity> doWork(Void... params) {
+                return GlobalVariables.netHelper.getAllActs();
+            }
+
+            @Override
+            protected void dealResult(ArrayList<SimpleHDActivity> result) {
+                mMapView.setDisplayMode(ISummonMapView.DisplayMode.NORMAL);
+                mMapView.showHd(result);
+//                mMapView.showHd(result);
+            }
+        }.action();
     }
 
     @Override
@@ -186,7 +203,9 @@ public class MainActivity extends ISummonActivity {
 
             @Override
             protected void dealResult(ArrayList<SimpleHDActivity> result) {
+                mMapView.setDisplayMode(ISummonMapView.DisplayMode.NORMAL);
                 mMapView.showHd(result);
+//                mMapView.showHd(result);
             }
         }.action();
     }

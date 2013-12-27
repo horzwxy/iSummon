@@ -28,8 +28,11 @@ public class ShowHdDetailsActivity extends ISummonActivity {
      * 通过Intent传入HDActivity实例时的key
      */
     public static final String HDACTIVITY = "hdActivity";
+    public static final String WAY = "way";
 
     private HDActivity hdActivity;
+
+    private int way;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class ShowHdDetailsActivity extends ISummonActivity {
 
         Intent intent = getIntent();
         hdActivity = (HDActivity) intent.getSerializableExtra(HDACTIVITY);
+        way = intent.getIntExtra(WAY, -1);
 
         setText(R.id.actName, R.string.act_name_prompt, hdActivity.getHdName());
         setText(R.id.actPlace, R.string.act_place_prompt, hdActivity.getHdAddress());
@@ -104,25 +108,29 @@ public class ShowHdDetailsActivity extends ISummonActivity {
      * @param v
      */
     public void applyIn(View v) {
-        new ProgressTaskBundle<Integer, Boolean>(
+        new ProgressTaskBundle<Integer, Integer>(
                 this,
                 R.string.delivering
         ) {
             @Override
-            protected Boolean doWork(Integer... params) {
-                return GlobalVariables.netHelper.applyHDActivity(params[0]);
+            protected Integer doWork(Integer... params) {
+                return GlobalVariables.netHelper.applyHDActivity(params[0], params[1]);
             }
 
             @Override
-            protected void dealResult(Boolean result) {
-                if (result) {
+            protected void dealResult(Integer result) {
+                if (result > 0) {
                     showToast(R.string.apply_success);
                     finish();
-                } else {
+                }
+                else if(result == 0) {
                     showToast(R.string.apply_failed);
                 }
+                else {
+                    showToast(R.string.apply_full);
+                }
             }
-        }.action(hdActivity.getHdId());
+        }.action(hdActivity.getHdId(), way);
     }
 
     /**

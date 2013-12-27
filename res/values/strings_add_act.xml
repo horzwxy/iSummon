@@ -68,4 +68,5 @@
 
     <string name="apply_success">已加入活动</string>
     <string name="apply_failed">未能加入活动</string>
+    <string name="apply_full">活动人数已满</string>
 </resources>

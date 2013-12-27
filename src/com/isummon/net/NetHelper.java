@@ -171,7 +171,7 @@ public abstract class NetHelper {
      */
     public abstract boolean cancleHDActivity(int hdId);
 
-    public abstract boolean applyHDActivity(int hdId);
+    public abstract int applyHDActivity(int hdId, int how);
 
     //----------------------------------一系列的查询方法-----
 

@@ -190,8 +190,8 @@ public class FakeNetHelper extends NetHelper {
     }
 
     @Override
-    public boolean applyHDActivity(int hdId) {
-        return false;
+    public int applyHDActivity(int hdId, int how) {
+        return 0;
     }
 
     @Override

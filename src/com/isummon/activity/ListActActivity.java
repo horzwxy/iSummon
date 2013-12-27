@@ -10,7 +10,9 @@ import android.widget.ListView;
 
 import com.isummon.R;
 import com.isummon.data.GlobalVariables;
+import com.isummon.model.HDActivity;
 import com.isummon.model.SimpleHDActivity;
+import com.isummon.widget.ProgressTaskBundle;
 import com.isummon.widget.SimpleHdAdapter;
 
 import java.util.ArrayList;
@@ -49,11 +51,31 @@ public class ListActActivity extends ISummonActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ListActActivity.this, ShowHdDetailsActivity.class);
-                intent.putExtra(ShowHdDetailsActivity.HDACTIVITY, GlobalVariables.netHelper.getHDActivityById((int) id));
-                startActivity(intent);
+                System.out.println("position=" + position);
+                System.out.println("id=" + id);
+                onShowDetails((int)id);
             }
         });
+    }
+
+    private void onShowDetails(int id) {
+        new ProgressTaskBundle<Integer, HDActivity>(
+                this,
+                R.string.delivering
+        ) {
+            @Override
+            protected HDActivity doWork(Integer... params) {
+                return GlobalVariables.netHelper.getHDActivityById(params[0]);
+            }
+
+            @Override
+            protected void dealResult(HDActivity result) {
+                Intent intent = new Intent(ListActActivity.this, ShowHdDetailsActivity.class);
+                intent.putExtra(ShowHdDetailsActivity.HDACTIVITY, result);
+                intent.putExtra(ShowHdDetailsActivity.WAY, 1);
+                startActivity(intent);
+            }
+        }.action(id);
     }
 
     /**

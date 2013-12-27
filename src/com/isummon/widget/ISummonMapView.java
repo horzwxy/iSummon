@@ -21,6 +21,8 @@ import com.isummon.R;
 import com.isummon.activity.ActEditActivity;
 import com.isummon.activity.PickMapAddressActivity;
 import com.isummon.activity.ShowHdDetailsActivity;
+import com.isummon.data.GlobalVariables;
+import com.isummon.model.HDActivity;
 import com.isummon.model.SimpleHDActivity;
 
 import java.util.ArrayList;
@@ -191,22 +193,53 @@ public class ISummonMapView extends MapView {
         }
 
         protected boolean onTap(int index) {
-//            final SimpleHDActivity selectedHd = currentHDList.get(index);
+            final SimpleHDActivity selectedHd = currentHDList.get(index);
             PopupClickListener popListener = new PopupClickListener(){
                 @Override
                 public void onClickedPopup(int popIndex) {
                     if ( popIndex == 0){
-                        //查看活动
-                        Intent intent = new Intent();
-                        intent.setClass(getContext().getApplicationContext(), ShowHdDetailsActivity.class);
-//                        intent.putExtra(ShowHdDetailsActivity.HDACTIVITY, selectedHd);
-                        getContext().startActivity(intent);
+                        new ProgressTaskBundle<Integer, HDActivity>(
+                                getContext(),
+                                R.string.delivering
+                        ) {
+                            @Override
+                            protected HDActivity doWork(Integer... params) {
+                                return GlobalVariables.netHelper.getHDActivityById(params[0]);
+                            }
+
+                            @Override
+                            protected void dealResult(HDActivity result) {
+                                Intent intent = new Intent();
+                                intent.setClass(getContext().getApplicationContext(), ShowHdDetailsActivity.class);
+                                intent.putExtra(ShowHdDetailsActivity.HDACTIVITY, result);
+                                getContext().startActivity(intent);
+                            }
+                        }.action(selectedHd.getHdId());
                     }
                     else if(popIndex == 2){
                         //申请加入
-//                        if(GlobalVariables.currentUser.getUserId() == selectedHd.getHdOriginId()){//
-//
-//                        }
+                      new ProgressTaskBundle<Integer, Integer>(
+                        getContext(),
+                                R.string.delivering
+                        ) {
+                            @Override
+                            protected Integer doWork(Integer... params) {
+                                return GlobalVariables.netHelper.applyHDActivity(params[0],params[1]);
+                            }
+
+                            @Override
+                            protected void dealResult(Integer result) {
+                                if (result > 0) {
+                                    Toast.makeText(getContext(), R.string.apply_success, Toast.LENGTH_SHORT).show();
+                                }
+                                else if(result == 0) {
+                                    Toast.makeText(getContext(), R.string.apply_failed, Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Toast.makeText(getContext(), R.string.apply_full, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }.action(selectedHd.getHdId(), 1);
                     }
                 }
             };

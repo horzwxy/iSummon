@@ -122,6 +122,7 @@ public class NotificationListActivity extends ISummonActivity {
                         ShowHdDetailsActivity.class);
                 intent.putExtra(ShowHdDetailsActivity.HDACTIVITY,
                         result);
+                intent.putExtra(ShowHdDetailsActivity.WAY, 0);
                 startActivity(intent);
             }
         }.action(id);

@@ -49,8 +49,8 @@ public class ActEditActivity extends ISummonActivity {
      */
     public static final int GET_ADDRESS = 876;
 
-    private final static int DEFAULT_LATITUDE = 0;
-    private final static int DEFAULT_LONGITUDE = 0;
+    private final static int DEFAULT_LATITUDE = -91000000;
+    private final static int DEFAULT_LONGITUDE = -182000000;
 
     /**
      * 正在编辑的活动实例
@@ -96,7 +96,7 @@ public class ActEditActivity extends ISummonActivity {
         et.setHint(R.string.act_place_prompt);
         // if longitude is greater than -181 degrees, it must be a valid number
         // in unit of 1e-6 degrees
-        if(longitude > -181 ) {
+        if(longitude > -181000000 ) {
             result.setLongitude(longitude);
             result.setLatitude(latitude);
             et.setOnClickListener(new View.OnClickListener() {

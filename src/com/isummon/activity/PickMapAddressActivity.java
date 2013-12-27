@@ -22,13 +22,13 @@ public class PickMapAddressActivity extends MapActivity {
         mMapView.setDisplayMode(ISummonMapView.DisplayMode.SINGLE_TAP);
         mMapView.setAddressPickedListener(new AddressPickedListener() {
             @Override
-            public void onAddressPicked(double longitude, double latitude) {
+            public void onAddressPicked(int longitude, int latitude) {
                 showAddressConfirmDialog(longitude, latitude);
             }
         });
     }
 
-    private void showAddressConfirmDialog(final double longitude, final double latitude) {
+    private void showAddressConfirmDialog(final int longitude, final int latitude) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.pick_addr_from_map_dialog_title);
         View dialogContent = getLayoutInflater().inflate(R.layout.dialog_input_addr_name, null);
@@ -55,7 +55,7 @@ public class PickMapAddressActivity extends MapActivity {
         builder.create().show();
     }
 
-    private void onAddressNameInput(String name, double longitude, double latitude) {
+    private void onAddressNameInput(String name, int longitude, int latitude) {
         if(name != null && !name.equals("")) {
             onReturnAddressResult(name, longitude, latitude);
         }
@@ -64,7 +64,7 @@ public class PickMapAddressActivity extends MapActivity {
         }
     }
 
-    private void onReturnAddressResult(String name, double longitude, double latitude) {
+    private void onReturnAddressResult(String name, int longitude, int latitude) {
         Intent intent = new Intent();
         intent.putExtra(ActEditActivity.ADDRESS_NAME, name );
         intent.putExtra(ActEditActivity.LONGITUDE, longitude);
@@ -77,7 +77,7 @@ public class PickMapAddressActivity extends MapActivity {
      * Activity向地图视图注册回调函数，用来响应单击事件
      */
     public interface AddressPickedListener {
-        public void onAddressPicked(double longitude, double latitude);
+        public void onAddressPicked(int longitude, int latitude);
     }
 
 
