@@ -15,5 +15,5 @@ public class GlobalVariables {
     /**
      * 在此保留登录用户的实例。
      */
-    public static UserModel currentUser = netHelper.findUserByName("horzwxy").get(0);//new UserModel();
+    public static UserModel currentUser = new UserModel();
 }
