@@ -226,7 +226,7 @@ public class ActEditActivity extends ISummonActivity {
         builder.setItems(HDProperty.getChns(), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 EditText promptText = (EditText) findViewById(R.id.act_property);
-                promptText.setText(HDProperty.values()[which].name());
+                promptText.setText(HDProperty.values()[which].getChn());
                 result.setHdProperty(HDProperty.values()[which]);
             }
         });
@@ -301,9 +301,9 @@ public class ActEditActivity extends ISummonActivity {
         result.setHdName(hdName);
         result.setHdAddress(hdPlace);
         result.setHdStartTime(
-                getDateRepresentation(hdStartDate, "-", "-", "") + ":" + getTimeRepresentation(hdStartTime, ""));
+                getDateRepresentation(hdStartDate, "-", "-", "") + " " + getTimeRepresentation(hdStartTime, ":"));
         result.setHdEndTime(
-                getDateRepresentation(hdEndDate, "-", "-", "") + ":" + getTimeRepresentation(hdEndTime, ""));
+                getDateRepresentation(hdEndDate, "-", "-", "") + " " + getTimeRepresentation(hdEndTime, ":"));
         result.setHdDesc(hdContentString);
         result.setHdType(HDType.valueOf(hdTypeString));
         try {

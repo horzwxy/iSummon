@@ -195,7 +195,12 @@ public class RealNetHelper extends NetHelper {
         Log.v(TAG, "update avatar from " + GlobalVariables.currentUser.getAvatar() + " to " + avatarId + " of user " + GlobalVariables.currentUser.getNickName());
         Object resultObj = makeKsoapCall(request, userActionUrl);
         if(resultObj != null){
-            return Boolean.parseBoolean(resultObj.toString());
+            Log.v(TAG, "update avatar return : " + resultObj.toString());
+            int code = Integer.parseInt(resultObj.toString());
+            if(code == 0){
+                GlobalVariables.currentUser.setAvatar(avatarId);
+                return true;
+            }
         }
         return  false;
     }
@@ -300,7 +305,7 @@ public class RealNetHelper extends NetHelper {
         Object resultObj = makeKsoapCall(request, activityUrl);
         if(resultObj != null){
                Log.v(TAG, "add Hd activity get hdId: " + resultObj.toString());
-            return (Integer.parseInt(resultObj.toString()) ==1) ? 0 : -1;
+            return (Integer.parseInt(resultObj.toString()) > 0) ? 0 : -1;
         }
         return -1;
     }
@@ -512,7 +517,7 @@ public class RealNetHelper extends NetHelper {
 //        request.addProperty("latitude", 11.0);
         request.addProperty("startTime", act.getHdStartTime());
         request.addProperty("endTime", act.getHdEndTime());
-        request.addProperty("originId", act.getHdOriginId());
+        request.addProperty("originId", GlobalVariables.currentUser.getUserId());
         request.addProperty("desc", act.getHdDesc());
         request.addProperty("type", act.getHdType());
         request.addProperty("numLimit", act.getHdNumLimit());
